@@ -1,13 +1,14 @@
 {
-    "name"         : "node-web-scrape",
-    "version"      : "0.0.1",
-    "description"  : "Scrape le web.",
-    "main"         : "server.js",
-    "author"       : "Scotch",
-    "dependencies" : {
-      "express"    : "latest",
-      "request"    : "latest",
-      "async"      : "^1.5.0",
-      "cheerio"    : "latest"
-    }
+  "name": "node-web-scrape",
+  "version": "0.0.1",
+  "description": "Scrape le web.",
+  "main": "server.js",
+  "author": "Scotch",
+  "dependencies": {
+    "async": "^1.5.0",
+    "cheerio": "latest",
+    "dustjs-linkedin": "^2.7.5",
+    "express": "latest",
+    "request": "latest"
+  }
 }
