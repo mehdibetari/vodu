@@ -3,7 +3,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Document</title>
+      <title>Agenda Calendrier Netflix 2017 2018 2019</title>
     </head>
     <body>
     <style>
@@ -41,19 +41,20 @@
     </style>
       <nav>ALLOSERIE</nav>
       <header>
-        <h1>Calendrier des sorties NETFLIX</h1>
-        <p>Agenda mis à jour le 7 sept 2017</p>
+        <h1>Calendrier des sorties NETFLIX 2017 2018</h1>
+        <p>Agenda mis à jour le 19 sept 2017</p>
       </header>
       <section>
+        {#list}
         <article>
           <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
+            <img src="{imgUrl}" alt="{name}">
           </aside>
           <div>
-            <h1>Titre de la serie</h1>
+            <h1>{name}</h1>
             <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
+              <span>{premiereDate} - </span>
+              <span>{type}{#seasons} - {seasons} saison(s){/seasons}</span>
             </div>
             <div>
               createur
@@ -64,101 +65,7 @@
             <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
           </div>
         </article>
-        <article>
-          <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
-          </aside>
-          <div>
-            <h1>Titre de la serie</h1>
-            <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
-            </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
-          </div>
-        </article>
-        <article>
-          <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
-          </aside>
-          <div>
-            <h1>Titre de la serie</h1>
-            <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
-            </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
-          </div>
-        </article>
-        <article>
-          <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
-          </aside>
-          <div>
-            <h1>Titre de la serie</h1>
-            <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
-            </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
-          </div>
-        </article>
-        <article>
-          <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
-          </aside>
-          <div>
-            <h1>Titre de la serie</h1>
-            <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
-            </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
-          </div>
-        </article>
-        <article>
-          <aside>
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" alt="">
-          </aside>
-          <div>
-            <h1>Titre de la serie</h1>
-            <div>
-              <span>date de sortie</span>
-              <span>categorie</span>
-            </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
-          </div>
-        </article>
+        {/list}
       </section>
       <footer></footer>
     </body>
