@@ -2,7 +2,9 @@ var express = require('express');
 var app     = express();
 var dust    = require('dustjs-linkedin');
 var fs      = require('fs');
-
+app.get('/', function(req, res) {
+    res.redirect('/calendrier/netflix');
+});
 app.get('/calendrier/netflix', function(req, res){
     fs.readFile('./front-layout/test.html', 'utf8', function (err,data) {
         if (err) {
@@ -11,7 +13,7 @@ app.get('/calendrier/netflix', function(req, res){
         console.log(data);
         var tmpl = dust.compile(data, 'view-netflix');
         dust.loadSource(tmpl);
-        var view = dust.render('view-netflix', { version: 'toto' }, function(err, out) {
+        var view = dust.render('view-netflix', { emoj: ';)' }, function(err, out) {
             if(err) {
                 console.error(err);
             } else {
