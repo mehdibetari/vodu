@@ -5,7 +5,32 @@ var async   = require('async');
 
 const baseUrl = 'https://media.netflix.com';
 const url = 'https://media.netflix.com/gateway/v1/fr/titles/upcoming';
+const googleSearchBaseUrl = 'https://www.google.fr/search?q=';
+const imdbGoogleSearchParam = '%20site%3Aimdb.com&oq=';
 
+var imdbData = {};
+
+imdbData.getMovieLink = function (name, year, callback) {
+    const url = googleSearchBaseUrl + 
+                    encodeURIComponent(name + ' ' +year) + 
+                    imdbGoogleSearchParam + 
+                    encodeURIComponent(name + ' ' +year);
+    request(url, function(error, response, html){
+        if(!error){
+            var $ = cheerio.load(html);
+            var text = $('.g h3 a').html();
+            var link = $('.g h3 a').attr('href');
+            console.log('IMDB::::',text,link,html);
+            if (text && text.indexOf(name) > -1 && text.indexOf(year) > -1) {
+                callback(link.replace('/url?q=',''));
+            }
+            else {
+                callback(false);
+            }
+        }
+    });
+
+};
 request(url, function(mainError, mainResponse, mainHtml){
     var results = JSON.parse(mainResponse.body);
     var newItems = [];
@@ -25,13 +50,21 @@ request(url, function(mainError, mainResponse, mainHtml){
                         
                         $('img','.nfo-poster-img-container').filter(function(){
                             var imgTemp = ($(this).attr('src') === '/dist/img/no-key-art.jpg') ? false : $(this).attr('src');
-                            item.imgUrl = imgTemp;
-                            
+                            if (imgTemp) {
+                                item.imgUrl = imgTemp;
+                                newItems.push(item);
+                                done();
+                            }
+                            else {
+                                imdbData.getMovieLink(item.name, item.sortDate, function (imdbMovieLink) {
+                                    item.imdbMovieLink = imdbMovieLink;
+                                    newItems.push(item);
+                                    done();
+                                });
+                            }
                             console.log(cpt, '/', results.items.length,' ############ :: ', item.imgUrl);
-                            newItems.push(item);
                         });
                     }
-                    done();
                 });
             }
         }, function(err, results) {
