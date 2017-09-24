@@ -16,21 +16,37 @@ imdbData.getMovieLink = function (name, year, callback) {
                 imdbSearchEndUrl;
     request(url, function(moviesError, moviesResponse, moviesHtml){
         if(!moviesError) {
+            var titleToFound = name + ' (' + year + ')';
             var $ = cheerio.load(moviesHtml);
-            var movieLink = $('.findList tbody tr td a').attr('href');
-            request(imdbBaseUrl + movieLink, function(movieError, movieResponse, movieHtml){
-                if(!movieError) {
-                    var $ = cheerio.load(movieHtml);
-                    var posterLink = $('.poster img').attr('src');
-                    var actors = $('.credit_summary_item span[itemprop*="actors"] a span').text();
-                    download(posterLink,'./posters/' + name + '+' +year + '.jpg', function () {
-                        callback({"actors": actors, "posterLink": posterLink, "movieLink": movieLink});
+            // var movieLink = $('.findList tbody tr td a').attr('href');
+            // var movieTitle = $('.findList tbody tr td a').text();
+            var moviesFounded = $('.findList tbody tr.findResult td.result_text');
+            moviesFounded.each(function(){
+                // console.log($(this).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
+                if ($(this).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'')) {
+                    var movieLink = $(this).find('a').attr('href');
+                    // console.log(movieLink);
+                    request(imdbBaseUrl + movieLink, function(movieError, movieResponse, movieHtml){
+                        if(!movieError) {
+                            var $ = cheerio.load(movieHtml);
+                            var posterLink = $('.poster img').attr('src');
+                            var actors = '';
+                            $('.credit_summary_item span[itemprop*="actors"] a span').each(function(i){
+                                actors += $(this).text();
+                                actors += (i < $('.credit_summary_item span[itemprop*="actors"] a span').length - 1) ? ', ' : '...';
+                            });
+                            download(posterLink,'./posters/' + name + '+' +year + '.jpg', function () {
+                                callback({'actors': actors, 'posterLink': posterLink, 'movieLink': movieLink});
+                            });
+                        }
+                        else {
+                            callback({});
+                        }
                     });
-                }
-                else {
-                    callback({});
+                    return false;
                 }
             });
+
         }
         else {
             callback({});
@@ -40,8 +56,8 @@ imdbData.getMovieLink = function (name, year, callback) {
 };
 var download = function(uri, filename, callback){
     request.head(uri, function(err, res, body){
-        console.log('content-type:', res.headers['content-type']);
-        console.log('content-length:', res.headers['content-length']);
+        // console.log('content-type:', res.headers['content-type']);
+        // console.log('content-length:', res.headers['content-length']);
 
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
