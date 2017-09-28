@@ -7,9 +7,7 @@ const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
 const imdbSearchEndUrl = '&s=all';
 
-var imdbData = {};
-
-imdbData.getMovieLink = function (name, year, callback) {
+var getMovieLink = function (name, year, callback) {
     const url = imdbBaseUrl + 
                 imdbSearchStartUrl + 
                 encodeURIComponent(name + '+' +year) + 
@@ -22,26 +20,37 @@ imdbData.getMovieLink = function (name, year, callback) {
             // var movieLink = $('.findList tbody tr td a').attr('href');
             // var movieTitle = $('.findList tbody tr td a').text();
             var moviesFounded = $('.findList tbody tr.findResult td.result_text');
+            if (!moviesFounded || moviesFounded.length < 1) callback({});
             async.eachSeries(moviesFounded, function(movie){
-                // console.log($(movie).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
+                console.log($(movie).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
                 // console.log($(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) );
                 var textExactlyMatch = $(movie).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'');
                 var textExactlyStart = $(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) === 0;
                 if (!lock && textExactlyMatch || textExactlyStart) {
                     lock = true;
                     var movieLink = $(movie).find('a').attr('href');
-                    // console.log('##############SCRAPE : ',name, ' => ',movieLink);
+                    console.log('##############SCRAPE : ',name, ' => ',movieLink);
                     request(imdbBaseUrl + movieLink, function(movieError, movieResponse, movieHtml){
                         if(!movieError) {
                             var $ = cheerio.load(movieHtml);
-                            var posterLink = $('.poster img').attr('src');
+                            var posterUrl = $('.poster img').attr('src');
                             var actors = '';
                             $('.credit_summary_item span[itemprop*="actors"] a span').each(function(i){
                                 actors += $(this).text();
                                 actors += (i < $('.credit_summary_item span[itemprop*="actors"] a span').length - 1) ? ', ' : '...';
                             });
-                            download(posterLink,'./posters/' + name + '+' +year + '.jpg', function () {
-                                callback({'actors': actors, 'posterLink': posterLink, 'movieLink': movieLink});
+                            var directors = '';
+                            $('.credit_summary_item span[itemprop*="director"] a span').each(function(i){
+                                directors += $(this).text();
+                                directors += (i < $('.credit_summary_item span[itemprop*="director"] a span').length - 1) ? ', ' : '...';
+                            });
+                            var creators = '';
+                            $('.credit_summary_item span[itemprop*="creator"] a span').each(function(i){
+                                creators += $(this).text();
+                                creators += (i < $('.credit_summary_item span[itemprop*="creator"] a span').length - 1) ? ', ' : '...';
+                            });
+                            download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function () {
+                                callback({'actors': actors, 'posterUrl': posterUrl, 'movieLink': movieLink, 'directors': directors, 'creators': creators});
                             });
                         }
                         else {
@@ -63,6 +72,7 @@ imdbData.getMovieLink = function (name, year, callback) {
 
 };
 var download = function(uri, filename, callback){
+    if (!uri) return callback();
     request.head(uri, function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
@@ -134,4 +144,4 @@ var download = function(uri, filename, callback){
 
 // };
 
-exports.imdbData = imdbData;
+exports.getMovieLink = getMovieLink;

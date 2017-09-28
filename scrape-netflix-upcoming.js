@@ -2,35 +2,81 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var async   = require('async');
+// var imdbData = require('./scrape-imdb-film-data');
 
 const baseUrl = 'https://media.netflix.com';
 const url = 'https://media.netflix.com/gateway/v1/fr/titles/upcoming';
-const googleSearchBaseUrl = 'https://www.google.fr/search?q=';
-const imdbGoogleSearchParam = '%20site%3Aimdb.com&oq=';
+// const googleSearchBaseUrl = 'https://www.google.fr/search?q=';
+// const imdbGoogleSearchParam = '%20site%3Aimdb.com&oq=';
+
+const imdbBaseUrl = 'http://www.imdb.com';
+const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
+const imdbSearchEndUrl = '&s=all';
 
 var imdbData = {};
+var download = function(uri, filename, callback){
+    request.head(uri, function(err, res, body){
+        // console.log('content-type:', res.headers['content-type']);
+        // console.log('content-length:', res.headers['content-length']);
+
+        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    });
+};
 
 imdbData.getMovieLink = function (name, year, callback) {
-    const url = googleSearchBaseUrl + 
-                    encodeURIComponent(name + ' ' +year) + 
-                    imdbGoogleSearchParam + 
-                    encodeURIComponent(name + ' ' +year);
-    request(url, function(error, response, html){
-        if(!error){
-            var $ = cheerio.load(html);
-            var text = $('.g h3 a').html();
-            var link = $('.g h3 a').attr('href');
-            console.log('IMDB::::',text,link,html);
-            if (text && text.indexOf(name) > -1 && text.indexOf(year) > -1) {
-                callback(link.replace('/url?q=',''));
-            }
-            else {
-                callback(false);
-            }
+    const url = imdbBaseUrl + 
+                imdbSearchStartUrl + 
+                encodeURIComponent(name + '+' +year) + 
+                imdbSearchEndUrl;
+    var lock = false;
+    request(url, function(moviesError, moviesResponse, moviesHtml){
+        if(!moviesError) {
+            var titleToFound = name + ' (' + year + ')';
+            var $ = cheerio.load(moviesHtml);
+            // var movieLink = $('.findList tbody tr td a').attr('href');
+            // var movieTitle = $('.findList tbody tr td a').text();
+            var moviesFounded = $('.findList tbody tr.findResult td.result_text');
+            async.eachSeries(moviesFounded, function(movie){
+                // console.log($(movie).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
+                // console.log($(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) );
+                var textExactlyMatch = $(movie).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'');
+                var textExactlyStart = $(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) === 0;
+                if (!lock && textExactlyMatch || textExactlyStart) {
+                    lock = true;
+                    var movieLink = $(movie).find('a').attr('href');
+                    // console.log('##############SCRAPE : ',name, ' => ',movieLink);
+                    request(imdbBaseUrl + movieLink, function(movieError, movieResponse, movieHtml){
+                        if(!movieError) {
+                            var $ = cheerio.load(movieHtml);
+                            var posterLink = $('.poster img').attr('src');
+                            var actors = '';
+                            $('.credit_summary_item span[itemprop*="actors"] a span').each(function(i){
+                                actors += $(this).text();
+                                actors += (i < $('.credit_summary_item span[itemprop*="actors"] a span').length - 1) ? ', ' : '...';
+                            });
+                            download(posterLink,'./posters/' + name + '+' +year + '.jpg', function () {
+                                callback({'actors': actors, 'posterLink': posterLink, 'movieLink': movieLink});
+                            });
+                        }
+                        else {
+                            callback({});
+                        }
+                    });
+                    return false;
+                }
+                else {
+                    callback({});
+                }
+            });
+
+        }
+        else {
+            callback({});
         }
     });
 
 };
+
 request(url, function(mainError, mainResponse, mainHtml){
     var results = JSON.parse(mainResponse.body);
     var newItems = [];

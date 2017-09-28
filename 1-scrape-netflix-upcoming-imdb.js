@@ -2,6 +2,7 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var async   = require('async');
+var imdb = require('./scrape-imdb-film-data');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
 const NETFLIX_UPCOMING_PATH = '/gateway/v1/fr/titles/upcoming';
@@ -25,20 +26,21 @@ function getNetflixUpcomingStore (newNetflixUpcoming, callback) {
         fs.readFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, 'utf8', function (error,netflixUpcomingStore) {
             if (error)  {
                 console.log('!!! ERROR on read file '+ STORE_FOLDER + STORE_NETFLIX_UPCOMING + '\n ###ErrorLogStart### ' + error+ '\n ###ErrorLogEnd### ')
-                return false;
+                callback(false);
             }
-            return data;
+            callback(netflixUpcomingStore);
         });
     }
     else {
-        return false;
+        callback(false);
     }
 }
 
 function compareUpcomings (newUpcomings, oldUpcomings) {
     return JSON.stringify(newUpcomings) === JSON.stringify(oldUpcomings);
 }
-function updateUpcoming (newUpcomings, oldUpcomings) {
+
+function updateUpcoming (newUpcomings, oldUpcomings = [], callback) {
     var upComings = [];
     async.mapSeries(newUpcomings, function(item, done){
         var itemAlreadyExist = oldUpcomings.filter(function(oldItem){
@@ -49,15 +51,25 @@ function updateUpcoming (newUpcomings, oldUpcomings) {
             item.director = itemAlreadyExist[0].director;
             item.posterUrl = itemAlreadyExist[0].posterUrl;
             upComings.push(item);
+            done();
         }
         else {
-            getImdbInfos(item.name, getMediaStartYear(item), function(imdbInfos) {
-
+            imdb.getMovieLink(item.name, getMediaStartYear(item), function(imdbInfos) {
+                item.actors = imdbInfos.actors;
+                item.directors = imdbInfos.directors;
+                item.posterUrl = imdbInfos.posterUrl;
+                item.movieLink = imdbInfos.movieLink;
+                upComings.push(item);
+                done();
             });
         }
+    }, function(e) {
+        callback(upComings);
     });
 }
+
 function getMediaStartYear (media) {
+    // console.log('72',media)
     if (media.premiereDate === 'upcoming') {
         return false;
     }
@@ -65,23 +77,32 @@ function getMediaStartYear (media) {
         return media.sortDate.split('-')[0];
     }
     if (media.type === 'series') {
-        
+        return Number(media.sortDate.split('-')[0])-(--media.seasons);
     }
-
 }
+
+function saveStore (upComings) {
+    fs.writeFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, JSON.stringify(upComings), function(err){
+        console.log('File successfully written! - Check your project directory for the ./output/netflix-upcoming.json file');
+    });
+}
+
 function refreshNetflixUpcoming () {
     getNetflixUpcoming(function(netflixUpcoming) {
-        console.log(netflixUpcoming);
-        getNetflixUpcomingStore(netflixUpcoming, function(netflixUpcomingStore) {
+        // console.log(netflixUpcoming);
+        getNetflixUpcomingStore(netflixUpcoming.items, function(netflixUpcomingStore) {
             var newUpcomings = {};
-            if (!compareUpcomings(netflixUpcoming, netflixUpcomingStore.items)) {
-                newUpcomings.items = updateUpcoming(netflixUpcoming, netflixUpcomingStore.items);
-                newUpcomings.timeStamp = updateStoreTimeStamp();
-                saveStore(newUpcomings);
+            console.log(compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items));
+            if (!compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items)) {
+                updateUpcoming(netflixUpcoming.items, netflixUpcomingStore.items, function(items) {
+                    newUpcomings.timeStamp = Date.now();
+                    newUpcomings.items = items;
+                    saveStore(newUpcomings);
+                });
             }
             else {
                 newUpcomings.items = netflixUpcomingStore.items
-                newUpcomings.timeStamp = updateStoreTimeStamp();
+                newUpcomings.timeStamp = Date.now();
                 saveStore(newUpcomings);
             }
         });
@@ -89,6 +110,8 @@ function refreshNetflixUpcoming () {
 }
 
 refreshNetflixUpcoming();
+
+
     // var newItems = [];
     // var cpt = 0;
 
