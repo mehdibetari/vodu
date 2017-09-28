@@ -14,6 +14,7 @@ imdbData.getMovieLink = function (name, year, callback) {
                 imdbSearchStartUrl + 
                 encodeURIComponent(name + '+' +year) + 
                 imdbSearchEndUrl;
+    var lock = false;
     request(url, function(moviesError, moviesResponse, moviesHtml){
         if(!moviesError) {
             var titleToFound = name + ' (' + year + ')';
@@ -21,11 +22,15 @@ imdbData.getMovieLink = function (name, year, callback) {
             // var movieLink = $('.findList tbody tr td a').attr('href');
             // var movieTitle = $('.findList tbody tr td a').text();
             var moviesFounded = $('.findList tbody tr.findResult td.result_text');
-            moviesFounded.each(function(){
-                // console.log($(this).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
-                if ($(this).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'')) {
-                    var movieLink = $(this).find('a').attr('href');
-                    // console.log(movieLink);
+            async.eachSeries(moviesFounded, function(movie){
+                // console.log($(movie).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
+                // console.log($(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) );
+                var textExactlyMatch = $(movie).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'');
+                var textExactlyStart = $(movie).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) === 0;
+                if (!lock && textExactlyMatch || textExactlyStart) {
+                    lock = true;
+                    var movieLink = $(movie).find('a').attr('href');
+                    // console.log('##############SCRAPE : ',name, ' => ',movieLink);
                     request(imdbBaseUrl + movieLink, function(movieError, movieResponse, movieHtml){
                         if(!movieError) {
                             var $ = cheerio.load(movieHtml);
@@ -45,6 +50,9 @@ imdbData.getMovieLink = function (name, year, callback) {
                     });
                     return false;
                 }
+                else {
+                    callback({});
+                }
             });
 
         }
@@ -62,37 +70,68 @@ var download = function(uri, filename, callback){
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
 };
-  
-imdbData.getMovieLink('inception','2010', function (movieData) {
-    setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-    imdbData.getMovieLink('interstellar','2014', function (movieData) {
-        setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-        imdbData.getMovieLink('memento','2000', function (movieData) {
-            setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-            imdbData.getMovieLink('The Dark Knight Rises','2012', function (movieData) {
-                setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                imdbData.getMovieLink('The Dark Knight','2008', function (movieData) {
-                    setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                    imdbData.getMovieLink('Le prestige','2006', function (movieData) {
-                        setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                        imdbData.getMovieLink('Batman Begins','2005', function (movieData) {
-                            setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                            imdbData.getMovieLink('Dunkerque','2017', function (movieData) {
-                                setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                                imdbData.getMovieLink('Man of Steel','2013', function (movieData) {
-                                    setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                                    imdbData.getMovieLink('Le loup de Wall Street','2013', function (movieData) {
-                                        setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                                        imdbData.getMovieLink('Django Unchained','2012', function (movieData) {
-                                            setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
-});
+
+// imdbData.getMovieLink('The Good Place','2016', function (movieData) {
+//     setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+// });
+
+
+// imdbData.getMovieLink('inception','2010', function (movieData) {
+//     setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//     imdbData.getMovieLink('interstellar','2014', function (movieData) {
+//         setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//         imdbData.getMovieLink('memento','2000', function (movieData) {
+//             setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//             imdbData.getMovieLink('The Dark Knight Rises','2012', function (movieData) {
+//                 setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                 imdbData.getMovieLink('The Dark Knight','2008', function (movieData) {
+//                     setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                     imdbData.getMovieLink('Le prestige','2006', function (movieData) {
+//                         setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                         imdbData.getMovieLink('Batman Begins','2005', function (movieData) {
+//                             setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                             imdbData.getMovieLink('Dunkerque','2017', function (movieData) {
+//                                 setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                                 imdbData.getMovieLink('Man of Steel','2013', function (movieData) {
+//                                     setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                                     imdbData.getMovieLink('Le loup de Wall Street','2013', function (movieData) {
+//                                         setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                                         imdbData.getMovieLink('Django Unchained','2012', function (movieData) {
+//                                             setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                                             imdbData.getMovieLink('The Good Place','2016', function (movieData) {
+//                                                 setTimeout(function(){ console.log('MOVIE', movieData); }, 1000);
+//                                             });
+//                                         });
+//                                     });
+//                                 });
+//                             });
+//                         });
+//                     });
+//                 });
+//             });
+//         });
+//     });
+// });
+// imdbData.getMovieLink = function (name, year, callback) {
+//     const url = googleSearchBaseUrl + 
+//                     encodeURIComponent(name + ' ' +year) + 
+//                     imdbGoogleSearchParam + 
+//                     encodeURIComponent(name + ' ' +year);
+//     request(url, function(error, response, html){
+//         if(!error){
+//             var $ = cheerio.load(html);
+//             var text = $('.g h3 a').html();
+//             var link = $('.g h3 a').attr('href');
+//             console.log('IMDB::::',text,link,html);
+//             if (text && text.indexOf(name) > -1 && text.indexOf(year) > -1) {
+//                 callback(link.replace('/url?q=',''));
+//             }
+//             else {
+//                 callback(false);
+//             }
+//         }
+//     });
+
+// };
+
+exports.imdbData = imdbData;
