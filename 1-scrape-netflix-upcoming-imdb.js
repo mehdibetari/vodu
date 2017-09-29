@@ -2,6 +2,7 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var async   = require('async');
+let colors = require('colors');
 var imdb = require('./scrape-imdb-film-data');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
@@ -40,9 +41,14 @@ function compareUpcomings (newUpcomings, oldUpcomings) {
     return JSON.stringify(newUpcomings) === JSON.stringify(oldUpcomings);
 }
 
-function updateUpcoming (newUpcomings, oldUpcomings = [], callback) {
+function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback) {
     var upComings = [];
-    async.mapSeries(newUpcomings, function(item, done){
+    let cpt = 1;
+    let postersCpt = 0;
+    let metaCpt = 0;
+    async.mapSeries(newUpcomings, function(item, done) {
+        console.log('');
+        console.log(colors.inverse('#',cpt,'/',mediasCount));
         var itemAlreadyExist = oldUpcomings.filter(function(oldItem){
             return oldItem.id === item.id;
         });
@@ -54,24 +60,28 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], callback) {
             done();
         }
         else {
-            imdb.getMovieLink(item.name, getMediaStartYear(item), function(imdbInfos) {
+            imdb.getMedia(item.name, getMediaStartYear(item), function(imdbInfos) {
+                if (imdbInfos.actors) metaCpt++;
+                if (imdbInfos.posterUrl) postersCpt++;
                 item.actors = imdbInfos.actors;
                 item.directors = imdbInfos.directors;
                 item.posterUrl = imdbInfos.posterUrl;
-                item.movieLink = imdbInfos.movieLink;
+                item.mediaLink = imdbInfos.mediaLink;
                 upComings.push(item);
                 done();
             });
         }
+        cpt++;
     }, function(e) {
+        console.log('');
+        console.log(colors.bgYellow.white('POSTER DOWNLOADED =>',postersCpt,'/', mediasCount, ' META SCRAPPED =>',metaCpt,'/', mediasCount));
         callback(upComings);
     });
 }
 
 function getMediaStartYear (media) {
-    // console.log('72',media)
     if (media.premiereDate === 'upcoming') {
-        return false;
+        return new Date().getFullYear();
     }
     if (media.type !== 'series') {
         return media.sortDate.split('-')[0];
@@ -83,27 +93,34 @@ function getMediaStartYear (media) {
 
 function saveStore (upComings) {
     fs.writeFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, JSON.stringify(upComings), function(err){
-        console.log('File successfully written! - Check your project directory for the ./output/netflix-upcoming.json file');
+        console.log(colors.bgGreen.white('File successfully written! - Check your project directory for the ./store/netflix-upcoming.json file'));
     });
 }
 
 function refreshNetflixUpcoming () {
+    console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     getNetflixUpcoming(function(netflixUpcoming) {
         // console.log(netflixUpcoming);
+        console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
         getNetflixUpcomingStore(netflixUpcoming.items, function(netflixUpcomingStore) {
             var newUpcomings = {};
-            console.log(compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items));
+            let doesntChangeMEssage = colors.bgGreen.white('    ✓ Upcoming doesnt change since last scrpping');
+            let hasChangeMessage = colors.yellow('    ✘ Upcomings has changed since the last refresh');
+            console.log((compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items)? doesntChangeMEssage : hasChangeMessage));
+            console.log('');
             if (!compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items)) {
-                updateUpcoming(netflixUpcoming.items, netflixUpcomingStore.items, function(items) {
+                updateUpcoming(netflixUpcoming.items, netflixUpcomingStore.items, netflixUpcoming.meta.result.totalItems, function(items) {
                     newUpcomings.timeStamp = Date.now();
                     newUpcomings.items = items;
                     saveStore(newUpcomings);
+                    console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
                 });
             }
             else {
                 newUpcomings.items = netflixUpcomingStore.items
                 newUpcomings.timeStamp = Date.now();
                 saveStore(newUpcomings);
+                console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
             }
         });
     });
@@ -134,8 +151,8 @@ refreshNetflixUpcoming();
     //                         done();
     //                     }
     //                     else {
-    //                         imdbData.getMovieLink(item.name, item.sortDate, function (imdbMovieLink) {
-    //                             item.imdbMovieLink = imdbMovieLink;
+    //                         imdbData.getMedia(item.name, item.sortDate, function (imdbmediaLink) {
+    //                             item.imdbmediaLink = imdbmediaLink;
     //                             newItems.push(item);
     //                             done();
     //                         });
