@@ -1,7 +1,6 @@
 let fs              = require('fs');
 let async           = require('async');
 let colors          = require('colors');
-let mkdirp          = require('mkdirp');
 let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixProvider = require('./providers/netflix-provider');
 
