@@ -3,6 +3,7 @@ let request = require('request');
 let cheerio = require('cheerio');
 let async   = require('async');
 let colors = require('colors');
+var uploadcare = require('uploadcare')('677798e572bfce424b48', '159a48768c425d3918b5');
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
@@ -121,7 +122,12 @@ function download (uri, filename, callback){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
         request(uri).pipe(fs.createWriteStream(filename)).on('close', function(){
-            callback(filename);
+            //Upload from URL
+            uploadcare.file.fromUrl(uri, function(err,res){
+                //Res should contain returned file ID
+                let uplc_filepath = 'https://ucarecdn.com/' + res.file_id + '/' + res.filename;
+                callback(uplc_filepath);
+            });
         });
     });
 }

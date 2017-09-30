@@ -42,6 +42,7 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
             item.director = itemAlreadyExist[0].director;
             item.posterUrl = itemAlreadyExist[0].posterUrl;
             item.summary = itemAlreadyExist[0].summary;
+            item.localPath = itemAlreadyExist[0].localPath;
             upComings.push(item);
             done();
         }
@@ -54,6 +55,7 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
                 item.posterUrl = imdbInfos.posterUrl;
                 item.mediaLink = imdbInfos.mediaLink;
                 item.summary = imdbInfos.summary;
+                item.localPath = imdbInfos.localPath;
                 upComings.push(item);
                 done();
             });
