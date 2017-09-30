@@ -6,11 +6,11 @@ app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
 app.get('/calendrier/netflix', function(req, res){
-    fs.readFile('../front-layout/agenda-netflix.html', 'utf8', function (err,data) {
+    fs.readFile('./front-layout/agenda-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
-        fs.readFile('../store/netflix-upcoming.json', 'utf8', function (error,response) {
+        fs.readFile('./store/netflix-upcoming.json', 'utf8', function (error,response) {
             if (error) {
                 return console.log(error);
             }
@@ -30,5 +30,5 @@ app.get('/calendrier/netflix', function(req, res){
     });
 });
 
-app.listen('80');
+app.listen('8180');
 exports = module.exports = app;
