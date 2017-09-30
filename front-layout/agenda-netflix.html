@@ -42,13 +42,13 @@
       <nav>ALLOSERIE</nav>
       <header>
         <h1>Calendrier des sorties NETFLIX 2017 2018</h1>
-        <p>Agenda mis à jour le 19 sept 2017</p>
+        <p>Agenda mis à jour le {lastUpdate}</p>
       </header>
       <section>
         {#list}
         <article>
           <aside>
-            <img src="{imgUrl}" alt="{name}">
+            <img src="{posterUrl}" alt="{name}">
           </aside>
           <div>
             <h1>{name}</h1>
@@ -56,13 +56,10 @@
               <span>{premiereDate} - </span>
               <span>{type}{#seasons} - {seasons} saison(s){/seasons}</span>
             </div>
-            <div>
-              createur
-            </div>
-            <div>
-              casting
-            </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quibusdam repudiandae reprehenderit molestiae consectetur soluta corrupti explicabo, sunt numquam quaerat assumenda ad laboriosam! Quisquam ipsa, at commodi ipsam quae numquam.</div>
+            {#directors}<div>Réalisation : {directors}</div>{/directors}
+            {#creators}<div>Créateur : {creators}</div>{/creators}
+            {#actors}<div>Casting : {actors}</div>{/actors}
+            {#summary}<div>Descriptif : {summary}</div>{/summary}
           </div>
         </article>
         {/list}

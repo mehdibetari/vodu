@@ -10,13 +10,15 @@ app.get('/calendrier/netflix', function(req, res){
         if (err) {
             return console.log(err);
         }
-        fs.readFile('./output/netflix-upcoming.json', 'utf8', function (error,response) {
+        fs.readFile('./store/netflix-upcoming.json', 'utf8', function (error,response) {
             if (error) {
                 return console.log(error);
             }
             var tmpl = dust.compile(data, 'view-netflix');
             dust.loadSource(tmpl);
-            var view = dust.render('view-netflix', { list: JSON.parse(response) }, function(e, out) {
+            const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
+            const fullDate = lastUpdateDate.getDate() +'/'+(lastUpdateDate.getMonth()+1)+'/'+lastUpdateDate.getFullYear();
+            var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDate }, function(e, out) {
                 if(e) {
                     console.error(e);
                 } else {
@@ -28,5 +30,5 @@ app.get('/calendrier/netflix', function(req, res){
     });
 });
 
-app.listen('80');
+app.listen('8180');
 exports = module.exports = app;
