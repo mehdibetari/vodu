@@ -45,12 +45,14 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callba
                         creators += $(this).text();
                         creators += (i < $('.credit_summary_item span[itemprop*="creator"] a span').length - 1) ? ', ' : '...';
                     });
+                    let summary = '';
+                    summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
                     download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function (path) {
                         const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                         const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                         console.log( (path) ? addedMessage : failedMessage);
-                        callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators});
+                        callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
                     });
                 }
                 else {
@@ -122,6 +124,6 @@ function download (uri, filename, callback){
             callback(filename);
         });
     });
-};
+}
 
 exports.getMedia = getMedia;
