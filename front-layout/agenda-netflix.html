@@ -13,6 +13,7 @@
           background: #edede9;
           box-sizing: border-box;
           font-size: 14px;
+          font-family: Tahoma, Geneva, sans-serif;
         }
         body > nav {
           position: fixed;
@@ -32,11 +33,41 @@
         body > header > h1 {
           font-size: 18px;
         }
+        section {
+          padding: 0 15px;
+        }
         article {
           display: flex;
+          padding: 30px 0;
+          border-bottom: 1px #ddd solid;
+        }
+        article > aside {
+          min-height: 147.25px;
+          min-width: 100px;
+          max-height: 147.25px;
+          max-width: 100px;
+          margin-right: 10px;
+          background-color: #000;
+          border-left: 10px red solid;
         }
         article > aside > img {
-          height: 160px;
+          height: auto;
+          max-width: 100px;
+          max-height: 147.25px;
+        }
+        article h1 {
+          margin-top: 5px;
+          text-transform: uppercase;
+          letter-spacing: -1.3px;
+        }
+        .date {
+          color: lightcoral;
+          text-transform: capitalize;
+        }
+        .type {
+          text-transform: uppercase;
+          letter-spacing: -1;
+          color: #777;
         }
     </style>
       <nav>ALLOSERIE</nav>
@@ -51,15 +82,13 @@
             <img src="{localPath}" alt="{name}">
           </aside>
           <div>
+            <div class="date">{premiereDate}</div>
             <h1>{name}</h1>
-            <div>
-              <span>{premiereDate} - </span>
-              <span>{type}{#seasons} - {seasons} saison(s){/seasons}</span>
-            </div>
-            {#directors}<div>Réalisation : {directors}</div>{/directors}
-            {#creators}<div>Créateur : {creators}</div>{/creators}
-            {#actors}<div>Casting : {actors}</div>{/actors}
-            {#summary}<div>Descriptif : {summary}</div>{/summary}
+            <div class="type">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+            {#directors}<div><small>Réalisation</small>  {directors}</div>{/directors}
+            {#creators}<div><small>Créateur</small>  {creators}</div>{/creators}
+            {#actors}<div><small>Casting</small>  {actors}</div>{/actors}
+            {#summary}<div><small>Descriptif</small>  {summary}</div>{/summary}
           </div>
         </article>
         {/list}
