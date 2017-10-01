@@ -2,6 +2,7 @@ let fs              = require('fs');
 let async           = require('async');
 let colors          = require('colors');
 let imdbScraper     = require('./scrapers/imdb-scraper');
+let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
 
 const STORE_FOLDER = './store';
@@ -49,15 +50,26 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
         else {
             imdbScraper.getMedia(item.name, getMediaStartYear(item), function(imdbInfos) {
                 if (imdbInfos.actors) metaCpt++;
-                if (imdbInfos.posterUrl) postersCpt++;
+                if (imdbInfos.localPath) postersCpt++;
                 item.actors = imdbInfos.actors;
                 item.directors = imdbInfos.directors;
                 item.posterUrl = imdbInfos.posterUrl;
                 item.mediaLink = imdbInfos.mediaLink;
                 item.summary = imdbInfos.summary;
                 item.localPath = imdbInfos.localPath;
-                upComings.push(item);
-                done();
+                if (!item.localPath) {
+                    netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), function(netflixPoster) {
+                        if (imdbInfos.localPath) postersCpt++;
+                        item.posterUrl = netflixPoster.posterUrl;
+                        item.localPath = netflixPoster.localPath;
+                        upComings.push(item);
+                        done();
+                    });
+                }
+                else {
+                    upComings.push(item);
+                    done();
+                }
             });
         }
         cpt++;
