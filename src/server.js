@@ -30,6 +30,6 @@ app.get('/calendrier/netflix', function(req, res){
     });
 });
 
-app.use(express.static('public'));
+app.use(express.static('../public'));
 app.listen('80');
 exports = module.exports = app;
