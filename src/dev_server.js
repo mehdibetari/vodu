@@ -30,5 +30,6 @@ app.get('/calendrier/netflix', function(req, res){
     });
 });
 
+app.use(express.static('sitemap'));
 app.listen('8180');
 exports = module.exports = app;
