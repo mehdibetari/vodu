@@ -2,7 +2,7 @@ var express = require('express');
 var app     = express();
 var dust    = require('dustjs-linkedin');
 var fs      = require('fs');
-app.get('/', function(req, res) {
+app.get('.', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
 app.get('/calendrier/netflix', function(req, res){
@@ -17,7 +17,7 @@ app.get('/calendrier/netflix', function(req, res){
             var tmpl = dust.compile(data, 'view-netflix');
             dust.loadSource(tmpl);
             const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
-            const fullDate = lastUpdateDate.getDate()+'/'+(lastUpdateDate.getMonth()+1)+'/'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
+            const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
             var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDate }, function(e, out) {
                 if(e) {
                     console.error(e);
