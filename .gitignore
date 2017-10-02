@@ -4,3 +4,4 @@ posters/
 store/
 tmp/
 store/netflix-upcoming.json
+package-lock.json
