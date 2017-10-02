@@ -2,7 +2,7 @@ var express = require('express');
 var app     = express();
 var dust    = require('dustjs-linkedin');
 var fs      = require('fs');
-app.get('.', function(req, res) {
+app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
 app.get('/calendrier/netflix', function(req, res){
