@@ -18,7 +18,7 @@ app.get('/calendrier/netflix', function(req, res){
             dust.loadSource(tmpl);
             const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
-            const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + date.getMinutes();
+            const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
             const fullDateTime = fullDate+' à '+fullTime;
             var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDateTime }, function(e, out) {
                 if(e) {
