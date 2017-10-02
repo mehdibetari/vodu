@@ -6,11 +6,11 @@ app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
 app.get('/calendrier/netflix', function(req, res){
-    fs.readFile('../front-layout/agenda-netflix.html', 'utf8', function (err,data) {
+    fs.readFile('./front-layout/agenda-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
-        fs.readFile('../store/netflix-upcoming.json', 'utf8', function (error,response) {
+        fs.readFile('./store/netflix-upcoming.json', 'utf8', function (error,response) {
             if (error) {
                 return console.log(error);
             }
@@ -18,7 +18,7 @@ app.get('/calendrier/netflix', function(req, res){
             dust.loadSource(tmpl);
             const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
-            const fullTime = lastUpdateDate.getHours()+'h'+(date.getMinutes()<10?'0':'') + date.getMinutes();
+            const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + date.getMinutes();
             const fullDateTime = fullDate+' à '+fullTime;
             var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDateTime }, function(e, out) {
                 if(e) {
@@ -32,6 +32,6 @@ app.get('/calendrier/netflix', function(req, res){
     });
 });
 
-app.use(express.static('../public'));
+app.use(express.static('./public'));
 app.listen('80');
 exports = module.exports = app;
