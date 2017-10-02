@@ -14,8 +14,8 @@ function getNetflixUpcomingStore (newNetflixUpcoming, callback) {
             if (error)  {
                 console.log('!!! ERROR on read file '+ STORE_FOLDER + STORE_NETFLIX_UPCOMING + '\n ###ErrorLogStart### ' + error+ '\n ###ErrorLogEnd### ')
                 callback(false);
-            }
-            callback(netflixUpcomingStore);
+            }        
+            callback(JSON.parse(netflixUpcomingStore));
         });
     }
     else {
@@ -38,21 +38,40 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
         let itemAlreadyExist = oldUpcomings.filter(function(oldItem){
             return oldItem.id === item.id;
         });
-        if (itemAlreadyExist.length > 0) {
-            item.actors = itemAlreadyExist[0].actors;
-            item.director = itemAlreadyExist[0].director;
+        if (itemAlreadyExist.length > 0 && itemAlreadyExist[0].localPath && itemAlreadyExist[0].posterUrl) {
+            console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
+            postersCpt++;
             item.posterUrl = itemAlreadyExist[0].posterUrl;
-            item.summary = itemAlreadyExist[0].summary;
             item.localPath = itemAlreadyExist[0].localPath;
-            upComings.push(item);
-            done();
+            if (itemAlreadyExist[0].actors && (itemAlreadyExist[0].directors || itemAlreadyExist[0].creators || itemAlreadyExist[0].summary)) {
+                console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
+                metaCpt++;
+                item.actors = itemAlreadyExist[0].actors;
+                item.directors = itemAlreadyExist[0].directors;
+                item.creators = itemAlreadyExist[0].creators;
+                item.summary = itemAlreadyExist[0].summary;
+                upComings.push(item);
+                done();
+            }
+            else {
+                imdbScraper.getMedia(item.name, getMediaStartYear(item), false, function(imdbInfos) {
+                    if (imdbInfos.actors) metaCpt++;
+                    item.actors = imdbInfos.actors;
+                    item.directors = imdbInfos.directors;
+                    item.creators = imdbInfos.creators;
+                    item.summary = imdbInfos.summary;
+                    upComings.push(item);
+                    done();
+                });
+            }
         }
         else {
-            imdbScraper.getMedia(item.name, getMediaStartYear(item), function(imdbInfos) {
+            imdbScraper.getMedia(item.name, getMediaStartYear(item), true, function(imdbInfos) {
                 if (imdbInfos.actors) metaCpt++;
                 if (imdbInfos.localPath) postersCpt++;
                 item.actors = imdbInfos.actors;
                 item.directors = imdbInfos.directors;
+                item.creators = imdbInfos.creators;
                 item.posterUrl = imdbInfos.posterUrl;
                 item.mediaLink = imdbInfos.mediaLink;
                 item.summary = imdbInfos.summary;
@@ -119,7 +138,7 @@ function refreshNetflixUpcoming () {
                 });
             }
             else {
-                newUpcomings.items = netflixUpcomingStore.items
+                newUpcomings.items = netflixUpcomingStore.items;
                 newUpcomings.totalItems = netflixUpcomingStore.totalItems;
                 newUpcomings.timeStamp = Date.now();
                 saveStore(newUpcomings);

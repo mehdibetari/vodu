@@ -14,7 +14,7 @@ function getMediaListUrl (name, year) {
         encodeURIComponent(name + '+' +year) + 
         imdbSearchEndUrl;
 }
-function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callback) {
+function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
     async.eachSeries(mediasFounded, function(media, done){
         console.log('      Matching test : ',$(media).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
@@ -49,12 +49,18 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callba
                     let summary = '';
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
-                    download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function (path) {
-                        const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
-                        const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
-                        console.log( (path) ? addedMessage : failedMessage);
-                        callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
-                    });
+                    if (enableDownload) {
+                        download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function (path) {
+                            const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
+                            const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
+                            console.log( (path) ? addedMessage : failedMessage);
+                            callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                        });
+                    }
+                    else {
+                        console.log(colors.bgYellow.white('DOWNLOAD POSTER DISABLED') + ' => ' + name + year + colors.magenta(' ✘ Poster already downloaded') + colors.green(' ✓ but meta data does'));
+                        callback({'actors': actors, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                    }
                 }
                 else {
                     console.log('    Media scrappin '+ colors.red('FAILED'));
@@ -73,7 +79,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callba
         callback({});
     });
 }
-function getMedia(name, year, callback) {
+function getMedia(name, year, enableDownload, callback) {
     console.log(colors.inverse('IMDB media to found'),colors.bgGreen.white(name,year));
 
     let url = getMediaListUrl(name, year);
@@ -99,12 +105,12 @@ function getMedia(name, year, callback) {
                         callback({});
                     }
                     else {
-                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, callback);
+                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
                     }
                 });
             }
             else {
-                listScrapping(mediasFounded, titleToFound, name, year, $, lock, callback);
+                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
             }
         }
         else {
