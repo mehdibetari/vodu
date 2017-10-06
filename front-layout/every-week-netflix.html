@@ -4,7 +4,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <meta name="google-site-verification" content="Z1umQEXvEUm7G-_R0hnV2mvxjKCJSpXMt_z2HGI1_5I" />
-      <title>Agenda Calendrier Netflix 2017 2018 2019</title>
+      <title>Nouveaux épisodes chaque semaines sur Netflix</title>
       <!-- Global Site Tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
       <script>
@@ -53,16 +53,12 @@
         }
         article > aside {
           min-height: 147.25px;
-          min-width: 100px;
           max-height: 147.25px;
-          max-width: 100px;
           margin-right: 10px;
-          background-color: #000;
           border-left: 10px red solid;
         }
         article > aside > img {
           height: auto;
-          max-width: 100px;
           max-height: 147.25px;
         }
         article h1 {
@@ -90,22 +86,45 @@
           color: #ddd;
           text-decoration: none;
         }
+        @media screen and (max-width: 720px) {
+          article > aside {
+            min-height: 100px;
+            max-height: 100px;
+          }
+          article > aside > img {
+            max-height: 100px;
+          }
+        }
+        @media screen and (max-width: 490px) {
+          article {
+            display: inherit;
+          }
+          article > aside {
+            min-height: none;
+            max-height: none;
+          }
+          article > aside > img {
+            max-height: none;
+          }
+        }
     </style>
       <nav>ALLOSERIE</nav>
       <header>
-        <h1>Calendrier des sorties NETFLIX 2017 2018</h1>
+        <h1>Calendrier NETFLIX des épisodes chaque semaine</h1>
         <p>Dernière mise à jour de l'agenda le {lastUpdate}</p>
       </header>
       <section>
         {#list}
         <article>
+          {#localPath}
           <aside>
             <img src="{localPath}" alt="{name}">
           </aside>
+          {/localPath}
           <div>
-            <div class="date">{premiereDate}</div>
-            <h1>{name}</h1>
-            <div class="type">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+            <div class="date">{recurence}</div>
+            <h1>{#href}<a href="{href}">{/href}{name}{#href}</a>{/href}</h1>
+            <div class="type">{#seasons}{seasons} saison(s){/seasons}</div>
             {#directors}<div><small>Réalisation</small>  {directors}</div>{/directors}
             {#creators}<div><small>Créateur</small>  {creators}</div>{/creators}
             {#actors}<div><small>Casting</small>  {actors}</div>{/actors}
@@ -115,7 +134,9 @@
         {/list}
       </section>
       <footer>
-        <a href="/calendrier/netflix">Calendrier NETFLIX des épisodes chaque semaine</a>
+        {#theFooter}
+          <a href="{href}">{name}</a>
+        {/theFooter}
       </footer>
     </body>
 </html>
