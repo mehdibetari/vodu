@@ -31,7 +31,7 @@ app.get('/calendrier/netflix', function(req, res){
 });
 
 app.get('/episode-chaque-semaine/netflix', function(req, res){
-    fs.readFile('./front-layout/every-week-netflix.html', 'utf8', function (err,data) {
+    fs.readFile('./store/every-week-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
@@ -59,5 +59,5 @@ app.get('/episode-chaque-semaine/netflix', function(req, res){
 });
 
 app.use(express.static('public'));
-app.listen('8180');
+app.listen('8007');
 exports = module.exports = app;

@@ -3,7 +3,8 @@ let request = require('request');
 let cheerio = require('cheerio');
 let async   = require('async');
 let colors = require('colors');
-var uploadcare = require('uploadcare')('677798e572bfce424b48', '159a48768c425d3918b5');
+let configKeys = require('../config-keys');
+let uploadcare = require('uploadcare')(configKeys.uploadcare.public_key, configKeys.uploadcare.private_key);
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
