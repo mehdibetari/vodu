@@ -102,8 +102,21 @@ function getMedia(name, year, enableDownload, callback) {
                     mediasFounded = $('.findList tbody tr.findResult td.result_text');
                     if (!mediasFounded || mediasFounded.length < 1) {
                         console.log('      List scrappin '+ colors.red('WITHOUT MEDIA'));
-                        console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
-                        callback({});
+                        url = getMediaListUrl(name, --year);
+                        request(url, function(mediasError, mediasResponse, mediasHtml){
+                            console.log('    3rd List scrappin with decreased year '+ colors.green('SUCCESS'));
+                            titleToFound = name + ' (' + year + ')';
+                            $ = cheerio.load(mediasHtml);
+                            mediasFounded = $('.findList tbody tr.findResult td.result_text');
+                            if (!mediasFounded || mediasFounded.length < 1) {
+                                console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
+                                callback({});
+                            }
+                            else {
+                                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
+                            }
+                        });
+
                     }
                     else {
                         listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
