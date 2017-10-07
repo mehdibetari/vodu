@@ -100,16 +100,16 @@
         {#list}
         <article>
           <aside>
-            <img src="{localPath}" alt="{name}">
+            <img src="{localPath}" alt="{name}" class="image picture"/>
           </aside>
           <div>
-            <div class="date">{premiereDate}</div>
-            <h1>{name}</h1>
-            <div class="type">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
-            {#directors}<div><small>Réalisation</small>  {directors}</div>{/directors}
-            {#creators}<div><small>Créateur</small>  {creators}</div>{/creators}
-            {#actors}<div><small>Casting</small>  {actors}</div>{/actors}
-            {#summary}<p><small>Descriptif</small>  {summary}</p>{/summary}
+            <div class="date date-de-sortie">{premiereDate}</div>
+            <h1 class="nom name">{name}</h1>
+            <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+            {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
+            {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
+            {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
+            {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
           </div>
         </article>
         {/list}
