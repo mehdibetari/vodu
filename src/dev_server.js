@@ -31,11 +31,11 @@ app.get('/calendrier/netflix', function(req, res){
 });
 
 app.get('/episode-chaque-semaine/netflix', function(req, res){
-    fs.readFile('./store/every-week-netflix.html', 'utf8', function (err,data) {
+    fs.readFile('./front-layout/every-week-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
-        fs.readFile('./public/netflix-every-week.json', 'utf8', function (error,response) {
+        fs.readFile('./store/netflix-every-week.json', 'utf8', function (error,response) {
             if (error) {
                 return console.log(error);
             }

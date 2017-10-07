@@ -90,6 +90,26 @@
           color: #ddd;
           text-decoration: none;
         }
+        footer a > span {
+          white-space: nowrap;
+          line-height: 2;
+        }
+        footer a .every-week-badge:first-child {
+          background-color: #e70f1d;
+          text-transform: uppercase;
+          color: white;
+          padding: 3px 10px;
+          font-weight: 600;
+          font-size: 12px;
+        }
+        footer a .every-week-badge:nth-child(2) {
+          background-color: white;
+          text-transform: uppercase;
+          color: black;
+          padding: 3px 10px;
+          font-weight: 600;
+          font-size: 12px;
+        }
     </style>
       <nav>ALLOSERIE</nav>
       <header>
@@ -115,7 +135,7 @@
         {/list}
       </section>
       <footer>
-        <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des épisodes chaque semaine</a>
+        <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
       </footer>
     </body>
 </html>
