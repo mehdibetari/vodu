@@ -35,7 +35,7 @@ function getPoster (uri, name, year, callback) {
             if (posterUri && posterUri !== '' && posterUri.length > 0) {
                 posterUri = $(posterUri).attr('src');
                 console.log('    NETFLIX POSTER URL : '+posterUri);
-                download(posterUri,'./posters/' + name + '+' + year + '.jpg', function (path) {
+                download(posterUri,'./public/posters/' + name + '+' + year + '.jpg', function (path) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
