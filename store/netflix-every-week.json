@@ -1,0 +1,50 @@
+{
+    "timeStamp": 1507324525987,
+    "items": [
+        {
+            "localPath": "https://ucarecdn.com/5955a740-47d1-4b3a-a010-db6a9f676dde/thegoodplace.jpg",
+            "name": "The Good Place",
+            "recurence": "Nouvel épisode vendredi",
+            "seasons": "2",
+            "directors": "",
+            "creators": "Michael Schur",
+            "actors": "Kristen Bell, William Jackson Harper, Jameela Jamil...",
+            "summary": "À sa mort, l'égocentrique Eleanor Shellstrop se retrouve par erreur dans un monde paradisiaque. Déterminée à y rester, elle va tenter de devenir une meilleure personne."
+        },
+        {
+            "localPath": "https://ucarecdn.com/2ef30171-cc9e-42cd-adb3-44f19a8054eb/startrekdiscovery.jpg",
+            "name": "STAR TREK Discovery",
+            "recurence": "Nouvel épisode lundi",
+            "seasons": "1",
+            "directors": "",
+            "creators": "Bryan Fuller, Alex Kurtzman",
+            "actors": "Sonequa Martin-Green, Doug Jones, Shazad Latif...",
+            "summary": "Après un siècle de silence, une guerre éclate entre la Fédération et l'empire klingon, alors qu'un officier en disgrâce de la Starfleet se retrouve au centre du conflit."
+        },
+        {
+            "localPath": "https://ucarecdn.com/28c12f6e-bdc5-45b3-bc8f-ca0102fc18d9/designatedsurvivor.jpg",
+            "name": "Designated survivor",
+            "recurence": "Nouvel épisode vendredi",
+            "seasons": "2",
+            "directors": "",
+            "creators": "David Guggenheim",
+            "actors": "Kiefer Sutherland, Natascha McElhone, Adan Canto...",
+            "summary": "Dans ce passionnant thriller politique, le sort de l'Amérique repose dans les mains d'un petit fonctionnaire après qu'une attaque sur Washington a décimé le gouvernement."
+        },
+        {
+            "localPath": "https://ucarecdn.com/19f1190e-5ecc-4761-8da1-f3209ea613e6/outlander.jpg",
+            "name": "Outlander",
+            "recurence": "Nouvel épisode lundi",
+            "seasons": "3",
+            "directors": "",
+            "creators": "Ronald D. Moore",
+            "actors": "Caitriona Balfe, Sam Heughan, Duncan Lacroix...",
+            "summary": "Dans cette épopée adaptée des romans à succès de Diana Gabaldon, une infirmière de guerre se retrouve soudain plongée dans un lointain passé."
+        }
+    ],
+    "footer": {
+        "name": "Voir aussi le Calendrier NETFLIX des sorties 2017 2018",
+        "href": "/calendrier/netflix"
+    }
+
+}

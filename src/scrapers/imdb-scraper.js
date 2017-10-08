@@ -3,6 +3,8 @@ let request = require('request');
 let cheerio = require('cheerio');
 let async   = require('async');
 let colors = require('colors');
+let configKeys = require('../config-keys');
+let uploadcare = require('uploadcare')(configKeys.uploadcare.public_key, configKeys.uploadcare.private_key);
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
@@ -13,7 +15,7 @@ function getMediaListUrl (name, year) {
         encodeURIComponent(name + '+' +year) + 
         imdbSearchEndUrl;
 }
-function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callback) {
+function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
     async.eachSeries(mediasFounded, function(media, done){
         console.log('      Matching test : ',$(media).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
@@ -48,12 +50,18 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callba
                     let summary = '';
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
-                    download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function (path) {
-                        const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
-                        const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
-                        console.log( (path) ? addedMessage : failedMessage);
-                        callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
-                    });
+                    if (enableDownload) {
+                        download(posterUrl,'./posters/' + name + '+' +year + '.jpg', function (path) {
+                            const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
+                            const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
+                            console.log( (path) ? addedMessage : failedMessage);
+                            callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                        });
+                    }
+                    else {
+                        console.log(colors.bgYellow.white('DOWNLOAD POSTER DISABLED') + ' => ' + name + year + colors.magenta(' ✘ Poster already downloaded') + colors.green(' ✓ but meta data does'));
+                        callback({'actors': actors, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                    }
                 }
                 else {
                     console.log('    Media scrappin '+ colors.red('FAILED'));
@@ -72,7 +80,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, callba
         callback({});
     });
 }
-function getMedia(name, year, callback) {
+function getMedia(name, year, enableDownload, callback) {
     console.log(colors.inverse('IMDB media to found'),colors.bgGreen.white(name,year));
 
     let url = getMediaListUrl(name, year);
@@ -94,16 +102,29 @@ function getMedia(name, year, callback) {
                     mediasFounded = $('.findList tbody tr.findResult td.result_text');
                     if (!mediasFounded || mediasFounded.length < 1) {
                         console.log('      List scrappin '+ colors.red('WITHOUT MEDIA'));
-                        console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
-                        callback({});
+                        url = getMediaListUrl(name, --year);
+                        request(url, function(mediasError, mediasResponse, mediasHtml){
+                            console.log('    3rd List scrappin with decreased year '+ colors.green('SUCCESS'));
+                            titleToFound = name + ' (' + year + ')';
+                            $ = cheerio.load(mediasHtml);
+                            mediasFounded = $('.findList tbody tr.findResult td.result_text');
+                            if (!mediasFounded || mediasFounded.length < 1) {
+                                console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
+                                callback({});
+                            }
+                            else {
+                                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
+                            }
+                        });
+
                     }
                     else {
-                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, callback);
+                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
                     }
                 });
             }
             else {
-                listScrapping(mediasFounded, titleToFound, name, year, $, lock, callback);
+                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
             }
         }
         else {
@@ -121,7 +142,12 @@ function download (uri, filename, callback){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
         request(uri).pipe(fs.createWriteStream(filename)).on('close', function(){
-            callback(filename);
+            //Upload from URL
+            uploadcare.file.fromUrl(uri, function(err,res){
+                //Res should contain returned file ID
+                let uplc_filepath = 'https://ucarecdn.com/' + res.file_id + '/' + res.filename;
+                callback(uplc_filepath);
+            });
         });
     });
 }

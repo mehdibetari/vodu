@@ -1,0 +1,51 @@
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <meta name="google-site-verification" content="Z1umQEXvEUm7G-_R0hnV2mvxjKCJSpXMt_z2HGI1_5I" />
+      <title>Nouveaux épisodes chaque semaines sur Netflix</title>
+      <link rel="stylesheet" href="/css/styles.css">
+      <!-- Global Site Tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+
+        gtag('config', 'UA-107359518-1');
+      </script>
+    </head>
+    <body>
+      <nav>ALLOSERIE</nav>
+      <header>
+        <h1>Calendrier NETFLIX des épisodes chaque semaine</h1>
+        <p>Dernière mise à jour de l'agenda le {lastUpdate}</p>
+      </header>
+      <section id="every-week-netflix">
+        {#list}
+        <article>
+          {#localPath}
+          <aside>
+            <img src="{localPath}" alt="{name}">
+          </aside>
+          {/localPath}
+          <div>
+            <div class="date">{recurence}</div>
+            <h1>{#href}<a href="{href}">{/href}{name}{#href}</a>{/href}</h1>
+            <div class="type">{#seasons}{seasons} saison(s){/seasons}</div>
+            {#directors}<div><small>Réalisation</small>  {directors}</div>{/directors}
+            {#creators}<div><small>Créateur</small>  {creators}</div>{/creators}
+            {#actors}<div><small>Casting</small>  {actors}</div>{/actors}
+            {#summary}<p><small>Descriptif</small>  {summary}</p>{/summary}
+          </div>
+        </article>
+        {/list}
+      </section>
+      <footer>
+        {#theFooter}
+          <a href="{href}">{name}</a>
+        {/theFooter}
+      </footer>
+    </body>
+</html>

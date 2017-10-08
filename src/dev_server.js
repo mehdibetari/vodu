@@ -17,10 +17,8 @@ app.get('/calendrier/netflix', function(req, res){
             var tmpl = dust.compile(data, 'view-netflix');
             dust.loadSource(tmpl);
             const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
-            const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
-            const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
-            const fullDateTime = fullDate+' à '+fullTime;
-            var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDateTime }, function(e, out) {
+            const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
+            var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDate }, function(e, out) {
                 if(e) {
                     console.error(e);
                 } else {
@@ -60,6 +58,6 @@ app.get('/episode-chaque-semaine/netflix', function(req, res){
     });
 });
 
-app.use(express.static('./public'));
-app.listen('80');
+app.use(express.static('public'));
+app.listen('8007');
 exports = module.exports = app;
