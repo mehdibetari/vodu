@@ -46,8 +46,6 @@
         <article>
           <aside>
             <img src="{localPath}" alt="{name}" class="image picture"/>
-            <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button&size=small&mobile_iframe=true&width=73&height=20&appId" width="73" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/calendrier/netflix/{id}">Tweeter</a>
           </aside>
           <div>
             <div class="date date-de-sortie">{premiereDate}</div>
@@ -57,6 +55,10 @@
             {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
             {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
             {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
+            <div>
+              <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button&size=small&mobile_iframe=true&width=73&height=20&appId" width="73" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/calendrier/netflix/{id}">Tweeter</a>
+            </div>
           </div>
         </article>
         {/list}
