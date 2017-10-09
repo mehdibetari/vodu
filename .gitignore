@@ -1,5 +1,5 @@
 /node_modules
-posters/
+public/posters/
 tmp/
 store/netflix-upcoming.json
 src/config-keys.js
