@@ -73,7 +73,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate) {
         return {
             url: 'http://alloserie.fr/calendrier/netflix/' + mediaId,
             title: media[0].name + ' date de sortie: ' + media[0].premiereDate + ' sur Netflix',
-            description: (media[0].summary) ? : 'Calendrier mis à jour le ' + lastUpdateDate,
+            description: (media[0].summary) ? media[0].summary : 'Calendrier mis à jour le ' + lastUpdateDate,
             image: media[0].localPath
         };
     }
