@@ -72,8 +72,8 @@ function getMediaMetaData (mediaId, items, lastUpdateDate) {
     if (media[0]) {
         return {
             url: 'http://alloserie.fr/calendrier/netflix/' + mediaId,
-            title: media[0].name + ' annoncé pour ' + media[0].premiereDate + ' sur Netflix',
-            description: media[0].summary,
+            title: media[0].name + ' date de sortie: ' + media[0].premiereDate + ' sur Netflix',
+            description: (media[0].summary) ? : 'Calendrier mis à jour le ' + lastUpdateDate,
             image: media[0].localPath
         };
     }
@@ -81,7 +81,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate) {
         return {
             url: 'http://alloserie.fr/calendrier/netflix/',
             title: 'Agenda des sorties Netflix 2017 2018',
-            description: 'Dernière mise à jour le ' + lastUpdateDate,
+            description: 'Calendrier mis à jour le ' + lastUpdateDate,
             image: 'https://ucarecdn.com/6c7ac889-fb0d-4535-a85b-e65e5983eefb/netflixoriginal.jpg'
         };
     }
