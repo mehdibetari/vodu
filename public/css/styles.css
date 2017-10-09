@@ -50,6 +50,9 @@ body {
     max-width: 100px;
     max-height: 147.25px;
   }
+  #agenda-netflix article > aside > iframe {
+    margin: 8px;
+  }
   #every-week-netflix article > aside {
     min-height: 147.25px;
     max-height: 147.25px;
@@ -88,6 +91,7 @@ body {
   footer a > span {
     white-space: nowrap;
     line-height: 2;
+    margin-left: 7px;
   }
   footer a .every-week-badge:first-child {
     background-color: #e70f1d;

@@ -5,7 +5,7 @@ var fs      = require('fs');
 app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
-app.get('/calendrier/netflix', function(req, res){
+app.get('/calendrier/netflix/:media_id*?', function(req, res){
     fs.readFile('./front-layout/agenda-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
@@ -16,9 +16,16 @@ app.get('/calendrier/netflix', function(req, res){
             }
             var tmpl = dust.compile(data, 'view-netflix');
             dust.loadSource(tmpl);
-            const lastUpdateDate = new Date(JSON.parse(response).timeStamp);
+            const netflixUpcoming = JSON.parse(response);
+            const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
-            var view = dust.render('view-netflix', { list: JSON.parse(response).items, lastUpdate: fullDate }, function(e, out) {
+            const metaData = getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate);
+            var view = dust.render('view-netflix', { 
+                list: netflixUpcoming.items, 
+                lastUpdate: fullDate,
+                meta: metaData
+            }, 
+            function(e, out) {
                 if(e) {
                     console.error(e);
                 } else {
@@ -57,6 +64,30 @@ app.get('/episode-chaque-semaine/netflix', function(req, res){
         });
     });
 });
+
+function getMediaMetaData (mediaId, items, lastUpdateDate) {
+    const media = items.filter(function (item) {
+        return item.id == mediaId;
+    });
+    if (media[0]) {
+        return {
+            url: 'http://alloserie.fr/calendrier/netflix/' + mediaId,
+            type: media[0].type,
+            title: media[0].name + ' annoncé pour ' + media[0].premiereDate + ' sur Netflix',
+            description: media[0].summary,
+            image: media[0].localPath
+        };
+    }
+    else {
+        return {
+            url: 'http://alloserie.fr/calendrier/netflix/',
+            type: 'calendrier Netflix',
+            title: 'Agenda des sorties Netflix 2017 2018',
+            description: 'Dernière mise à jour le ' + lastUpdateDate,
+            image: 'https://ucarecdn.com/6c7ac889-fb0d-4535-a85b-e65e5983eefb/netflixoriginal.jpg'
+        };
+    }
+}
 
 app.use(express.static('public'));
 app.listen('8007');
