@@ -57,7 +57,7 @@
             {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
             <div>
               <div id="fb-root"></div>
-              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&amp;src=sdkpreparse">Partager</a></div>
+              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&amp;src=sdkpreparse"></a></div>
               <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/calendrier/netflix/{id}"></a>
             </div>
           </div>
@@ -70,7 +70,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
       <script src="/scripts/article-title-filter.js"></script>
       <script>
-        (window).bind("load", function() {
+        $(window).bind("load", function() {
           /*Facebook*/
           (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
