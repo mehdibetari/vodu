@@ -19,18 +19,19 @@ body {
     font-size: 22px;
     font-family: Impact;  
   }
-  body > nav > .logo {
-    background-image: url(/images/alloserie.png);  
-    background-size: 150px 50px;  
+  body > nav .logo {
+    display: block;
     height: 50px;  
     width: 150px; 
+    background-image: url(/images/alloserie.png);  
+    background-size: 150px 50px;  
   }
  
   @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
   only screen and (-moz-min-device-pixel-ratio: 1.5),  
   only screen and (-o-min-device-pixel-ratio: 3/2),  
   only screen and (min-device-pixel-ratio: 1.5) {  
-    body > nav > .logo {  
+    body > nav .logo {  
       background-image: url(/images/alloserie@2x.png);  
     }  
   }
@@ -273,4 +274,33 @@ body {
 }
 .fb-share-button{
   margin-right: 5px;
+}
+#home section > article > a > img{
+  width: 100%;
+}
+#home footer {
+  position: inherit;
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+}
+#home footer .title {
+  text-align: center;
+  font-size: 14px;
+  color: white;
+}
+#home span.badge-soon {
+  font-size: 9px;
+  padding: 2px;
+  color: #662D91;
+  background-color: white;
+  border-radius: 1px;
+}
+#home footer > div:nth-child(2) {
+  padding: 0 25px;
+  border-left: 1px white solid; 
+  border-right: 1px white solid; 
+}
+#home footer > div > div {
+  margin: 8px 0;
 }

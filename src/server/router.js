@@ -4,7 +4,8 @@ let RoutesControllers = require('./routes.controllers');
 let routesControllers = new RoutesControllers();
 
 app.get('/', function(req, res) {
-    res.redirect('/calendrier/netflix');
+    // res.redirect('/calendrier/netflix');
+    routesControllers.home(req, res);
 });
 app.get('/calendrier/netflix/:media_id*?', function(req, res){
     routesControllers.calendarList('netflix', req, res);

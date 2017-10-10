@@ -1,0 +1,99 @@
+<html lang="en">
+    <head>
+      <title>Alloserie.fr | Calendrier, Agenda et catalogue des series</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <meta name="google-site-verification" content="Z1umQEXvEUm7G-_R0hnV2mvxjKCJSpXMt_z2HGI1_5I" />
+      <meta name="twitter:card" content="summary_large_image" />
+      {#meta}
+      <meta property="og:url"                content="http://alloserie.fr" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="Alloserie.fr | Calendrier, Agenda et catalogue des series" />
+      <meta property="og:description"        content="Date de sorties des series et films pour Netflix, OCS, Amazon TV" />
+      <meta property="og:image"              content="https://ucarecdn.com/342ba0b7-5883-408c-8b19-de42c55a6fa7/alloserielogo2x.jpg" />
+      {/meta}
+      <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+      <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+      <link rel="manifest" href="/images/favicon/manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
+      <link rel="stylesheet" href="/css/styles.css">
+      <!-- Global Site Tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+
+        gtag('config', 'UA-107359518-1');
+      </script>
+    </head>
+    <body id="home">
+      <nav>
+        <a href="/" class="logo"></a>
+      </nav>
+      <header>
+        <p>Dernière mise à jour le {lastUpdate}</p>
+      </header>
+      <section>
+        <article>
+            <a href="/calendrier/netflix">
+              <img src="/images/calendrier-netflix@2x.jpg" alt="">
+            </a>
+        </article>
+        <article>
+          <a href="/episode-chaque-semaine/netflix">
+            <img src="/images/weekly-netflix@2x.jpg" alt="">
+          </a>
+        </article>
+      </section>
+      <footer>
+        <div>
+          <div class="title">NETFLIX</div>
+          <div><a href="/calendrier/netflix">Calendrier des sorties NETFLIX</a></div>
+          <div><a href="/episode-chaque-semaine/netflix">Agenda NETFLIX un nouvel épisode chaque semaine</a></div>
+          <div><a href="/">Catalogue complet NETFLIX</a> <span class="badge-soon">Bientôt disponible</span></div>
+        </div>
+        <div>
+          <div class="title">AMAZON TV</div>
+          <div><a href="/">Calendrier des nouveautés AMAZON TV</a> <span class="badge-soon">Bientôt disponible</span></div>
+          <div><a href="/">Catalogue complet AMAZON TV</a> <span class="badge-soon">Bientôt disponible</span></div>
+        </div>
+        <div>
+          <div class="title">OCS</div>
+          <div><a href="/">Calendrier des sorties OCS</a> <span class="badge-soon">Bientôt disponible</span></div>
+          <div><a href="/">Catalogue complet OCS</a> <span class="badge-soon">Bientôt disponible</span></div>
+        </div>
+        <!-- <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a> -->
+      </footer>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+      <script src="/scripts/article-title-filter.js"></script>
+      <script>
+        $(window).bind("load", function() {
+          /*Facebook*/
+          (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+          /*Twitter*/
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+        });
+      </script>
+    </body>
+</html>

@@ -24,9 +24,9 @@ class RoutesControllers {
                     const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
                     
-                    var tmpl = dust.compile(data, 'view-netflix');
+                    let tmpl = dust.compile(data, 'view-netflix');
                     dust.loadSource(tmpl);
-                    var view = dust.render('view-netflix', { 
+                    let view = dust.render('view-netflix', { 
                         list: netflixUpcoming.items, 
                         lastUpdate: fullDate,
                         meta: metaData
@@ -61,9 +61,9 @@ class RoutesControllers {
                 const fullDateTime = fullDate+' à '+fullTime;
                 const metaData = metaService.getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
                 
-                var tmpl = dust.compile(data, 'view-netflix');
+                let tmpl = dust.compile(data, 'view-netflix');
                 dust.loadSource(tmpl);
-                var view = dust.render('view-netflix', { 
+                let view = dust.render('view-netflix', { 
                     list: netflixEveryWeekData.items, 
                     lastUpdate: fullDateTime, 
                     theFooter: netflixEveryWeekData.footer,
@@ -76,6 +76,27 @@ class RoutesControllers {
                         res.send(out);
                     }
                 });
+            });
+        });
+    }
+
+    home (req, res) {
+        fs.readFile(configServer.ALLOSERIE_HOME_LAYOUT, 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            }
+            const lastUpdateDate = new Date();
+            const fullDate = (lastUpdateDate.getDate()-1)+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
+
+            let tmpl = dust.compile(data, 'view-netflix');
+            dust.loadSource(tmpl);
+            let view = dust.render('view-netflix', {lastUpdate: fullDate}, function(e, out) {
+                if(e) {
+                    console.error(e);
+                } else {
+                    // Finally, we'll just send out a message to the browser reminding you that this app does not have a UI.
+                    res.send(out);
+                }
             });
         });
     }
