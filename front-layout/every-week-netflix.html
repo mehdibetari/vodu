@@ -1,6 +1,10 @@
 <html lang="en">
     <head>
-      <title>Nouveaux épisodes chaque semaines sur Netflix</title>
+      {#meta}
+      <title>{title} | Alloserie.fr</title>
+      {:else}
+      <title>Nouveaux épisodes chaque semaines sur Netflix | Alloserie.fr</title>
+      {/meta}
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -67,8 +71,8 @@
             {#summary}<p><small>Descriptif</small>  {summary}</p>{/summary}
             <div>
               <div id="fb-root"></div>
-              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&amp;src=sdkpreparse"></a></div>
-              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/calendrier/netflix/{id}"></a>
+              <div class="fb-share-button" data-href="http://alloserie.fr/episode-chaque-semaine/netflix/{id}" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fepisode-chaque-semaine%2Fnetflix%2F{id}&amp;src=sdkpreparse"></a></div>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/episode-chaque-semaine/netflix/{id}"></a>
             </div>
           </div>
         </article>

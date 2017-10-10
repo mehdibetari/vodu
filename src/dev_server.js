@@ -53,7 +53,7 @@ app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
             const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
             const fullDateTime = fullDate+' à '+fullTime;
-            const metaData = getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, 'http://alloserie.fr//episode-chaque-semaine/netflix/');
+            const metaData = getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, 'http://alloserie.fr/episode-chaque-semaine/netflix/');
             var view = dust.render('view-netflix', { 
                 list: netflixEveryWeekData.items, 
                 lastUpdate: fullDateTime, 
@@ -78,7 +78,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     if (media[0] && media[0].premiereDate) {
         return {
             url: baseUrl + mediaId,
-            title: media[0].name + ' date de sortie: ' + media[0].premiereDate + ' sur Netflix',
+            title: media[0].name + ' - date de sortie: ' + media[0].premiereDate + ' sur Netflix',
             description: (media[0].summary) ? media[0].summary : 'Calendrier mis à jour le ' + lastUpdateDate,
             image: media[0].localPath
         };

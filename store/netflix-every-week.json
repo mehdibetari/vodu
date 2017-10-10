@@ -2,6 +2,7 @@
     "timeStamp": 1507324525987,
     "items": [
         {
+            "id": "wke1",
             "localPath": "https://ucarecdn.com/5955a740-47d1-4b3a-a010-db6a9f676dde/thegoodplace.jpg",
             "name": "The Good Place",
             "recurence": "Nouvel épisode vendredi",
@@ -12,6 +13,7 @@
             "summary": "À sa mort, l'égocentrique Eleanor Shellstrop se retrouve par erreur dans un monde paradisiaque. Déterminée à y rester, elle va tenter de devenir une meilleure personne."
         },
         {
+            "id": "wke2",
             "localPath": "https://ucarecdn.com/2ef30171-cc9e-42cd-adb3-44f19a8054eb/startrekdiscovery.jpg",
             "name": "STAR TREK Discovery",
             "recurence": "Nouvel épisode lundi",
@@ -22,6 +24,7 @@
             "summary": "Après un siècle de silence, une guerre éclate entre la Fédération et l'empire klingon, alors qu'un officier en disgrâce de la Starfleet se retrouve au centre du conflit."
         },
         {
+            "id": "wke3",
             "localPath": "https://ucarecdn.com/28c12f6e-bdc5-45b3-bc8f-ca0102fc18d9/designatedsurvivor.jpg",
             "name": "Designated survivor",
             "recurence": "Nouvel épisode vendredi",
@@ -32,6 +35,7 @@
             "summary": "Dans ce passionnant thriller politique, le sort de l'Amérique repose dans les mains d'un petit fonctionnaire après qu'une attaque sur Washington a décimé le gouvernement."
         },
         {
+            "id": "wke4",
             "localPath": "https://ucarecdn.com/19f1190e-5ecc-4761-8da1-f3209ea613e6/outlander.jpg",
             "name": "Outlander",
             "recurence": "Nouvel épisode lundi",
