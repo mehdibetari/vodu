@@ -2,6 +2,12 @@ var express = require('express');
 var app     = express();
 var dust    = require('dustjs-linkedin');
 var fs      = require('fs');
+
+const ALLOSERIE_NETFLIX_WEEKLY_URL = 'http://alloserie.fr/episode-chaque-semaine/netflix/';
+const ALLOSERIE_NETFLIX_WEEKLY_TITLE = 'Nouveaux épisodes chaque semaines sur Netflix | Alloserie.fr';
+const ALLOSERIE_NETFLIX_CALENDAR_URL = 'http://alloserie.fr/calendrier/netflix/';
+const ALLOSERIE_NETFLIX_CALENDAR_TITLE = 'Agenda Calendrier Netflix 2017 2018 2019 | Alloserie.fr';
+
 app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
 });
@@ -19,7 +25,7 @@ app.get('/calendrier/netflix/:media_id*?', function(req, res){
             const netflixUpcoming = JSON.parse(response);
             const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
-            const metaData = getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, 'http://alloserie.fr/calendrier/netflix/');
+            const metaData = getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, ALLOSERIE_NETFLIX_CALENDAR_URL);
             var view = dust.render('view-netflix', { 
                 list: netflixUpcoming.items, 
                 lastUpdate: fullDate,
@@ -53,7 +59,7 @@ app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
             const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
             const fullDateTime = fullDate+' à '+fullTime;
-            const metaData = getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, 'http://alloserie.fr/episode-chaque-semaine/netflix/');
+            const metaData = getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, ALLOSERIE_NETFLIX_WEEKLY_URL);
             var view = dust.render('view-netflix', { 
                 list: netflixEveryWeekData.items, 
                 lastUpdate: fullDateTime, 
@@ -94,7 +100,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     else {
         return {
             url: baseUrl,
-            title: 'Agenda des sorties Netflix 2017 2018',
+            title: (baseUrl === ALLOSERIE_NETFLIX_WEEKLY_URL) ? ALLOSERIE_NETFLIX_WEEKLY_TITLE:ALLOSERIE_NETFLIX_CALENDAR_TITLE,
             description: 'Calendrier mis à jour le ' + lastUpdateDate,
             image: 'https://ucarecdn.com/6c7ac889-fb0d-4535-a85b-e65e5983eefb/netflixoriginal.jpg'
         };
