@@ -4,9 +4,9 @@ var dust    = require('dustjs-linkedin');
 var fs      = require('fs');
 
 const ALLOSERIE_NETFLIX_WEEKLY_URL = 'http://alloserie.fr/episode-chaque-semaine/netflix/';
-const ALLOSERIE_NETFLIX_WEEKLY_TITLE = 'Nouveaux épisodes chaque semaines sur Netflix | Alloserie.fr';
+const ALLOSERIE_NETFLIX_WEEKLY_TITLE = 'Nouveaux épisodes chaque semaines sur Netflix';
 const ALLOSERIE_NETFLIX_CALENDAR_URL = 'http://alloserie.fr/calendrier/netflix/';
-const ALLOSERIE_NETFLIX_CALENDAR_TITLE = 'Agenda Calendrier Netflix 2017 2018 2019 | Alloserie.fr';
+const ALLOSERIE_NETFLIX_CALENDAR_TITLE = 'Agenda Calendrier Netflix 2017 2018 2019';
 
 app.get('/', function(req, res) {
     res.redirect('/calendrier/netflix');
@@ -102,7 +102,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
             url: baseUrl,
             title: (baseUrl === ALLOSERIE_NETFLIX_WEEKLY_URL) ? ALLOSERIE_NETFLIX_WEEKLY_TITLE:ALLOSERIE_NETFLIX_CALENDAR_TITLE,
             description: 'Calendrier mis à jour le ' + lastUpdateDate,
-            image: 'https://ucarecdn.com/6c7ac889-fb0d-4535-a85b-e65e5983eefb/netflixoriginal.jpg'
+            image: 'https://ucarecdn.com/342ba0b7-5883-408c-8b19-de42c55a6fa7/alloserielogo2x.jpg'
         };
     }
 }
