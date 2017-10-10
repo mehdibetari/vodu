@@ -10,14 +10,29 @@ body {
     position: fixed;
     top: 0px;
     width: 100%;
-    height: 40px;
-    line-height:40px;
+    height: 50px;
+    line-height:50px;
     padding-left: 10px;
     vertical-align: center;
     z-index: 999;
     background: #ffffff;
     font-size: 22px;
-    font-family: Impact;
+    font-family: Impact;  
+  }
+  body > nav > .logo {
+    background-image: url(/images/alloserie.png);  
+    background-size: 150px 50px;  
+    height: 50px;  
+    width: 150px; 
+  }
+ 
+  @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
+  only screen and (-moz-min-device-pixel-ratio: 1.5),  
+  only screen and (-o-min-device-pixel-ratio: 3/2),  
+  only screen and (min-device-pixel-ratio: 1.5) {  
+    body > nav > .logo {  
+      background-image: url(/images/alloserie@2x.png);  
+    }  
   }
   body > header {
     margin: 60px 40px 20px 40px;
@@ -30,6 +45,7 @@ body {
   }
   section {
     padding: 0 15px;
+    margin-bottom: 20px;
   }
   article {
     display: flex;
@@ -43,7 +59,7 @@ body {
     max-width: 100px;
     margin-right: 10px;
     background-color: #000;
-    border-left: 10px red solid;
+    border-left: 10px #331749 solid;
   }
   #agenda-netflix article > aside > img {
     height: auto;
@@ -59,7 +75,7 @@ body {
     min-height: 147.25px;
     max-height: 147.25px;
     margin-right: 10px;
-    border-left: 10px red solid;
+    border-left: 10px #331749 solid;
   }
   #every-week-netflix article > aside > img {
     height: auto;
@@ -71,7 +87,7 @@ body {
     letter-spacing: -1.3px;
   }
   .date {
-    color: lightcoral;
+    color: #662D91;
     text-transform: capitalize;
   }
   .type {
@@ -82,7 +98,7 @@ body {
   footer {
     position: fixed;
     bottom: 0;
-    background-color: black;
+    background-color: 331749;
     width: 100%;
     padding: 7px 20px 7px 20px;
   }
@@ -254,4 +270,7 @@ body {
 	stroke: #333;
 	-webkit-transform: translate3d(-66.6%, 0, 0);
 	transform: translate3d(-66.6%, 0, 0);
+}
+.fb-share-button{
+  margin-right: 5px;
 }

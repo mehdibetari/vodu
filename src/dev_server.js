@@ -19,7 +19,7 @@ app.get('/calendrier/netflix/:media_id*?', function(req, res){
             const netflixUpcoming = JSON.parse(response);
             const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
-            const metaData = getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate);
+            const metaData = getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, 'http://alloserie.fr/calendrier/netflix/');
             var view = dust.render('view-netflix', { 
                 list: netflixUpcoming.items, 
                 lastUpdate: fullDate,
@@ -37,7 +37,7 @@ app.get('/calendrier/netflix/:media_id*?', function(req, res){
     });
 });
 
-app.get('/episode-chaque-semaine/netflix', function(req, res){
+app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
     fs.readFile('./front-layout/every-week-netflix.html', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
@@ -53,7 +53,13 @@ app.get('/episode-chaque-semaine/netflix', function(req, res){
             const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear();
             const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
             const fullDateTime = fullDate+' à '+fullTime;
-            var view = dust.render('view-netflix', { list: netflixEveryWeekData.items, lastUpdate: fullDateTime, theFooter: netflixEveryWeekData.footer}, function(e, out) {
+            const metaData = getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, 'http://alloserie.fr//episode-chaque-semaine/netflix/');
+            var view = dust.render('view-netflix', { 
+                list: netflixEveryWeekData.items, 
+                lastUpdate: fullDateTime, 
+                theFooter: netflixEveryWeekData.footer,
+                meta: metaData
+            }, function(e, out) {
                 if(e) {
                     console.error(e);
                 } else {
@@ -65,21 +71,29 @@ app.get('/episode-chaque-semaine/netflix', function(req, res){
     });
 });
 
-function getMediaMetaData (mediaId, items, lastUpdateDate) {
+function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     const media = items.filter(function (item) {
         return item.id == mediaId;
     });
-    if (media[0]) {
+    if (media[0] && media[0].premiereDate) {
         return {
-            url: 'http://alloserie.fr/calendrier/netflix/' + mediaId,
+            url: baseUrl + mediaId,
             title: media[0].name + ' date de sortie: ' + media[0].premiereDate + ' sur Netflix',
+            description: (media[0].summary) ? media[0].summary : 'Calendrier mis à jour le ' + lastUpdateDate,
+            image: media[0].localPath
+        };
+    }
+    else if (media[0] && media[0].recurence) {
+        return {
+            url: baseUrl + mediaId,
+            title: media[0].name + ' ' + media[0].recurence + ' sur Netflix',
             description: (media[0].summary) ? media[0].summary : 'Calendrier mis à jour le ' + lastUpdateDate,
             image: media[0].localPath
         };
     }
     else {
         return {
-            url: 'http://alloserie.fr/calendrier/netflix/',
+            url: baseUrl,
             title: 'Agenda des sorties Netflix 2017 2018',
             description: 'Calendrier mis à jour le ' + lastUpdateDate,
             image: 'https://ucarecdn.com/6c7ac889-fb0d-4535-a85b-e65e5983eefb/netflixoriginal.jpg'

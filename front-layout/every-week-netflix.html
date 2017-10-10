@@ -1,10 +1,35 @@
 <html lang="en">
     <head>
+      <title>Nouveaux épisodes chaque semaines sur Netflix</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <meta name="google-site-verification" content="Z1umQEXvEUm7G-_R0hnV2mvxjKCJSpXMt_z2HGI1_5I" />
-      <title>Nouveaux épisodes chaque semaines sur Netflix</title>
+      <meta name="twitter:card" content="summary_large_image" />
+      {#meta}
+      <meta property="og:url"                content="{url}" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="{title}" />
+      <meta property="og:description"        content="{description}" />
+      <meta property="og:image"              content="{image}" />
+      {/meta}
+      <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+      <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+      <link rel="manifest" href="/images/favicon/manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
       <link rel="stylesheet" href="/css/styles.css">
       <!-- Global Site Tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
@@ -17,7 +42,9 @@
       </script>
     </head>
     <body>
-      <nav>ALLOSERIE</nav>
+        <nav>
+          <div class="logo"></div>
+        </nav>
       <header>
         <h1>Calendrier NETFLIX des épisodes chaque semaine</h1>
         <p>Dernière mise à jour de l'agenda le {lastUpdate}</p>
@@ -38,6 +65,11 @@
             {#creators}<div><small>Créateur</small>  {creators}</div>{/creators}
             {#actors}<div><small>Casting</small>  {actors}</div>{/actors}
             {#summary}<p><small>Descriptif</small>  {summary}</p>{/summary}
+            <div>
+              <div id="fb-root"></div>
+              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&amp;src=sdkpreparse"></a></div>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://alloserie.fr/calendrier/netflix/{id}"></a>
+            </div>
           </div>
         </article>
         {/list}
@@ -47,5 +79,20 @@
           <a href="{href}">{name}</a>
         {/theFooter}
       </footer>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+      <script>
+        $(window).bind("load", function() {
+          /*Facebook*/
+          (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+          /*Twitter*/
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+        });
+      </script>
     </body>
 </html>
