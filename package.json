@@ -11,6 +11,7 @@
     "dustjs-linkedin": "^2.7.5",
     "express": "latest",
     "request": "latest",
-    "uploadcare": "^0.4.3"
+    "uploadcare": "^0.4.3",
+    "uuid": "^3.1.0"
   }
 }
