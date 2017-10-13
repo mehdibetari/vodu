@@ -3,18 +3,81 @@
 class Media {
 
     constructor(media) {
-        this.oid = media.id;
-        this.name = media.name;
-        this.type = media.type;
-        this.premiereDate = media.premiereDate;
-        this.seasons = media.seasons;
-        this.ourl = media.uri;
-        this.actors = media.actors;
-        this.directors = media.directors;
-        this.creators = media.creators;
-        this.posterUrl = media.posterUrl;
-        this.summary = media.summary;
-        this.imdbPath = media.mediaLink;
+        setOriginalId(media.id || null);
+        setName(media.name || null);
+        setType(media.type || null);
+        setPremiereDate(media.premiereDate || null);
+        setSeasons(media.seasons || null);
+        setOriginalUrl(media.uri || null);
+        setActors(media.actors || null);
+        setDirectors(media.directors || null);
+        setCreators(media.creators || null);
+        setPosterUrl(media.posterUrl || null);
+        setSummary(media.summary || null);
+        setImdbPath(media.mediaLink || null);
+        setImdbId(media.mediaLink || null);
+    }
+    
+    setOriginalId(oid) {
+        this.originalId = oid;
+    }
+    
+    setName(name) {
+        this.name = name;
+    }
+    
+    setType(type) {
+        this.type = type;
+    }
+    
+    setPremiereDate(premiereDate) {
+        this.premiereDate = premiereDate;
+    }
+    
+    setSeasons(seasons) {
+        this.seasons = seasons;
+    }
+    
+    setOriginalUrl(ourl) {
+        this.ourl = ourl;
+    }
+    
+    setActors(actors) {
+        this.actors = actors;
+    }
+    
+    setDirectors(directors) {
+        this.directors = directors;
+    }
+    
+    setCreators(creators) {
+        this.creators = creators;
+    }
+    
+    setPosterUrl(posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+    
+    setSummary(summary) {
+        this.summary = summary;
+    }
+    
+    setImdbPath(imdbPath) {
+        this.imdbPath = imdbPath;
+    }
+    
+    setImdbId(imdbPath) {
+        const explodedPath = imdbPath.split('/');
+        this.imdbPath = explodedPath[2] || null;
+    }
+
+    get(attributeName) {
+        if(attributeName) {
+            return this[attributeName];
+        }
+        else {
+            return this;
+        }
     }
 
 }
