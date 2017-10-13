@@ -1,6 +1,6 @@
 # node-server
 
-you need to add src/config-keys.js
+touch src/config-keys.js
 
 ```javascript
 const keys = {
@@ -11,3 +11,6 @@ const keys = {
 };
 exports.uploadcare = keys.uploadcare;
 ```
+
+touch src/media-store/firebase-key.json
+and copy your firebase key file
