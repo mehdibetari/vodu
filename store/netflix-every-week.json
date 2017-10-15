@@ -38,12 +38,23 @@
             "id": "wke4",
             "localPath": "https://ucarecdn.com/19f1190e-5ecc-4761-8da1-f3209ea613e6/outlander.jpg",
             "name": "Outlander",
-            "recurence": "Nouvel épisode lundi",
+            "recurence": "Nouvel épisode disponible le 23 octobre",
             "seasons": "3",
             "directors": "",
             "creators": "Ronald D. Moore",
             "actors": "Caitriona Balfe, Sam Heughan, Duncan Lacroix...",
             "summary": "Dans cette épopée adaptée des romans à succès de Diana Gabaldon, une infirmière de guerre se retrouve soudain plongée dans un lointain passé."
+        },
+        {
+            "id": "wke5",
+            "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
+            "name": "Dynastie",
+            "recurence": "Nouvel épisode jeudi",
+            "seasons": "1",
+            "directors": "",
+            "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
+            "actors": "Elizabeth Gillies, Nathalie Kelley, Grant Show, James Mackay, Rafael De La Fuente...",
+            "summary": "Dans ce reboot actualisé du soap culte, les Carrington et les Colby se disputent le contrôle de leurs fortunes, mais aussi de leurs enfants !"
         }
     ],
     "footer": {
