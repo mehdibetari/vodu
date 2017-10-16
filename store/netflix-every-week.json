@@ -1,6 +1,17 @@
 {
-    "timeStamp": 1507324525987,
+    "timeStamp": 1508099153722,
     "items": [
+        {
+            "id": "wke5",
+            "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
+            "name": "Dynastie",
+            "recurence": "Nouvel épisode jeudi",
+            "seasons": "1",
+            "directors": "",
+            "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
+            "actors": "Elizabeth Gillies, Nathalie Kelley, Grant Show, James Mackay, Rafael De La Fuente...",
+            "summary": "Dans ce reboot actualisé du soap culte, les Carrington et les Colby se disputent le contrôle de leurs fortunes, mais aussi de leurs enfants !"
+        },
         {
             "id": "wke1",
             "localPath": "https://ucarecdn.com/5955a740-47d1-4b3a-a010-db6a9f676dde/thegoodplace.jpg",
@@ -38,7 +49,7 @@
             "id": "wke4",
             "localPath": "https://ucarecdn.com/19f1190e-5ecc-4761-8da1-f3209ea613e6/outlander.jpg",
             "name": "Outlander",
-            "recurence": "Nouvel épisode lundi",
+            "recurence": "Nouvel épisode disponible le 23 octobre",
             "seasons": "3",
             "directors": "",
             "creators": "Ronald D. Moore",
