@@ -11,6 +11,7 @@
     "dustjs-linkedin": "^2.7.5",
     "express": "latest",
     "firebase-admin": "^5.4.2",
+    "querybase": "^0.6.0",
     "request": "latest",
     "uploadcare": "^0.4.3",
     "uuid": "^3.1.0"

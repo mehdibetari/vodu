@@ -1,74 +1,102 @@
 'use strict';
+const NETFLIX_BASE_URL = 'https://media.netflix.com';
+const IMDB_BASE_URL = 'http://www.imdb.com';
 
 class Media {
+    
+    constructor(media, from) {
+        this.setIdentifier();
+        this.setCategory();
+        this.setLink();
+        this.setPoster();
+        this.setName(media.name);
+        this.setType(media.type);
+        this.setPremiereDate(media.premiereDate);
+        this.setSeasons(media.seasons);
+        this.setSortDate(media.sortDate);
+        this.setActors(media.actors);
+        this.setDirectors(media.directors);
+        this.setCreators(media.creators);
+        this.setSummary(media.summary);
+        this.setYear(media.sortDate);
+        this.setSlug(this.name, this.year, this.type);
+        if (media.id && from) {
+            this.addIdentifier(media.id,from);
+        }
+        if (media.category && from) {
+            this.addCategory(media.category,from);
+        }
+        if (media.uri && from && from === 'netflix-upcomings') {
+            this.addLink(NETFLIX_BASE_URL + media.uri,from);
+        }
+        if (media.mediaLink && from) {
+            this.addLink(IMDB_BASE_URL + media.mediaLink, 'IMDB');
+        }
+        if (media.posterUrl) {
+            this.addPoster(media.posterUrl, from);
+        }
+        if (media.localPath) {
+            this.addPoster(media.localPath, 'own-cloud-storage');
+        }
 
-    constructor(media) {
-        setOriginalId(media.id || null);
-        setName(media.name || null);
-        setType(media.type || null);
-        setPremiereDate(media.premiereDate || null);
-        setSeasons(media.seasons || null);
-        setOriginalUrl(media.uri || null);
-        setActors(media.actors || null);
-        setDirectors(media.directors || null);
-        setCreators(media.creators || null);
-        setPosterUrl(media.posterUrl || null);
-        setSummary(media.summary || null);
-        setImdbPath(media.mediaLink || null);
-        setImdbId(media.mediaLink || null);
     }
-    
-    setOriginalId(oid) {
-        this.originalId = oid;
+    setIdentifier() {
+        this.indentifier = [];
     }
-    
+    setCategory() {
+        this.category = [];
+    }
+    setLink() {
+        this.link = [];
+    }
+    setPoster() {
+        this.poster = [];
+    }
     setName(name) {
         this.name = name;
     }
-    
     setType(type) {
         this.type = type;
     }
-    
     setPremiereDate(premiereDate) {
         this.premiereDate = premiereDate;
     }
-    
     setSeasons(seasons) {
         this.seasons = seasons;
     }
-    
-    setOriginalUrl(ourl) {
-        this.ourl = ourl;
+    setSortDate(sortDate) {
+        this.sortDate = sortDate;
     }
-    
     setActors(actors) {
         this.actors = actors;
     }
-    
     setDirectors(directors) {
         this.directors = directors;
     }
-    
     setCreators(creators) {
         this.creators = creators;
     }
-    
-    setPosterUrl(posterUrl) {
-        this.posterUrl = posterUrl;
-    }
-    
     setSummary(summary) {
         this.summary = summary;
     }
-    
-    setImdbPath(imdbPath) {
-        this.imdbPath = imdbPath;
+    setYear(sortDate) {
+        this.year = sortDate.split('-')[0];
     }
-    
-    setImdbId(imdbPath) {
-        const explodedPath = imdbPath.split('/');
-        this.imdbPath = explodedPath[2] || null;
+    setSlug(name,year,type) {
+        const cleanName = name.toLowerCase().replace(/\s/g,'');
+        this.slug = cleanName + '<|>' + year + '<|>' + type.toLowerCase()[0];
+    }
+    addIdentifier(id, from) {
+        this.indentifier.push({'from': from, 'value': id});
+    }
+    addCategory(category, from) {
+        this.category.push({'from': from, 'value': category});
+    }
+    addLink(link, from) {
+        this.link.push({'from': from, 'value': link});
+    }
+    addPoster(url, from) {
+        this.poster.push({'from': from, 'value': url});
     }
 
     get(attributeName) {
@@ -82,27 +110,3 @@ class Media {
 
 }
 module.exports =  Media;
-
-"id": 4846,
-"categoryId": "titles",
-"category": "Only On Netflix",
-"name": "Club De Cuervos",
-"description": "",
-"runTime": "",
-"type": "series",
-"distribution": "global",
-"distributionComments": "",
-"specialFormats": "",
-"premiereDate": "29 septembre 2017",
-"seasons": 2,
-"uri": "/fr/only-on-netflix/4846",
-"locale": "fr",
-"sortDate": "2017-09-29",
-"actors": "Luis Gerardo Méndez, Mariana Treviño, Stephanie Cayo...",
-"directors": "",
-"creators": "Gary Alazraki, Michael Lam...",
-"posterUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTk1NDQ3NzY1Ml5BMl5BanBnXkFtZTgwMzM4ODc0MzI@._V1_UY268_CR1,0,182,268_AL_.jpg",
-"mediaLink": "/title/tt4680240/?ref_=fn_al_tt_1",
-"summary": "\n                    When the patriarch of a prominent family dies, his heirs battle to determine who will gain control of his beloved soccer team: The Cuervos of Nuevo Toledo.\n            ",
-"localPath": "https://ucarecdn.com/080267c0-08c7-4368-9510-653491e07033/MV5BMTk1NDQ3NzY1Ml5BMl5BanBnXkFtZTgwMzM4ODc0MzI_V1_UY268_CR10182268_AL_.jpg",
-"uuid": "9ca8db10-aecd-11e7-8a70-fd15344748aa"
