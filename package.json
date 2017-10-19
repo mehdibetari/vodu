@@ -15,6 +15,7 @@
     "querybase": "^0.6.0",
     "request": "latest",
     "uploadcare": "^0.4.3",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "yargs": "^9.0.1"
   }
 }
