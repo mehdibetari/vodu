@@ -12,6 +12,8 @@ You need two third party API account (freemium): UPLOADCARE & FIREBASE to store 
 
 ## Getting started
 
+### Step 0 : NodeJS is required >= v6.9.1 on your system
+
 ### Step 1 : Set your API credentials for Uploadcare
 ```
 touch src/config-keys.js
@@ -49,6 +51,14 @@ npm install
 ```
 node src/refresh-upcoming.js
 ```
+![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-screenshot.jpg)
+
+You can also use prompt mode to add manualy a poster url does not founded by the scraper.
+```
+node src/refresh-upcoming.js --prompt=y
+```
+![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-prompt-mode.jpg)
+
 ### Run the web server
 On production it run on port 80
 ```

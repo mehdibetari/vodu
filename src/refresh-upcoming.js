@@ -2,6 +2,7 @@ let fs              = require('fs');
 let async           = require('async');
 let colors          = require('colors');
 let prompt          = require('prompt');
+const argv          = require('yargs').argv;
 let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
@@ -79,7 +80,7 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
                 item.localPath = imdbInfos.localPath;
                 if (!item.localPath) {
                     netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), function(netflixPoster) {
-                        if (imdbInfos.localPath) {
+                        if ((!argv.prompt) || (argv.prompt &&  argv.prompt === 'y' && imdbInfos.localPath)) {
                             postersCpt++;
                             item.posterUrl = netflixPoster.posterUrl;
                             item.localPath = netflixPoster.localPath;
