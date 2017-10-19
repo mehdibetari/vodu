@@ -51,13 +51,13 @@ npm install
 ```
 node src/refresh-upcoming.js
 ```
-![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-screenshot.jpg)
+![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-screenshot.png)
 
 You can also use prompt mode to add manualy a poster url does not founded by the scraper.
 ```
 node src/refresh-upcoming.js --prompt=y
 ```
-![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-prompt-mode.jpg)
+![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-prompt-mode.png)
 
 ### Run the web server
 On production it run on port 80
