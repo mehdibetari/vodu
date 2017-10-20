@@ -6,6 +6,7 @@ const argv          = require('yargs').argv;
 let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
+const Filestorage   = require('./media-storage/Filestorage');
 
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
@@ -29,11 +30,12 @@ function compareUpcomings (newUpcomings, oldUpcomings) {
     return JSON.stringify(newUpcomings) === JSON.stringify(oldUpcomings);
 }
 
-function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback) {
+function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, uploadcare, callback) {
     let upComings = [];
     let cpt = 1;
     let postersCpt = 0;
     let metaCpt = 0;
+    let posterStore = new Filestorage();
     async.mapSeries(newUpcomings, function(item, done) {
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
@@ -56,7 +58,7 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
                 done();
             }
             else {
-                imdbScraper.getMedia(item.name, getMediaStartYear(item), false, function(imdbInfos) {
+                imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
                     if (imdbInfos.actors) metaCpt++;
                     item.actors = imdbInfos.actors;
                     item.directors = imdbInfos.directors;
@@ -68,7 +70,7 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
             }
         }
         else {
-            imdbScraper.getMedia(item.name, getMediaStartYear(item), true, function(imdbInfos) {
+            imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
                 if (imdbInfos.actors) metaCpt++;
                 if (imdbInfos.localPath) postersCpt++;
                 item.actors = imdbInfos.actors;
@@ -79,8 +81,8 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
                 item.summary = imdbInfos.summary;
                 item.localPath = imdbInfos.localPath;
                 if (!item.localPath) {
-                    netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), function(netflixPoster) {
-                        if ((!argv.prompt) || (argv.prompt &&  argv.prompt === 'y' && imdbInfos.localPath)) {
+                    netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
+                        if ((!argv.prompt) || (argv.prompt && imdbInfos.localPath)) {
                             postersCpt++;
                             item.posterUrl = netflixPoster.posterUrl;
                             item.localPath = netflixPoster.localPath;
@@ -89,13 +91,16 @@ function updateUpcoming (newUpcomings, oldUpcomings = [], mediasCount, callback)
                         }
                         else {
                             prompt.start();
+                            prompt.message = colors.rainbow('Enter manualy');
                             prompt.get(['posterUrl'], function (err, result) {
-                                console.log('Command-line posterUrl received:',result.posterUrl);
-                                if (result.posterUrl) postersCpt++;
-                                item.posterUrl = result.posterUrl;
-                                item.localPath = result.posterUrl;
-                                upComings.push(item);
-                                done();
+                                posterStore.download(result.posterUrl,'./public/posters/' + item.name + '+' + getMediaStartYear(item) + '.jpg', uploadcare, function (path) {
+                                    console.log('Command-line posterUrl received:',result.posterUrl);
+                                    if (path) postersCpt++;
+                                    item.posterUrl = path;
+                                    item.localPath = result.posterUrl;
+                                    upComings.push(item);
+                                    done();
+                                });
                             });
                         }
                     });
@@ -132,7 +137,7 @@ function saveStore (upComings) {
     });
 }
 
-function refreshNetflixUpcoming () {
+function refreshNetflixUpcoming (uploadcare) {
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     netflixProvider.getUpcomingMedia(function(netflixUpcoming) {
         // console.log(netflixUpcoming);
@@ -144,7 +149,7 @@ function refreshNetflixUpcoming () {
             console.log((compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items)? doesntChangeMEssage : hasChangeMessage));
             console.log('');
             if (!compareUpcomings(netflixUpcoming.items, netflixUpcomingStore.items)) {
-                updateUpcoming(netflixUpcoming.items, netflixUpcomingStore.items, netflixUpcoming.meta.result.totalItems, function(items) {
+                updateUpcoming(netflixUpcoming.items, netflixUpcomingStore.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
                     newUpcomings.timeStamp = Date.now();
                     newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
                     newUpcomings.items = items;
@@ -162,5 +167,5 @@ function refreshNetflixUpcoming () {
         });
     });
 }
-
-refreshNetflixUpcoming();
+const uploadcare = argv.uploadcare;
+refreshNetflixUpcoming(uploadcare);
