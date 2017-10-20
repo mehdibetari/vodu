@@ -1,7 +1,7 @@
 const argv = require('yargs').argv;
 
 let router = require('./server/router');
-if (argv.env && argv.env === 'dev') {
+if (argv.dev) {
     router.listen('8888');
 }
 else {
