@@ -1,10 +1,9 @@
-let fs = require('fs');
-let request = require('request');
-let cheerio = require('cheerio');
-let async   = require('async');
-let colors = require('colors');
-let configKeys = require('../config-keys');
-let uploadcare = require('uploadcare')(configKeys.uploadcare.public_key, configKeys.uploadcare.private_key);
+let fs            = require('fs');
+let request       = require('request');
+let cheerio       = require('cheerio');
+let async         = require('async');
+let colors        = require('colors');
+const Filestorage = require('../media-storage/Filestorage');
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
@@ -15,8 +14,9 @@ function getMediaListUrl (name, year) {
         encodeURIComponent(name + '+' +year) + 
         imdbSearchEndUrl;
 }
-function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback) {
+function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
+    let posterStore = new Filestorage();
     async.eachSeries(mediasFounded, function(media, done){
         console.log('      Matching test : ',$(media).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
         // console.log($(media).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) );
@@ -51,7 +51,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
                     if (enableDownload) {
-                        download(posterUrl,'./public/posters/' + name + '+' +year + '.jpg', function (path) {
+                        posterStore.download(posterUrl,'./public/posters/' + name + '+' +year + '.jpg', uploadcare, function (path) {
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);
@@ -80,7 +80,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
         callback({});
     });
 }
-function getMedia(name, year, enableDownload, callback) {
+function getMedia(name, year, enableDownload, uploadcare, callback) {
     console.log(colors.inverse('IMDB media to found'),colors.bgGreen.white(name,year));
 
     let url = getMediaListUrl(name, year);
@@ -109,22 +109,37 @@ function getMedia(name, year, enableDownload, callback) {
                             $ = cheerio.load(mediasHtml);
                             mediasFounded = $('.findList tbody tr.findResult td.result_text');
                             if (!mediasFounded || mediasFounded.length < 1) {
-                                console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
-                                callback({});
+                                console.log('      List scrappin '+ colors.red('WITHOUT MEDIA'));
+                                let now = new Date();
+                                year = now.getFullYear();
+                                url = getMediaListUrl(name, year);
+                                request(url, function(mediasError, mediasResponse, mediasHtml){
+                                    console.log('    4rd List scrappin with current year '+ colors.green('SUCCESS'));
+                                    titleToFound = name + ' (' + year + ')';
+                                    $ = cheerio.load(mediasHtml);
+                                    mediasFounded = $('.findList tbody tr.findResult td.result_text');
+                                    if (!mediasFounded || mediasFounded.length < 1) {
+                                        console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ NO LIST FOUNDED'));
+                                        callback({});
+                                    }
+                                    else {
+                                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
+                                    }
+                                });
                             }
                             else {
-                                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
+                                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
                             }
                         });
 
                     }
                     else {
-                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
+                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
                     }
                 });
             }
             else {
-                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, callback);
+                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
             }
         }
         else {
@@ -132,23 +147,6 @@ function getMedia(name, year, enableDownload, callback) {
             // console.log(mediasError);
             callback({});
         }
-    });
-
-}
-
-function download (uri, filename, callback){
-    if (!uri) return callback(false);
-    request.head(uri, function(err, res, body){
-        // console.log('content-type:', res.headers['content-type']);
-        // console.log('content-length:', res.headers['content-length']);
-        request(uri).pipe(fs.createWriteStream(filename)).on('close', function(){
-            //Upload from URL
-            uploadcare.file.fromUrl(uri, function(err,res){
-                //Res should contain returned file ID
-                let uplc_filepath = 'https://ucarecdn.com/' + res.file_id + '/' + res.filename;
-                callback(uplc_filepath);
-            });
-        });
     });
 }
 

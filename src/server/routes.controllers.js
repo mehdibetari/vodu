@@ -20,6 +20,9 @@ class RoutesControllers {
                         return console.log(error);
                     }
                     const netflixUpcoming = JSON.parse(response);
+                    netflixUpcoming.items.sort(function(a,b) { 
+                        return new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime();
+                    });
                     const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
                     const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
