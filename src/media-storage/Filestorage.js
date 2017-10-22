@@ -33,7 +33,7 @@ class Filestorage {
                 fs.mkdirSync('./public/posters/');
             }
             request(uri).pipe(fs.createWriteStream(filename)).on('close', function(){
-                callback(true);
+                callback('/posters/' + filename);
             });
         });
     }
