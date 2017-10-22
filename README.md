@@ -55,14 +55,14 @@ node src/refresh-upcoming.js
 
 You can also use prompt mode to add manualy a poster url does not founded by the scraper.
 ```
-node src/refresh-upcoming.js --prompt
+node src/refresh-upcoming.js --prt
 ```
 ![PROMPT-MODE](http://alloserie.fr/images/terminal-refresh-upcomings-prompt-mode.png)
 
 By default posters are localy downloaded on `/public/posters` folder use option `--uploadcare` to store posters in
 
 ```
-node src/refresh-upcoming.js --uploadcare
+node src/refresh-upcoming.js --upc
 ```
 
 ### Run the web server
