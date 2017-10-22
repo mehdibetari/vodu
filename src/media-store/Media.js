@@ -53,31 +53,31 @@ class Media {
         this.poster = [];
     }
     setName(name) {
-        this.name = name;
+        this.name = name || '';
     }
     setType(type) {
-        this.type = type;
+        this.type = type || '';
     }
     setPremiereDate(premiereDate) {
-        this.premiereDate = premiereDate;
+        this.premiereDate = premiereDate || '';
     }
     setSeasons(seasons) {
-        this.seasons = seasons;
+        this.seasons = seasons || '';
     }
     setSortDate(sortDate) {
-        this.sortDate = sortDate;
+        this.sortDate = sortDate || '';
     }
     setActors(actors) {
-        this.actors = actors;
+        this.actors = actors || '';
     }
     setDirectors(directors) {
-        this.directors = directors;
+        this.directors = directors || '';
     }
     setCreators(creators) {
-        this.creators = creators;
+        this.creators = creators || '';
     }
     setSummary(summary) {
-        this.summary = summary;
+        this.summary = summary || '';
     }
     setYear(sortDate) {
         this.year = sortDate.split('-')[0];
