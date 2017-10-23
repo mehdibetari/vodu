@@ -38,17 +38,20 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
             var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
             if (minOnePoster) {
                 console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                item.posterUrl = getDataFrom(itemAlreadyExist.poster, mediaFrom);
-                item.localPath = getDataFrom(itemAlreadyExist.poster,'own-cloud-storage');
-                item.mediaLink = getDataFrom(itemAlreadyExist.link, mediaFrom);
+                item.posterUrl    = getDataFrom(itemAlreadyExist.poster, mediaFrom);
+                item.localPath    = getDataFrom(itemAlreadyExist.poster,'own-cloud-storage');
+                item.mediaLink    = getDataFrom(itemAlreadyExist.link, mediaFrom);
+                item.actors       = itemAlreadyExist.actors;
+                item.directors    = itemAlreadyExist.directors;
+                item.creators     = itemAlreadyExist.creators;
+                item.summary      = itemAlreadyExist.summary;
+                item.premiereDate = itemAlreadyExist.premiereDate;
+                item.seasons      = itemAlreadyExist.seasons;
+                item.sortDate     = itemAlreadyExist.sortDate;
                 
-                var minActorsAndOneMeta = itemAlreadyExist.actors && (itemAlreadyExist.directors || itemAlreadyExist.creators || itemAlreadyExist.summary);
+                var minActorsAndOneMeta = item.actors && (item.directors || item.creators || item.summary);
                 if (minActorsAndOneMeta) {
                     console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                    item.actors    = itemAlreadyExist.actors;
-                    item.directors = itemAlreadyExist.directors;
-                    item.creators  = itemAlreadyExist.creators;
-                    item.summary   = itemAlreadyExist.summary;
                     upComings.push(item);
                     done();
                 }
@@ -56,10 +59,10 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
                     imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
                         console.log(colors.inverse('meta UNFINISHED'),colors.bgRed.white(item.name, getMediaStartYear(item)));
                         if (imdbInfos.actors) metaCpt++;
-                        item.actors    = imdbInfos.actors    || itemAlreadyExist.actors;
-                        item.directors = imdbInfos.directors || itemAlreadyExist.directors;
-                        item.creators  = imdbInfos.creators  || itemAlreadyExist.creators;
-                        item.summary   = imdbInfos.summary   || itemAlreadyExist.summary;
+                        item.actors    = item.actors    || imdbInfos.actors;
+                        item.directors = item.directors || imdbInfos.directors;
+                        item.creators  = item.creators  || imdbInfos.creators;
+                        item.summary   = item.summary   || imdbInfos.summary;
                         item.posterUrl = item.posterUrl || imdbInfos.posterUrl;
                         item.localPath = item.localPath || imdbInfos.localPath;
                         item.mediaLink = item.mediaLink || imdbInfos.mediaLink;
