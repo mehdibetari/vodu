@@ -28,32 +28,35 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
         console.log(colors.inverse('#',cpt,'/',mediasCount));
         let itemMedia = new Media(item, mediaFrom);
         mediaStore.getMedia(itemMedia, function(itemAlreadyExist, error){
-            if (itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length) {
+            
+            var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
+            if (minOnePoster) {
                 console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                postersCpt++;
                 item.posterUrl = itemAlreadyExist.poster.map((poster) => poster.from === mediaFrom).value;
                 item.localPath = itemAlreadyExist.poster.map((poster) => poster.from === 'own-cloud-storage').value;
-                if (itemAlreadyExist.actors && (itemAlreadyExist.directors || itemAlreadyExist.creators || itemAlreadyExist.summary)) {
+                item.mediaLink = (itemAlreadyExist.link && ~itemAlreadyExist.link.length) ? itemAlreadyExist.link.map((link) => link.from === mediaFrom).value : null;
+                
+                var minActorsAndOneMeta = itemAlreadyExist.actors && (itemAlreadyExist.directors || itemAlreadyExist.creators || itemAlreadyExist.summary);
+                if (minActorsAndOneMeta) {
                     console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                    metaCpt++;
-                    item.actors = itemAlreadyExist.actors;
+                    item.actors    = itemAlreadyExist.actors;
                     item.directors = itemAlreadyExist.directors;
-                    item.creators = itemAlreadyExist.creators;
-                    item.summary = itemAlreadyExist.summary;
+                    item.creators  = itemAlreadyExist.creators;
+                    item.summary   = itemAlreadyExist.summary;
                     upComings.push(item);
-                    let updatedMedia = new Media(item, mediaFrom);
-                    mediaStore.setMedia(updatedMedia, function(error){
-                        if (error) console.log('Updated Item failed to put in Firestore error: ', error);
-                        done();
-                    });
+                    done();
                 }
                 else {
                     imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
+                        console.log(colors.inverse('meta UNFINISHED'),colors.bgRed.white(item.name, getMediaStartYear(item)));
                         if (imdbInfos.actors) metaCpt++;
-                        item.actors = imdbInfos.actors;
-                        item.directors = imdbInfos.directors;
-                        item.creators = imdbInfos.creators;
-                        item.summary = imdbInfos.summary;
+                        item.actors    = imdbInfos.actors    || itemAlreadyExist.actors;
+                        item.directors = imdbInfos.directors || itemAlreadyExist.directors;
+                        item.creators  = imdbInfos.creators  || itemAlreadyExist.creators;
+                        item.summary   = imdbInfos.summary   || itemAlreadyExist.summary;
+                        item.posterUrl = item.posterUrl || imdbInfos.posterUrl;
+                        item.localPath = item.localPath || imdbInfos.localPath;
+                        item.mediaLink = item.mediaLink || imdbInfos.mediaLink;
                         upComings.push(item);
                         let updatedMedia = new Media(item, mediaFrom);
                         mediaStore.setMedia(updatedMedia, function(error){
@@ -67,12 +70,13 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
                 imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
                     if (imdbInfos.actors) metaCpt++;
                     if (imdbInfos.localPath) postersCpt++;
-                    item.actors = imdbInfos.actors;
-                    item.directors = imdbInfos.directors;
-                    item.creators = imdbInfos.creators;
+
+                    item.actors    = imdbInfos.actors    || itemAlreadyExist.actors;
+                    item.directors = imdbInfos.directors || itemAlreadyExist.directors;
+                    item.creators  = imdbInfos.creators  || itemAlreadyExist.creators;
+                    item.summary   = imdbInfos.summary   || itemAlreadyExist.summary;
+                    item.mediaLink = imdbInfos.mediaLink || itemAlreadyExist.mediaLink;
                     item.posterUrl = imdbInfos.posterUrl;
-                    item.mediaLink = imdbInfos.mediaLink;
-                    item.summary = imdbInfos.summary;
                     item.localPath = imdbInfos.localPath;
                     if (!item.localPath) {
                         netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
