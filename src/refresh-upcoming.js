@@ -15,6 +15,12 @@ const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
 const uploadcare = argv.upc;
 refreshNetflixUpcoming(uploadcare);
 
+function getDataFrom(Datas = [], from) {
+    if (!~Datas.length) return '';
+    var Data = Datas.filter(data => data.from === from);
+    return Data[0].value || '';
+}
+
 function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
     let upComings = [];
     let cpt = 1;
@@ -32,9 +38,9 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
             var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
             if (minOnePoster) {
                 console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                item.posterUrl = itemAlreadyExist.poster.map((poster) => poster.from === mediaFrom).value;
-                item.localPath = itemAlreadyExist.poster.map((poster) => poster.from === 'own-cloud-storage').value;
-                item.mediaLink = (itemAlreadyExist.link && ~itemAlreadyExist.link.length) ? itemAlreadyExist.link.map((link) => link.from === mediaFrom).value : null;
+                item.posterUrl = getDataFrom(itemAlreadyExist.poster, mediaFrom);
+                item.localPath = getDataFrom(itemAlreadyExist.poster,'own-cloud-storage');
+                item.mediaLink = getDataFrom(itemAlreadyExist.link, mediaFrom);
                 
                 var minActorsAndOneMeta = itemAlreadyExist.actors && (itemAlreadyExist.directors || itemAlreadyExist.creators || itemAlreadyExist.summary);
                 if (minActorsAndOneMeta) {
