@@ -18,6 +18,7 @@ refreshNetflixUpcoming(uploadcare);
 function getDataFrom(Datas = [], from) {
     if (!~Datas.length) return '';
     var Data = Datas.filter(data => data.from === from);
+    if (!Data[0] || !Data[0].value) return '';
     return Data[0].value || '';
 }
 
