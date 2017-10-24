@@ -6,12 +6,12 @@ VODU - Video On Demand Upcomings
 
 This project scrape for you Upcomings series and movies provided by a famous VOD provider and serve result on a responsive website.
 
-[[Uploadcare-node](https://github.com/RexMorgan/uploadcare-node)]
-[[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup/)]
-
 [Demo](http://alloserie.fr)
 
 You need two third party API account (freemium): UPLOADCARE & FIREBASE to store Posters and already scraped media.
+
+[[Uploadcare-node](https://github.com/RexMorgan/uploadcare-node)]
+[[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup/)]
 
 ## Getting started
 
