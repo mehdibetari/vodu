@@ -10,6 +10,9 @@ This project scrape for you Upcomings series and movies provided by a famous VOD
 
 You need two third party API account (freemium): UPLOADCARE & FIREBASE to store Posters and already scraped media.
 
+[[Uploadcare-node](https://github.com/RexMorgan/uploadcare-node)]
+[[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup/)]
+
 ## Getting started
 
 ### Step 0 : NodeJS is required >= v6.9.1 on your system
@@ -76,5 +79,4 @@ Localy
 node src/server.js --dev
 ```
 Go to localhost:8888
-
 
