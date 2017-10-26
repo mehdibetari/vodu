@@ -1,3 +1,7 @@
+/**
+ * This script check all posters stored on uploadcare and purpose to remove all not used in Firestore (scrapped media database)
+ */
+
 const configKeys = require('../config-keys');
 let fs           = require('fs');
 let request      = require('request');
@@ -10,6 +14,7 @@ const maxLimit = 1000;
 let mediaStore = new Firestore();
 let cpt = 0;
 let filesToRemove = [];
+
 uploadcare.files.list({page: 1, limit: maxLimit}, function(error,response){
     console.log('Uploadcare Files: ',response.total);
     if (response && response.total > 0) {
