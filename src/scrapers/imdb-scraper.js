@@ -51,7 +51,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
                     if (enableDownload) {
-                        posterStore.download(posterUrl,'./public/posters/' + name + '+' +year + '.jpg', uploadcare, function (path) {
+                        posterStore.download(posterUrl,'./public/posters/' + name.replace('/','') + '+' +year + '.jpg', uploadcare, function (path) {
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);

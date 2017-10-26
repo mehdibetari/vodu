@@ -15,22 +15,79 @@ const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
 const uploadcare = argv.upc;
 refreshNetflixUpcoming(uploadcare);
 
-function getDataFrom(Datas = [], from) {
+function getDataFrom(from, Datas = []) {
     if (!~Datas.length) return '';
     var Data = Datas.filter(data => data.from === from);
     if (!Data[0] || !Data[0].value) return '';
     return Data[0].value || '';
 }
 
+function itemPatchWithExisting (item, existing, from) {
+    item.posterUrl    = getDataFrom(from, existing.poster);
+    item.localPath    = getDataFrom('own-cloud-storage', existing.poster);
+    item.mediaLink    = getDataFrom(from, existing.link);
+    item.actors       = existing.actors;
+    item.directors    = existing.directors;
+    item.creators     = existing.creators;
+    item.summary      = existing.summary;
+    item.premiereDate = existing.premiereDate;
+    item.seasons      = existing.seasons;
+    item.sortDate     = existing.sortDate;
+    return item;
+}
+
+function itemPatchWithImdbScrap (item, scrap) {
+    item.actors    = item.actors    || scrap.actors;
+    item.directors = item.directors || scrap.directors;
+    item.creators  = item.creators  || scrap.creators;
+    item.summary   = item.summary   || scrap.summary;
+    item.posterUrl = item.posterUrl || scrap.posterUrl;
+    item.localPath = item.localPath || scrap.localPath;
+    item.mediaLink = item.mediaLink || scrap.mediaLink;
+    return item;
+}
+
+function itemBuildWithImdbScrapOrExisting (item, scrap, existing = {}) {
+    item.actors    = scrap.actors    || existing.actors;
+    item.directors = scrap.directors || existing.directors;
+    item.creators  = scrap.creators  || existing.creators;
+    item.summary   = scrap.summary   || existing.summary;
+    item.mediaLink = scrap.mediaLink || existing.mediaLink;
+    item.posterUrl = scrap.posterUrl;
+    item.localPath = scrap.localPath;
+    return item;
+}
+
+function mediaAlreadyExistWithPoster (item, itemAlreadyExist, mediaFrom, mediaStore, callback) {
+    console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
+    item = itemPatchWithExisting(item, itemAlreadyExist, mediaFrom);
+    var minActorsAndOneMeta = item.actors && (item.directors || item.creators || item.summary);
+    if (minActorsAndOneMeta) {
+        console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
+        callback(item);
+    }
+    else {
+        imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
+            console.log(colors.inverse('meta UNFINISHED'),colors.bgRed.white(item.name, getMediaStartYear(item)));
+            item = itemPatchWithImdbScrap(item, imdbInfos);
+            let updatedMedia = new Media(item, mediaFrom);
+            mediaStore.setMedia(updatedMedia, function(error){
+                if (error) console.log('Updated Item failed to put in Firestore error: ', error);
+                callback(item);
+            });
+        });
+    }
+}
+
 function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
     let upComings = [];
-    let cpt = 1;
+    let cpt = 0;
     let postersCpt = 0;
-    let metaCpt = 0;
     let posterStore = new Filestorage();
     let mediaStore = new Firestore();
     const mediaFrom = 'netflix-upcomings';
     async.mapSeries(newUpcomings, function(item, done) {
+        cpt++;
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
         let itemMedia = new Media(item, mediaFrom);
@@ -38,87 +95,23 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
             
             var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
             if (minOnePoster) {
-                console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-                item.posterUrl    = getDataFrom(itemAlreadyExist.poster, mediaFrom);
-                item.localPath    = getDataFrom(itemAlreadyExist.poster,'own-cloud-storage');
-                item.mediaLink    = getDataFrom(itemAlreadyExist.link, mediaFrom);
-                item.actors       = itemAlreadyExist.actors;
-                item.directors    = itemAlreadyExist.directors;
-                item.creators     = itemAlreadyExist.creators;
-                item.summary      = itemAlreadyExist.summary;
-                item.premiereDate = itemAlreadyExist.premiereDate;
-                item.seasons      = itemAlreadyExist.seasons;
-                item.sortDate     = itemAlreadyExist.sortDate;
-                
-                var minActorsAndOneMeta = item.actors && (item.directors || item.creators || item.summary);
-                if (minActorsAndOneMeta) {
-                    console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
+                mediaAlreadyExistWithPoster(item, itemAlreadyExist, mediaFrom, mediaStore, function(item){
                     upComings.push(item);
                     done();
-                }
-                else {
-                    imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
-                        console.log(colors.inverse('meta UNFINISHED'),colors.bgRed.white(item.name, getMediaStartYear(item)));
-                        if (imdbInfos.actors) metaCpt++;
-                        item.actors    = item.actors    || imdbInfos.actors;
-                        item.directors = item.directors || imdbInfos.directors;
-                        item.creators  = item.creators  || imdbInfos.creators;
-                        item.summary   = item.summary   || imdbInfos.summary;
-                        item.posterUrl = item.posterUrl || imdbInfos.posterUrl;
-                        item.localPath = item.localPath || imdbInfos.localPath;
-                        item.mediaLink = item.mediaLink || imdbInfos.mediaLink;
-                        upComings.push(item);
-                        let updatedMedia = new Media(item, mediaFrom);
-                        mediaStore.setMedia(updatedMedia, function(error){
-                            if (error) console.log('Updated Item failed to put in Firestore error: ', error);
-                            done();
-                        });
-                    });
-                }
+                });
             }
             else {
                 imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
-                    if (imdbInfos.actors) metaCpt++;
                     if (imdbInfos.localPath) postersCpt++;
-
-                    item.actors    = imdbInfos.actors    || itemAlreadyExist.actors;
-                    item.directors = imdbInfos.directors || itemAlreadyExist.directors;
-                    item.creators  = imdbInfos.creators  || itemAlreadyExist.creators;
-                    item.summary   = imdbInfos.summary   || itemAlreadyExist.summary;
-                    item.mediaLink = imdbInfos.mediaLink || itemAlreadyExist.mediaLink;
-                    item.posterUrl = imdbInfos.posterUrl;
-                    item.localPath = imdbInfos.localPath;
+                    item = itemBuildWithImdbScrapOrExisting(item, imdbInfos, itemAlreadyExist || {});
                     if (!item.localPath) {
-                        netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
-                            if ((!argv.prt) || (argv.prt && imdbInfos.localPath)) {
-                                postersCpt++;
-                                item.posterUrl = netflixPoster.posterUrl;
-                                item.localPath = netflixPoster.localPath;
-                                upComings.push(item);
-                                let updatedMedia = new Media(item, mediaFrom);
-                                mediaStore.setMedia(updatedMedia, function(error){
-                                    if (error) console.log('Updated Item failed to post in Firestore error: ', error);
-                                    done();
-                                });
-                            }
-                            else {
-                                prompt.start();
-                                prompt.message = colors.rainbow('Enter manualy');
-                                prompt.get(['posterUrl'], function (err, result) {
-                                    posterStore.download(result.posterUrl,'./public/posters/' + item.name + '+' + getMediaStartYear(item) + '.jpg', uploadcare, function (path) {
-                                        console.log('Command-line posterUrl received:',result.posterUrl);
-                                        if (path) postersCpt++;
-                                        item.posterUrl = path;
-                                        item.localPath = result.posterUrl;
-                                        upComings.push(item);
-                                        let updatedMedia = new Media(item, mediaFrom);
-                                        mediaStore.setMedia(updatedMedia, function(error){
-                                            if (error) console.log('Updated Item failed to post in Firestore after prompt error: ', error);
-                                            done();
-                                        });
-                                    });
-                                });
-                            }
+                        trySearchPosterOnNetflixOrPrompt(item, imdbInfos, uploadcare, function(){
+                            upComings.push(item);
+                            let updatedMedia = new Media(item, mediaFrom);
+                            mediaStore.setMedia(updatedMedia, function(error){
+                                if (error) console.log('Updated Item failed to post in Firestore after prompt error: ', error);
+                                done();
+                            });
                         });
                     }
                     else {
@@ -131,12 +124,34 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
                     }
                 });
             }
-            cpt++;
         });
     }, function() {
         console.log('');
-        console.log(colors.bgYellow.white('POSTER DOWNLOADED =>',postersCpt,'/', mediasCount, ' META SCRAPPED =>',metaCpt,'/', mediasCount));
+        console.log(colors.bgYellow.white('POSTER DOWNLOADED =>',postersCpt,'/', mediasCount));
         callback(upComings);
+    });
+}
+
+function trySearchPosterOnNetflixOrPrompt (item, imdbInfos, uploadcare, callback) {
+    
+    netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
+        if ((!argv.prt) || (argv.prt && imdbInfos.localPath)) {
+            item.posterUrl = netflixPoster.posterUrl;
+            item.localPath = netflixPoster.localPath;
+            callback(item);
+        }
+        else {
+            prompt.start();
+            prompt.message = colors.rainbow('Enter manualy');
+            prompt.get(['posterUrl'], function (err, result) {
+                posterStore.download(result.posterUrl,'./public/posters/' + item.name.replace('/','') + '+' + getMediaStartYear(item) + '.jpg', uploadcare, function (path) {
+                    console.log('Command-line posterUrl received:',result.posterUrl);
+                    item.posterUrl = path;
+                    item.localPath = result.posterUrl;
+                    callback(item);
+                });
+            });
+        }
     });
 }
 
