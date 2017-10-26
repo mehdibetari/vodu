@@ -18,7 +18,7 @@ function getPoster (uri, name, year, uploadcare, callback) {
                 posterUri = $(posterUri).attr('src');
                 console.log('    NETFLIX POSTER URL : '+posterUri);
                 let posterStore = new Filestorage();
-                posterStore.download(posterUri,'./public/posters/' + name + '+' + year + '.jpg', uploadcare, function (path) {
+                posterStore.download(posterUri,'./public/posters/' + name.replace('/','') + '+' + year + '.jpg', uploadcare, function (path) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
