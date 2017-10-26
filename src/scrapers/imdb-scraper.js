@@ -1,4 +1,3 @@
-let fs            = require('fs');
 let request       = require('request');
 let cheerio       = require('cheerio');
 let async         = require('async');
@@ -75,7 +74,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
             console.log('        Media title '+ colors.red('DONT MATCH'));
             done();
         }
-    }, function(e) {
+    }, function() {
         console.log(colors.bgRed.white('MEDIA SEARCH ABORDED'),' => ',name,year,colors.magenta(' ✘ MEDIA NOT FOUND IN LIST'));
         callback({});
     });
