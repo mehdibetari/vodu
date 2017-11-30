@@ -18,7 +18,7 @@ app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
     routesControllers.weeklyList('netflix', req, res);
 });
 
-app.get('/packager/:input', function(req, res){
+app.get('/packager/:input*?', function(req, res){
     routesControllers.xspeedit(req, res);
 });
 

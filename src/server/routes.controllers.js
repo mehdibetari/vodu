@@ -115,7 +115,7 @@ class RoutesControllers {
     }
 
     xspeedit (req, res) {
-        packagerInstance = new Packager(req.params.input);
+        const packagerInstance = new Packager(req.params.input);
         res.setHeader('Content-Type', 'application/json');
         res.send({'packagedBoxes': packagerInstance.getBoxes(), 'count': packagerInstance.getBoxes().length});
     }
