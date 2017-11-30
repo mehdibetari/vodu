@@ -3,7 +3,7 @@ let dust    = require('dustjs-linkedin');
 let fs      = require('fs');
 let metaService = require('./meta.service');
 let configServer = require('./config-server').configServer;
-let packagerInstance = require('../xspeedit/XspeedIt');
+const Packager = require('../xspeedit/XspeedIt');
 
 class RoutesControllers {
     constructor() {
