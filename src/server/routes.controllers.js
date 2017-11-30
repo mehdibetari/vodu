@@ -3,6 +3,7 @@ let dust    = require('dustjs-linkedin');
 let fs      = require('fs');
 let metaService = require('./meta.service');
 let configServer = require('./config-server').configServer;
+let packagerInstance = require('../xspeedit/XspeedIt');
 
 class RoutesControllers {
     constructor() {
@@ -111,6 +112,12 @@ class RoutesControllers {
                 }
             });
         });
+    }
+
+    xspeedit (req, res) {
+        packagerInstance = new Packager(req.params.input);
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'packagedBoxes': packagerInstance.getBoxes(), 'count': packagerInstance.getBoxes().length});
     }
 }
 

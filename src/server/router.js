@@ -18,5 +18,9 @@ app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
     routesControllers.weeklyList('netflix', req, res);
 });
 
+app.get('/packager/:input', function(req, res){
+    routesControllers.xspeedit(req, res);
+});
+
 app.use(express.static('./public'));
 exports = module.exports = app;
