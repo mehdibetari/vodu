@@ -2,7 +2,6 @@ let fs              = require('fs');
 let async           = require('async');
 let colors          = require('colors');
 let prompt          = require('prompt');
-const argv          = require('yargs').argv;
 let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
@@ -12,8 +11,7 @@ let Media           = require('./media-store/Media');
 
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
-const uploadcare = argv.upc;
-refreshNetflixUpcoming(uploadcare);
+let argv = {};
 
 function getDataFrom(from, Datas = []) {
     if (!~Datas.length) return '';
@@ -173,7 +171,8 @@ function saveStore (upComings) {
     });
 }
 
-function refreshNetflixUpcoming (uploadcare) {
+function refreshNetflixUpcoming (uploadcare, prompt) {
+    argv.prt = prompt;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     netflixProvider.getUpcomingMedia(function(netflixUpcoming) {
         // console.log(netflixUpcoming);
@@ -188,3 +187,5 @@ function refreshNetflixUpcoming (uploadcare) {
         });
     });
 }
+
+module.exports = refreshNetflixUpcoming;

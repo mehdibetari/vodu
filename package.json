@@ -4,8 +4,12 @@
   "description": "Scrape le web.",
   "main": "server.js",
   "author": "Scotch",
+  "scripts": {
+    "cli": "node vodu-cli.js"
+  },
   "dependencies": {
     "async": "^1.5.2",
+    "atob": "^2.0.3",
     "cheerio": "latest",
     "colors": "^1.1.2",
     "dustjs-linkedin": "^2.7.5",

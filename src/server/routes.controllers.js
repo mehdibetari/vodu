@@ -4,6 +4,9 @@ let fs      = require('fs');
 let metaService = require('./meta.service');
 let configServer = require('./config-server').configServer;
 const Packager = require('../xspeedit/XspeedIt');
+const configKeys = require('../config-keys');
+const upcomings = require('../refresh-upcoming');
+const atob = require('atob');
 
 class RoutesControllers {
     constructor() {
@@ -118,6 +121,42 @@ class RoutesControllers {
         const packagerInstance = new Packager(req.params.input);
         res.setHeader('Content-Type', 'application/json');
         res.send({'packagedBoxes': packagerInstance.getBoxes(), 'count': packagerInstance.getBoxes().length});
+    }
+
+    refreshUpcomings (req, res) {
+        let badParam = false;
+        if (!req.params.key) {
+            badParam = true;
+        }
+        else {
+            const key = atob(req.params.key);
+            const dateString = this.getDateStringFormated();
+            const secret = key.replace(dateString,'');
+            if (secret === configKeys.secretApi['private_key']) {
+                upcomings(true);
+                res.status(200).send('In progress');
+            }
+            else {
+                badParam = true;
+            }
+
+        }
+        if (badParam) res.status(404).send('Not found');
+    }
+
+    getDateStringFormated () {
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; //January is 0!
+
+        const yyyy = today.getFullYear();
+        if(dd < 10){
+            dd = '0' + dd;
+        } 
+        if(mm < 10){
+            mm = '0' + mm;
+        } 
+        return yyyy + '-' + mm + '-' + dd;
     }
 }
 
