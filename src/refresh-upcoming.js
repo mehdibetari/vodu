@@ -12,6 +12,7 @@ let Media           = require('./media-store/Media');
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
 let argv = {};
+let uploadcare = false;
 
 function getDataFrom(from, Datas = []) {
     if (!~Datas.length) return '';
@@ -171,8 +172,9 @@ function saveStore (upComings) {
     });
 }
 
-function refreshNetflixUpcoming (uploadcare, prompt) {
+function refreshNetflixUpcoming (upc, prompt) {
     argv.prt = prompt;
+    uploadcare = upc;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     netflixProvider.getUpcomingMedia(function(netflixUpcoming) {
         // console.log(netflixUpcoming);
