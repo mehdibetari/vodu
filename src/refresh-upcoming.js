@@ -180,12 +180,15 @@ function refreshNetflixUpcoming (upc, prompt) {
         // console.log(netflixUpcoming);
         console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
         let newUpcomings = {};
-        updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
-            newUpcomings.timeStamp = Date.now();
-            newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
-            newUpcomings.items = items;
-            saveStore(newUpcomings);
-            console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+        netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
+            netflixUpcoming.items = netflixUpcoming.items.concat(upcomingMediaManual);
+            updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
+                newUpcomings.timeStamp = Date.now();
+                newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
+                newUpcomings.items = items;
+                saveStore(newUpcomings);
+                console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+            });
         });
     });
 }
