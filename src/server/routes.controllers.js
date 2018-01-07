@@ -14,42 +14,42 @@ class RoutesControllers {
 
     calendarList (wish, req, res) {
         switch(wish) {
-            case 'netflix':
-                fs.readFile(configServer.ALLOSERIE_NETFLIX_CALENDAR_LAYOUT, 'utf8', function (err,data) {
-                    if (err) {
-                        return console.log(err);
+        case 'netflix':
+            fs.readFile(configServer.ALLOSERIE_NETFLIX_CALENDAR_LAYOUT, 'utf8', (err,data) => {
+                if (err) {
+                    return console.log(err);
+                }
+                fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', (error,response) => {
+                    if (error) {
+                        return console.log(error);
                     }
-                    fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', function (error,response) {
-                        if (error) {
-                            return console.log(error);
+                    const netflixUpcoming = JSON.parse(response);
+                    netflixUpcoming.items.sort((a,b) => new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime());
+                    netflixUpcoming.items = this.removeMediaFromPreviousYear(netflixUpcoming.items);
+
+                    const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
+                    const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
+                    const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
+                    
+                    let tmpl = dust.compile(data, 'view-netflix');
+                    dust.loadSource(tmpl);
+                    let view = dust.render('view-netflix', { 
+                        list: netflixUpcoming.items, 
+                        lastUpdate: fullDate,
+                        meta: metaData
+                    }, 
+                    function(e, out) {
+                        if(e) {
+                            console.error(e);
+                        } else {
+                            // Finally, we'll just send out a message to the browser reminding you that this app does not have a UI.
+                            res.send(out);
                         }
-                        const netflixUpcoming = JSON.parse(response);
-                        netflixUpcoming.items.sort(function(a,b) { 
-                            return new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime();
-                        });
-                        const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
-                        const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
-                        const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
-                        
-                        let tmpl = dust.compile(data, 'view-netflix');
-                        dust.loadSource(tmpl);
-                        let view = dust.render('view-netflix', { 
-                            list: netflixUpcoming.items, 
-                            lastUpdate: fullDate,
-                            meta: metaData
-                        }, 
-                        function(e, out) {
-                            if(e) {
-                                console.error(e);
-                            } else {
-                                // Finally, we'll just send out a message to the browser reminding you that this app does not have a UI.
-                                res.send(out);
-                            }
-                        });
                     });
                 });
-                break;
-            case 'json-netflix':
+            });
+            break;
+        case 'json-netflix':
                 fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', function (error,response) {
                     if (error) {
                         return console.log(error);
@@ -157,6 +157,10 @@ class RoutesControllers {
             mm = '0' + mm;
         } 
         return yyyy + '-' + mm + '-' + dd;
+    }
+
+    removeMediaFromPreviousYear (medias) {
+        return medias.filter((item) => new Date(item.sortDate).getFullYear() != new Date().getFullYear() - 1);
     }
 }
 
