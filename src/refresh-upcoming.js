@@ -161,6 +161,9 @@ function getMediaStartYear (media) {
     if (media.type !== 'series') {
         return media.sortDate.split('-')[0];
     }
+    if (media.type === 'series' && media.firstSeason) {
+        return Number(media.firstSeason);
+    }
     if (media.type === 'series') {
         return Number(media.sortDate.split('-')[0])-(--media.seasons);
     }
@@ -181,7 +184,7 @@ function refreshNetflixUpcoming (upc, prompt) {
         console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
         let newUpcomings = {};
         netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
-            netflixUpcoming.items = netflixUpcoming.items.concat(upcomingMediaManual);
+            netflixUpcoming.items = upcomingMediaManual.concat(netflixUpcoming.items);
             updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
                 newUpcomings.timeStamp = Date.now();
                 newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
