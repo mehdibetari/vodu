@@ -26,7 +26,7 @@ class Filestorage {
     }
 
     downloadLocaly (uri, filename, callback) {
-        request.head(uri, function(err, res, body){
+        request.head(uri, function(){
             // console.log('content-type:', res.headers['content-type']);
             // console.log('content-length:', res.headers['content-length']);
             if (!fs.existsSync('./public/posters/')){

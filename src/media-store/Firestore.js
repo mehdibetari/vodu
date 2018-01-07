@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let admin = require('firebase-admin');
 let serviceAccount = require('./firebase-key.json');

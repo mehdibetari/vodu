@@ -2,7 +2,6 @@ let fs              = require('fs');
 let async           = require('async');
 let colors          = require('colors');
 let prompt          = require('prompt');
-const argv          = require('yargs').argv;
 let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
@@ -12,8 +11,8 @@ let Media           = require('./media-store/Media');
 
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
-const uploadcare = argv.upc;
-refreshNetflixUpcoming(uploadcare);
+let argv = {};
+let uploadcare = false;
 
 function getDataFrom(from, Datas = []) {
     if (!~Datas.length) return '';
@@ -83,7 +82,6 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
     let upComings = [];
     let cpt = 0;
     let postersCpt = 0;
-    let posterStore = new Filestorage();
     let mediaStore = new Firestore();
     const mediaFrom = 'netflix-upcomings';
     async.mapSeries(newUpcomings, function(item, done) {
@@ -91,7 +89,7 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
         let itemMedia = new Media(item, mediaFrom);
-        mediaStore.getMedia(itemMedia, function(itemAlreadyExist, error){
+        mediaStore.getMedia(itemMedia, function(itemAlreadyExist){
             
             var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
             if (minOnePoster) {
@@ -144,6 +142,7 @@ function trySearchPosterOnNetflixOrPrompt (item, imdbInfos, uploadcare, callback
             prompt.start();
             prompt.message = colors.rainbow('Enter manualy');
             prompt.get(['posterUrl'], function (err, result) {
+                let posterStore = new Filestorage();
                 posterStore.download(result.posterUrl,'./public/posters/' + item.name.replace('/','') + '+' + getMediaStartYear(item) + '.jpg', uploadcare, function (path) {
                     console.log('Command-line posterUrl received:',result.posterUrl);
                     item.posterUrl = path;
@@ -168,12 +167,14 @@ function getMediaStartYear (media) {
 }
 
 function saveStore (upComings) {
-    fs.writeFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, JSON.stringify(upComings), function(err){
+    fs.writeFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, JSON.stringify(upComings), function(){
         console.log(colors.bgGreen.white('File successfully written! - Check your project directory for the ./store/netflix-upcoming.json file'));
     });
 }
 
-function refreshNetflixUpcoming (uploadcare) {
+function refreshNetflixUpcoming (upc, prompt) {
+    argv.prt = prompt;
+    uploadcare = upc;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     netflixProvider.getUpcomingMedia(function(netflixUpcoming) {
         // console.log(netflixUpcoming);
@@ -188,3 +189,5 @@ function refreshNetflixUpcoming (uploadcare) {
         });
     });
 }
+
+module.exports = refreshNetflixUpcoming;

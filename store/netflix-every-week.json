@@ -1,5 +1,5 @@
 {
-    "timeStamp": 1509049960719,
+    "timeStamp": 1515271954148,
     "items": [
         {
             "id": "wke7",
@@ -13,28 +13,6 @@
             "summary": "Adaptée du comic book, la série raconte le destin d'un multimillionnaire insouciant devenu superhéros, déterminé à débarrasser la ville de ses criminels."
         },
         {
-            "id": "wke6",
-            "localPath": "https://ucarecdn.com/356d32aa-1c84-432a-adc9-769fd02d1ac6/905fd61a1caae45340de3538b6bcb89d4bec95b4.jpg",
-            "name": "Riverdale",
-            "recurence": "Nouvel épisode jeudi",
-            "seasons": "2",
-            "directors": "",
-            "creators": "Roberto Aguirre-Sacasa",
-            "actors": "K.J. Apa, Lili Reinhart, Camila Mendes, Cole Sprouse, Marisol Nichols...",
-            "summary": "Naviguant dans les eaux troubles du sexe, de l'amour, de l'éducation et de la famille, Archie et ses amis se retrouvent plongés au cœur d'une mystérieuse affaire."
-        },
-        {
-            "id": "wke5",
-            "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
-            "name": "Dynastie",
-            "recurence": "Nouvel épisode jeudi",
-            "seasons": "1",
-            "directors": "",
-            "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
-            "actors": "Elizabeth Gillies, Nathalie Kelley, Grant Show, James Mackay, Rafael De La Fuente...",
-            "summary": "Dans ce reboot actualisé du soap culte, les Carrington et les Colby se disputent le contrôle de leurs fortunes, mais aussi de leurs enfants !"
-        },
-        {
             "id": "wke1",
             "localPath": "https://ucarecdn.com/5955a740-47d1-4b3a-a010-db6a9f676dde/thegoodplace.jpg",
             "name": "The Good Place",
@@ -46,10 +24,32 @@
             "summary": "À sa mort, l'égocentrique Eleanor Shellstrop se retrouve par erreur dans un monde paradisiaque. Déterminée à y rester, elle va tenter de devenir une meilleure personne."
         },
         {
+            "id": "wke6",
+            "localPath": "https://ucarecdn.com/356d32aa-1c84-432a-adc9-769fd02d1ac6/905fd61a1caae45340de3538b6bcb89d4bec95b4.jpg",
+            "name": "Riverdale",
+            "recurence": "Nouvel épisode jeudi 18 janvier 2018",
+            "seasons": "2",
+            "directors": "",
+            "creators": "Roberto Aguirre-Sacasa",
+            "actors": "K.J. Apa, Lili Reinhart, Camila Mendes, Cole Sprouse, Marisol Nichols...",
+            "summary": "Naviguant dans les eaux troubles du sexe, de l'amour, de l'éducation et de la famille, Archie et ses amis se retrouvent plongés au cœur d'une mystérieuse affaire."
+        },
+        {
+            "id": "wke5",
+            "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
+            "name": "Dynastie",
+            "recurence": "Nouvel épisode jeudi 18 janvier 2018",
+            "seasons": "1",
+            "directors": "",
+            "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
+            "actors": "Elizabeth Gillies, Nathalie Kelley, Grant Show, James Mackay, Rafael De La Fuente...",
+            "summary": "Dans ce reboot actualisé du soap culte, les Carrington et les Colby se disputent le contrôle de leurs fortunes, mais aussi de leurs enfants !"
+        },
+        {
             "id": "wke2",
             "localPath": "https://ucarecdn.com/2ef30171-cc9e-42cd-adb3-44f19a8054eb/startrekdiscovery.jpg",
             "name": "STAR TREK Discovery",
-            "recurence": "Nouvel épisode lundi",
+            "recurence": "Nouvel épisode lundi 8 janvier 2018",
             "seasons": "1",
             "directors": "",
             "creators": "Bryan Fuller, Alex Kurtzman",
@@ -60,28 +60,17 @@
             "id": "wke3",
             "localPath": "https://ucarecdn.com/28c12f6e-bdc5-45b3-bc8f-ca0102fc18d9/designatedsurvivor.jpg",
             "name": "Designated survivor",
-            "recurence": "Nouvel épisode vendredi",
+            "recurence": "Nouvel épisode vendredi 9 mars 2018",
             "seasons": "2",
             "directors": "",
             "creators": "David Guggenheim",
             "actors": "Kiefer Sutherland, Natascha McElhone, Adan Canto...",
             "summary": "Dans ce passionnant thriller politique, le sort de l'Amérique repose dans les mains d'un petit fonctionnaire après qu'une attaque sur Washington a décimé le gouvernement."
-        },
-        {
-            "id": "wke4",
-            "localPath": "https://ucarecdn.com/19f1190e-5ecc-4761-8da1-f3209ea613e6/outlander.jpg",
-            "name": "Outlander",
-            "recurence": "Nouvel épisode lundi",
-            "seasons": "3",
-            "directors": "",
-            "creators": "Ronald D. Moore",
-            "actors": "Caitriona Balfe, Sam Heughan, Duncan Lacroix...",
-            "summary": "Dans cette épopée adaptée des romans à succès de Diana Gabaldon, une infirmière de guerre se retrouve soudain plongée dans un lointain passé."
         }
     ],
     "footer": {
         "name": "Voir aussi le Calendrier NETFLIX des sorties 2017 2018",
         "href": "/calendrier/netflix"
     }
-
+    
 }
