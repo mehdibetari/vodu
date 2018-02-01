@@ -37,7 +37,7 @@
             "id": "wke6",
             "localPath": "https://ucarecdn.com/356d32aa-1c84-432a-adc9-769fd02d1ac6/905fd61a1caae45340de3538b6bcb89d4bec95b4.jpg",
             "name": "Riverdale",
-            "recurence": "Nouvel épisode jeudi 18 janvier 2018",
+            "recurence": "Nouvel épisode jeudi",
             "seasons": "2",
             "directors": "",
             "creators": "Roberto Aguirre-Sacasa",
@@ -48,7 +48,7 @@
             "id": "wke5",
             "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
             "name": "Dynastie",
-            "recurence": "Nouvel épisode jeudi 18 janvier 2018",
+            "recurence": "Nouvel épisode jeudi",
             "seasons": "1",
             "directors": "",
             "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
@@ -59,7 +59,7 @@
             "id": "wke2",
             "localPath": "https://ucarecdn.com/2ef30171-cc9e-42cd-adb3-44f19a8054eb/startrekdiscovery.jpg",
             "name": "STAR TREK Discovery",
-            "recurence": "Nouvel épisode lundi 8 janvier 2018",
+            "recurence": "Nouvel épisode lundi",
             "seasons": "1",
             "directors": "",
             "creators": "Bryan Fuller, Alex Kurtzman",
@@ -79,7 +79,7 @@
         }
     ],
     "footer": {
-        "name": "Voir aussi le Calendrier NETFLIX des sorties 2017 2018",
+        "name": "Voir aussi le Calendrier NETFLIX des sorties 2018 2019",
         "href": "/calendrier/netflix"
     }
     
