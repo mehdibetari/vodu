@@ -5,5 +5,5 @@ if (argv.dev) {
     router.listen('8888');
 }
 else {
-    router.listen('80');
+    router.listen('3000');
 }
