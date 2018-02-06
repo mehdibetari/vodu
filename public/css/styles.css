@@ -304,3 +304,25 @@ body {
 #home footer > div > div {
   margin: 8px 0;
 }
+.badge {
+  white-space: nowrap;
+  background-color: #edb802;
+  border-radius: 2px;
+  color: white;
+  cursor: default;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 14px;
+  margin-right: 2px;
+  padding: 0 2px;
+  vertical-align: baseline;
+}
+.c-pointer {
+  cursor: pointer;
+}
+.mg-5 {
+  margin: 5px;
+}
+.d-flex {
+  display: flex;
+}
