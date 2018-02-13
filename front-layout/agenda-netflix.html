@@ -64,7 +64,7 @@
       </section>
       <section id="agenda-netflix">
         {#list}
-        <article>
+        <article id="{id}">
           <aside>
             <img src="{localPath}" alt="{name}" class="image picture"/>
           </aside>
@@ -76,10 +76,12 @@
             {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
             {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
             {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
-            <div>
-              <div id="fb-root"></div>
-              <div class="fb-share-button" data-href="http://alloserie.fr/calendrier/netflix/{id}" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&amp;src=sdkpreparse"></a></div>
-              <a href="https://twitter.com/share" class="twitter-share-button"  data-text="{name} - {premiereDate}" data-hashtags="netflix" data-url="http://alloserie.fr/calendrier/netflix/{id}"></a>
+            <template id="share-template-{id}">
+              <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            </template>
+            <div class="d-flex mg-5">
+                <span id="share-btn-{id}" class="badge c-pointer mg-5 share-btn">PARTAGER</span>
+                <div id="twitter-share-btn-{id}"></div>
             </div>
           </div>
         </article>
@@ -102,6 +104,31 @@
           }(document, 'script', 'facebook-jssdk'));
           /*Twitter*/
           !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+        });
+
+        $('.share-btn').click(function(){
+          /*facebook share btn added from template*/
+          var btnId = $(this).attr('id');
+          var uid = btnId.replace('share-btn-','');
+          var templateId = 'share-template-' + uid;
+          var template = document.querySelector('#'+templateId);
+          var clone = document.importNode(template.content, true);
+          $('#' + btnId).after(clone);
+          $('#' + btnId).remove();
+
+          /*twitter btn added with JS*/
+          if (uid) {
+            var name = $('#' + uid).find('.name').text();
+            var premiereDate = $('#' + uid).find('.date-de-sortie').text();
+          }
+          twttr.widgets.createShareButton(
+            "http:\/\/alloserie.fr\/calendrier\/netflix\/" + uid,
+            document.getElementById("twitter-share-btn-" + uid),
+            {
+              text: name + ' - ' + premiereDate,
+              hashtags: "netflix"
+            }
+          );
         });
       </script>
     </body>

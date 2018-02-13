@@ -1,12 +1,12 @@
 [
     {
-        "name": "Jessica Jones",
-        "description": "Jessica Jones est engagée pour retrouver une jolie étudiante de l'université de New York qui a disparu, mais l'affaire semble finalement plus complexe.",
-        "type": "series",
-        "premiereDate": "8 mars 2018",
-        "firstSeason": "2015",
-        "seasons": 2,
+        "name": "The Cloverfield Paradox",
+        "firstSeason": "",
+        "seasons": null,
+        "description": "Orbiting a planet on the brink of war, scientists test a device to solve an energy crisis, and end up face-to-face with a dark alternate reality.",
+        "type": "movie",
+        "premiereDate": "4 fev. 2018",
         "locale": "fr",
-        "sortDate": "2018-03-08"
+        "sortDate": "2018-02-04"
     }
 ]
