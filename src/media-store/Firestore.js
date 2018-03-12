@@ -16,7 +16,11 @@ class Firestore {
     }
 
     clearMediaName (original) {
-        return original.replace('.','').replace('#','').replace('$','').replace('[','').replace(']','');
+        let cleared = replaceAll(original, '.', '');
+        cleared = replaceAll(cleared, '#', '');
+        cleared = replaceAll(cleared, '$', '');
+        cleared = replaceAll(cleared, '[', '');
+        return replaceAll(cleared, ']', '');
     }
 
     getMedia(media, callback) {
@@ -72,5 +76,9 @@ class Firestore {
             callback(err);
         });
     }
+
+    replaceAll (target, search, replacement) {
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
 }
 module.exports =  Firestore;
