@@ -16,11 +16,11 @@ class Firestore {
     }
 
     clearMediaName (original) {
-        let cleared = replaceAll(original, '.', '');
-        cleared = replaceAll(cleared, '#', '');
-        cleared = replaceAll(cleared, '$', '');
-        cleared = replaceAll(cleared, '[', '');
-        return replaceAll(cleared, ']', '');
+        let cleared = this.replaceAll(original, '.', '');
+        cleared = this.replaceAll(cleared, '#', '');
+        cleared = this.replaceAll(cleared, '$', '');
+        cleared = this.replaceAll(cleared, '[', '');
+        return this.replaceAll(cleared, ']', '');
     }
 
     getMedia(media, callback) {
