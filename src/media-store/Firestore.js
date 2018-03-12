@@ -16,11 +16,12 @@ class Firestore {
     }
 
     clearMediaName (original) {
-        let cleared = this.replaceAll(original, '.', '');
-        cleared = this.replaceAll(cleared, '#', '');
-        cleared = this.replaceAll(cleared, '$', '');
-        cleared = this.replaceAll(cleared, '[', '');
-        return this.replaceAll(cleared, ']', '');
+        return original
+                    .split('.').join('')
+                    .split('#').join('')
+                    .split('$').join('')
+                    .split('[').join('')
+                    .split(']').join('');
     }
 
     getMedia(media, callback) {
@@ -76,9 +77,5 @@ class Firestore {
             callback(err);
         });
     }
-
-    replaceAll (target, search, replacement) {
-        return target.replace(new RegExp(search, 'g'), replacement);
-    };
 }
 module.exports =  Firestore;
