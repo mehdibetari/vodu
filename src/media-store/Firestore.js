@@ -25,8 +25,7 @@ class Firestore {
     }
 
     getMedia(media, callback) {
-        const mediaName = this.clearMediaName(media.slug);
-        this.mediaRef.child(mediaName).once('value', (snapshot) => {
+        this.mediaRef.child(this.clearMediaName(media.slug)).once('value', (snapshot) => {
             let err = (snapshot.val()) ? false : true;
             callback(snapshot.val(), err);
         }, function (errorObject) {
@@ -63,17 +62,17 @@ class Firestore {
         });
     }
     postMedia(media, callback) {
-        this.mediaRef.child(media.slug).set(media, function(err){
+        this.mediaRef.child(this.clearMediaName(media.slug)).set(media, function(err){
             callback(err);
         });
     }
     putMedia(media, callback) {
-        this.mediaRef.child(media.slug).update(media, function(err){
+        this.mediaRef.child(this.clearMediaName(media.slug)).update(media, function(err){
             callback(err);
         });
     }
     removeMedia(media, callback) {
-        this.mediaRef.child(media.slug).remove(function(err){
+        this.mediaRef.child(this.clearMediaName(media.slug)).remove(function(err){
             callback(err);
         });
     }
