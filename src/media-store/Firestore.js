@@ -14,8 +14,14 @@ class Firestore {
         this.ref = this.db.ref("server");
         this.mediaRef = this.ref.child("media");
     }
+
+    clearMediaName (original) {
+        return original.replace('.','').replace('#','').replace('$','').replace('[','').replace(']','');
+    }
+
     getMedia(media, callback) {
-        this.mediaRef.child(media.slug).once('value', (snapshot) => {
+        const mediaName = this.clearMediaName(media.slug);
+        this.mediaRef.child(mediaName).once('value', (snapshot) => {
             let err = (snapshot.val()) ? false : true;
             callback(snapshot.val(), err);
         }, function (errorObject) {
