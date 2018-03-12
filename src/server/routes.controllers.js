@@ -32,6 +32,12 @@ class RoutesControllers {
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
                     
                     let tmpl = dust.compile(data, 'view-netflix');
+                    dust.filters.unicorn = function(value) {
+                        if (typeof value === 'string') {
+                           return value.replace('/posters/./public/posters/', '/posters/');
+                         }
+                         return value;
+                    };
                     dust.loadSource(tmpl);
                     let view = dust.render('view-netflix', { 
                         list: netflixUpcoming.items, 
