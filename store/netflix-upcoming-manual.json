@@ -1,12 +1,12 @@
 [
     {
-        "name": "The Cloverfield Paradox",
-        "firstSeason": "",
-        "seasons": null,
-        "description": "Orbiting a planet on the brink of war, scientists test a device to solve an energy crisis, and end up face-to-face with a dark alternate reality.",
-        "type": "movie",
-        "premiereDate": "4 fev. 2018",
+        "name": "Luke Cage",
+        "firstSeason": "2017",
+        "seasons": 2,
+        "description": "À l'abri de sa capuche, un ancien détenu se bat pour blanchir son nom et sauver son quartier. Il ne cherchait pas la bagarre, mais les gens avaient besoin d'un héros.",
+        "type": "serie",
+        "premiereDate": "22 juin 2018",
         "locale": "fr",
-        "sortDate": "2018-02-04"
+        "sortDate": "2018-06-22"
     }
 ]
