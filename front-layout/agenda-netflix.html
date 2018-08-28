@@ -48,7 +48,7 @@
         <a href="/" class="logo"></a>
       </nav>
       <header>
-        <h1>Calendrier des sorties NETFLIX FRANCE 2017 2018</h1>
+        <h1>Calendrier des sorties NETFLIX FRANCE 2018 2019</h1>
         <p>Dernière mise à jour de l'agenda le {lastUpdate}</p>
       </header>
       <section>
@@ -62,38 +62,52 @@
 					</svg>
 				</span>
       </section>
-      <section id="agenda-netflix">
-        {#list}
-        <article id="{id}">
-          <aside>
+      <section  id="agenda-netflix">
+        <div class="cards">
+          {#list}
+          <div class="card" id="{id}">
             {#localPath}
-            <img src="{localPath|unicorn}" alt="{name}" class="image picture"/>
+            <img src="{localPath|unicorn}" alt="{name}"/>
+            {:else}
+            <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
             {/localPath}
-          </aside>
-          <div>
-            <div class="date date-de-sortie">{premiereDate}</div>
-            <h1 class="nom name">{name}</h1>
-            <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
-            {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
-            {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
-            {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
-            {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
-            <template id="share-template-{id}">
-              <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-            </template>
-            <div class="d-flex mg-5">
-                <span id="share-btn-{id}" class="badge c-pointer mg-5 share-btn">PARTAGER</span>
-                <div id="twitter-share-btn-{id}"></div>
+            <div class="card-title">
+              <a href="#" class="toggle-info btn">
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>
+                  <span class="name">{name}</span>
+                  <small class="date-de-sortie">{premiereDate}</small>
+              </h2>
+            </div>
+            <div class="card-flap flap1">
+              <div class="card-description">
+                <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+                {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
+                {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
+                {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
+                {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
+              </div>
+              <div class="card-flap flap2">
+                <div class="card-actions">
+                  <div id="twitter-share-btn-{id}"></div>
+                </div>
+              </div>
+              <template id="share-template-{id}">
+                <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+              </template>
             </div>
           </div>
-        </article>
-        {/list}
+          {/list}
+        </div>        
       </section>
       <footer>
         <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
       </footer>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
       <script src="/scripts/article-title-filter.js"></script>
+      <script src="/scripts/card-animation.js"></script>
       <script>
         $(window).bind("load", function() {
           /*Facebook*/
@@ -106,31 +120,6 @@
           }(document, 'script', 'facebook-jssdk'));
           /*Twitter*/
           !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-        });
-
-        $('.share-btn').click(function(){
-          /*facebook share btn added from template*/
-          var btnId = $(this).attr('id');
-          var uid = btnId.replace('share-btn-','');
-          var templateId = 'share-template-' + uid;
-          var template = document.querySelector('#'+templateId);
-          var clone = document.importNode(template.content, true);
-          $('#' + btnId).after(clone);
-          $('#' + btnId).remove();
-
-          /*twitter btn added with JS*/
-          if (uid) {
-            var name = $('#' + uid).find('.name').text();
-            var premiereDate = $('#' + uid).find('.date-de-sortie').text();
-          }
-          twttr.widgets.createShareButton(
-            "http:\/\/alloserie.fr\/calendrier\/netflix\/" + uid,
-            document.getElementById("twitter-share-btn-" + uid),
-            {
-              text: name + ' - ' + premiereDate,
-              hashtags: "netflix"
-            }
-          );
         });
       </script>
     </body>

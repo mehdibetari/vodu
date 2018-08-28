@@ -14,7 +14,7 @@
     "colors": "^1.1.2",
     "dustjs-linkedin": "^2.7.5",
     "express": "latest",
-    "firebase-admin": "^5.4.2",
+    "firebase-admin": "^5.13.1",
     "prompt": "^1.0.0",
     "querybase": "^0.6.0",
     "request": "latest",

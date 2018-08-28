@@ -1,23 +1,24 @@
-$(document).ready(function(){
-    $('#input-1').on('input', function() {
+$(document).ready(function () {
+    //Search filter
+    $('#input-1').on('input', function () {
         var dptChoose = cleanString($(this).val());
-        if(dptChoose == '') {
-            $('article').each(function(){
+        if (dptChoose == '') {
+            $('div.card').each(function () {
                 $(this).slideDown();
             });
         }
 
-        $('article').each(function(){
+        $('div.card').each(function () {
             var title = cleanString($(this).find('.name').html());
-            if(title.indexOf(dptChoose) > -1) {
+            if (title.indexOf(dptChoose) > -1) {
                 $(this).slideDown();
-            }
-            else {
+            } else {
                 $(this).slideUp();
             }
         });
     });
 });
-function cleanString (original) {
-    return original.replace(' ','').replace(',','').replace('.','').replace('\'','').toLowerCase();
+
+function cleanString(original) {
+    return original.replace(' ', '').replace(',', '').replace('.', '').replace('\'', '').toLowerCase();
 }
