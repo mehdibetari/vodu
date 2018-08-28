@@ -135,10 +135,8 @@ class RoutesControllers {
             badParam = true;
         }
         else {
-            const key = atob(req.params.key);
-            const dateString = this.getDateStringFormated();
-            const secret = key.replace(dateString,'');
-            if (secret === configKeys.secretApi['private_key']) {
+            const key = atob(req.params.key);;
+            if (key === configKeys.secretApi['private_key']) {
                 upcomings(true);
                 res.status(200).send('In progress');
             }
@@ -148,21 +146,6 @@ class RoutesControllers {
 
         }
         if (badParam) res.status(404).send('Not found');
-    }
-
-    getDateStringFormated () {
-        let today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth() + 1; //January is 0!
-
-        const yyyy = today.getFullYear();
-        if(dd < 10){
-            dd = '0' + dd;
-        } 
-        if(mm < 10){
-            mm = '0' + mm;
-        } 
-        return yyyy + '-' + mm + '-' + dd;
     }
 
     removeMediaFromPreviousYear (medias) {
