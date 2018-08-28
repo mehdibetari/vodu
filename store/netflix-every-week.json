@@ -1,49 +1,27 @@
 { 
-    "timeStamp": 1526545725469,
+    "timeStamp": 1535447496100,
     "items": [
         {
-            "id": "wke8",
-            "localPath": "https://ucarecdn.com/10693f55-d706-4b42-98bf-0928b3258504/busted.jpg",
-            "name": "Busted",
-            "recurence": "Nouvel épisode vendredi",
+            "id": "wke10",
+            "localPath": "https://ucarecdn.com/66242de5-249b-4744-b314-3796df3a7507/b236f12d1650db04094fd011bb581970457f85f2.jpg",
+            "name": "Better Call Saul",
+            "recurence": "Nouvel épisode mardi",
+            "seasons": "2",
+            "directors": "",
+            "creators": "Vince Gillian, Peter Gould",
+            "actors": "Bob Odenkirk, Jonathan Banks...",
+            "summary": "Série sur la vie de Jimmy McGill, avocat sans envergure, avant qu'il ne devienne l'homme de loi véreux Saul Goodman et qu'il ne rencontre les futurs trafiquants de méthamphétamine Walter White et Jesse Pinkman."
+        },
+        {
+            "id": "wke11",
+            "localPath": "https://ucarecdn.com/a77918a9-03ea-429f-8789-f3237913ee5e/c7ad15475192972fdf2c5546290d863b0c22ca47.jpg",
+            "name": "En Bref",
+            "recurence": "Nouvel épisode mercredi",
             "seasons": "1",
             "directors": "",
             "creators": "",
-            "actors": "Yoo Jae-suk, Ahn Jae-wook, Kim Jong-min...",
-            "summary": "S'attaquant à diverses affaires lors des épisodes de ce jeu télévisé, sept fins limiers résolvent petit à petit la plus énigmatique de toutes : qu'en est-il du projet D ?"
-        },
-        {
-            "id": "wke9",
-            "localPath": "https://ucarecdn.com/1ba0d77b-bb40-4778-a4fc-4cb098d47dc8/5ff330400efe8674c4a9c68cae553571d0ee136d.jpg",
-            "name": "Hyori's Bed & Breakfast",
-            "recurence": "Nouvel épisode jeudi",
-            "seasons": "2",
-            "directors": "",
-            "creators": "",
-            "actors": "Lee Hyo-ri, Lee Sang-soon, Ji-eun Lee...",
-            "summary": "La diva de la K-pop Lee Hyo-ri et son mari ouvrent les portes de leur maison située sur la magnifique île de Jeju à des voyageurs à qui ils offrent le gîte et le couvert."
-        },
-        {
-            "id": "wke7",
-            "localPath": "https://ucarecdn.com/26bb13e5-3ae7-4dd1-9b63-a959b26c54da/ScreenShot20171026at222335.png",
-            "name": "Arrow",
-            "recurence": "Nouvel épisode jeudi [Exclu US+24]",
-            "seasons": "6",
-            "directors": "",
-            "creators": "Greg Berlanti, Marc Guggenheim, Andrew Kreisberg",
-            "actors": " Stephen Amell, Katie Cassidy, David Ramsey...",
-            "summary": "Adaptée du comic book, la série raconte le destin d'un multimillionnaire insouciant devenu superhéros, déterminé à débarrasser la ville de ses criminels."
-        },
-        {
-            "id": "wke3",
-            "localPath": "https://ucarecdn.com/28c12f6e-bdc5-45b3-bc8f-ca0102fc18d9/designatedsurvivor.jpg",
-            "name": "Designated survivor",
-            "recurence": "Nouvel épisode vendredi",
-            "seasons": "2",
-            "directors": "",
-            "creators": "David Guggenheim",
-            "actors": "Kiefer Sutherland, Natascha McElhone, Adan Canto...",
-            "summary": "Dans ce passionnant thriller politique, le sort de l'Amérique repose dans les mains d'un petit fonctionnaire après qu'une attaque sur Washington a décimé le gouvernement."
+            "actors": "",
+            "summary": "En bref comme l’indique son nom est un format court, d’une vingtaine de minutes, qui va traiter de sujets d’actualité variés, en te donnant toutes les clés principales pour t’aider à comprendre tout ca."
         }
     ],
     "footer": {
