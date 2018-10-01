@@ -1,5 +1,5 @@
 { 
-    "timeStamp": 1537880490024,
+    "timeStamp": 1538397444796,
     "items": [
         {
             "id": "wke10",
@@ -32,6 +32,49 @@
             "seasons": "3",
             "actors": "Kristen Bell, Ted Danson"
             
+        },
+        {
+            "id": "wke5",
+            "localPath": "https://ucarecdn.com/9bbc548a-4ce2-4201-b4dc-2ce16c319e5b/dynastie.jpg",
+            "name": "Dynastie",
+            "recurence": "Nouvel épisode lundi",
+            "seasons": "2",
+            "directors": "",
+            "creators": "Sallie Patrick, Josh Schwartz, Stephanie Savage",
+            "actors": "Elizabeth Gillies, Nathalie Kelley, Grant Show, James Mackay, Rafael De La Fuente...",
+            "summary": "Dans ce reboot actualisé du soap culte, les Carrington et les Colby se disputent le contrôle de leurs fortunes, mais aussi de leurs enfants !"
+        },
+        {
+            "id": "wke6",
+            "localPath": "https://ucarecdn.com/356d32aa-1c84-432a-adc9-769fd02d1ac6/905fd61a1caae45340de3538b6bcb89d4bec95b4.jpg",
+            "name": "Riverdale",
+            "recurence": "Nouvel épisode jeudi 11 octobre",
+            "seasons": "3",
+            "directors": "",
+            "creators": "Roberto Aguirre-Sacasa",
+            "actors": "K.J. Apa, Lili Reinhart, Camila Mendes, Cole Sprouse, Marisol Nichols...",
+            "summary": "Naviguant dans les eaux troubles du sexe, de l'amour, de l'éducation et de la famille, Archie et ses amis se retrouvent plongés au cœur d'une mystérieuse affaire."
+        },
+        {
+            "id": "wke7",
+            "localPath": "https://ucarecdn.com/26bb13e5-3ae7-4dd1-9b63-a959b26c54da/ScreenShot20171026at222335.png",
+            "name": "Arrow",
+            "recurence": "Nouvel épisode mardi 16 octobre [Exclu US+24]",
+            "seasons": "7",
+            "directors": "",
+            "creators": "Greg Berlanti, Marc Guggenheim, Andrew Kreisberg",
+            "actors": " Stephen Amell, Katie Cassidy, David Ramsey...",
+            "summary": "Adaptée du comic book, la série raconte le destin d'un multimillionnaire insouciant devenu superhéros, déterminé à débarrasser la ville de ses criminels."
+        },
+        {
+            "id": "wke8",
+            "localPath": "https://ucarecdn.com/05094618-bf79-4c93-a449-042475df77e6/444dfed5f7db299e4ace5e5fef2f8ff762471e04.jpg",
+            "name": "Black Lightning",
+            "recurence": "Nouvel épisode mardi 16 octobre",
+            "seasons": "2",
+            "directors": "Greg Berlanti, Salim Akil, Mara Brock Akil",
+            "actors": "Cress Williams, China Anne McClain, Nafessa Williams...",
+            "summary": "Quand ses filles sont menacées par un gang, le proviseur du lycée de Garfield, Jefferson Pierce, est contraint d'utiliser les super-pouvoirs auxquels il avait renoncé."
         }
     ],
     "footer": {
