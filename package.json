@@ -5,6 +5,7 @@
   "main": "server.js",
   "author": "Scotch",
   "scripts": {
+    "start": "node src/server.js --dev",
     "cli": "node vodu-cli.js"
   },
   "dependencies": {
