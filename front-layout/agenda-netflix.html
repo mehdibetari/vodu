@@ -70,37 +70,39 @@
         <div class="cards">
           {#list}
           <div class="card" id="{id}">
-            {#localPath}
-            <img src="{localPath|unicorn}" alt="{name}"/>
-            {:else}
-            <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
-            {/localPath}
-            <div class="card-title" id="{name|u}">
-              <a href="#" class="toggle-info btn">
-                <span class="left"></span>
-                <span class="right"></span>
-              </a>
-              <h2>
-                  <span class="name">{name}</span>
-                  <small class="date-de-sortie">{premiereDate}</small>
-              </h2>
-            </div>
-            <div class="card-flap flap1">
-              <div class="card-description">
-                <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
-                {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
-                {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
-                {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
-                {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
+            <div  id="{name|u}">
+              {#localPath}
+              <img src="{localPath|unicorn}" alt="{name}"/>
+              {:else}
+              <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
+              {/localPath}
+              <div class="card-title">
+                <a href="#" class="toggle-info btn">
+                  <span class="left"></span>
+                  <span class="right"></span>
+                </a>
+                <h2>
+                    <span class="name">{name}</span>
+                    <small class="date-de-sortie">{premiereDate}</small>
+                </h2>
               </div>
-              <div class="card-flap flap2">
-                <div class="card-actions">
-                  <div id="twitter-share-btn-{id}"></div>
+              <div class="card-flap flap1">
+                <div class="card-description">
+                  <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+                  {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
+                  {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
+                  {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
+                  {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
                 </div>
+                <div class="card-flap flap2">
+                  <div class="card-actions">
+                    <div id="twitter-share-btn-{id}"></div>
+                  </div>
+                </div>
+                <template id="share-template-{id}">
+                  <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                </template>
               </div>
-              <template id="share-template-{id}">
-                <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-              </template>
             </div>
           </div>
           {/list}
