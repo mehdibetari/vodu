@@ -30,7 +30,8 @@ class RoutesControllers {
                     const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
                     const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
-                    
+                    const structuredData = metaService.getStructuredData(this.filterMediaWithPicture(netflixUpcoming.items), configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
+
                     let tmpl = dust.compile(data, 'view-netflix');
                     dust.filters.unicorn = function(value) {
                         if (typeof value === 'string') {
@@ -42,7 +43,8 @@ class RoutesControllers {
                     let view = dust.render('view-netflix', { 
                         list: netflixUpcoming.items, 
                         lastUpdate: fullDate,
-                        meta: metaData
+                        meta: metaData,
+                        structuredData
                     }, 
                     function(e, out) {
                         if(e) {
@@ -56,14 +58,14 @@ class RoutesControllers {
             });
             break;
         case 'json-netflix':
-                fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', function (error,response) {
-                    if (error) {
-                        return console.log(error);
-                    }
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(response);
-                });
-                break;
+            fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', function (error,response) {
+                if (error) {
+                    return console.log(error);
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.send(response);
+            });
+            break;
         }
     }
 
@@ -150,6 +152,10 @@ class RoutesControllers {
 
     removeMediaFromPreviousYear (medias) {
         return medias.filter((item) => new Date(item.sortDate).getFullYear() != new Date().getFullYear() - 1);
+    }
+
+    filterMediaWithPicture(medias) {
+        return medias.filter((item) => item.posterUrl);
     }
 }
 

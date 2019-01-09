@@ -1,5 +1,68 @@
-
 const configServer = require('./config-server').configServer;
+
+class Items {
+    constructor(items, baseUrl) {
+        let media;
+        this.data = {};
+        this.data["@type"] = "ItemList";
+        this.data["@context"] = "https://schema.org";
+        this.data.itemListElement = items.map((item, index) => { 
+            media = new Item(item, index, baseUrl);
+            return media.item;
+        });
+    }
+
+    get items() {
+        return this.data;
+    } 
+}
+
+class Item {
+    constructor(item, index, baseUrl) {
+        let people;
+        this.data = {};
+        this.data["@type"] = "ListItem";
+        this.data.position = index + 1;
+
+        const Director = item.directors ? new Person(item.directors.replace('...', '').split(',')[0]) : undefined;
+        const Authors = item.creators ? item.creators.replace('...', '').split(',').map((creator) => { 
+            people = new Person(creator);
+            return people.person;
+        }) : undefined;
+        const Actors = item.actors ? item.actors.replace('...', '').split(',').map((actor) => {
+            people = new Person(actor);
+            return people.person;
+        }) : undefined;
+
+        this.data.item = {
+            "@type": item.series? "TVSeries" : "Movie", // text "Movie" ou "TVSeries"
+            "url": `${baseUrl}#${encodeURI(item.name)}`, // text url => baseUrl + item.id
+            "name": item.name, // text => item.name
+            "actor": Actors, // persons => split item.actors
+            "author": Authors, // persons => split item.creators
+            "director": Director && Director.person, // person => split item.directors
+            "datePublished": item.sortDate, // "2009-05-08" => item.sortDate
+            "description": item.description, // text => item.description
+            "image": item.posterUrl // text url => item.posterUrl
+        };
+    }
+
+    get item() {
+        return this.data;
+    } 
+}
+
+class Person {
+    constructor(name) {
+        this.data = {};
+        this.data["@type"] = "Person";
+        this.data.name = name;
+    }
+
+    get person() {
+        return this.data;
+    }
+}
 
 function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     const media = items.filter(function (item) {
@@ -37,4 +100,10 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     }
 }
 
-exports.getMediaMetaData = getMediaMetaData;
+function getStructuredData(items, baseUrl) {
+    // console.log('item0', items[0]);
+    const list = new Items(items, baseUrl);
+    return list.items;
+}
+
+module.exports = { getMediaMetaData, getStructuredData };
