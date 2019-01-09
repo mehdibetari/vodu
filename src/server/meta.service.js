@@ -40,7 +40,7 @@ class Item {
             "name": item.name, // text => item.name
             "actor": Actors, // persons => split item.actors
             "author": Authors, // persons => split item.creators
-            "director": Director && Director.person, // person => split item.directors
+            "director": Director && Director.person || 'non renseigné', // person => split item.directors
             "datePublished": item.sortDate, // "2009-05-08" => item.sortDate
             "description": item.description, // text => item.description
             "image": item.posterUrl // text url => item.posterUrl
