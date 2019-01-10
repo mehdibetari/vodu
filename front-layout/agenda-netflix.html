@@ -1,10 +1,9 @@
 <html lang="fr">
     <head>
-      {#meta}
-      <title>{title} {#humanDate}{currentYear}{/humanDate} | Alloserie.fr</title>
-      <meta name="Description" content="{#humanDate}{frenchDate}{/humanDate} - {description} {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
+      
+      <title>{#meta}{title}{/meta} {#humanDate}{currentYear}{/humanDate} | Alloserie.fr</title>
+      <meta name="Description" content="{#humanDate}{frenchDate}{/humanDate} - {#meta}{description}{/meta} {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
       <meta name="Keywords" content="Agenda episodes series chaque semane netflix {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
-      {/meta}
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">

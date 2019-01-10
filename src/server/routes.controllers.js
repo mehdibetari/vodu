@@ -100,6 +100,7 @@ class RoutesControllers {
                 const fullTime = lastUpdateDate.getHours()+'h'+(lastUpdateDate.getMinutes()<10?'0':'') + lastUpdateDate.getMinutes();
                 const fullDateTime = fullDate+' à '+fullTime;
                 const metaData = metaService.getMediaMetaData(req.params.media_id,netflixEveryWeekData.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_WEEKLY_URL);
+                metaData.frenchDate = `${lastUpdateDate.getDate()} ${this.getAbbrMonth()[lastUpdateDate.getMonth()]} ${lastUpdateDate.getFullYear()}`;
                 
                 let tmpl = dust.compile(data, 'view-netflix');
                 dust.loadSource(tmpl);
