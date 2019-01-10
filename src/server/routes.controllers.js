@@ -86,11 +86,11 @@ class RoutesControllers {
     }
 
     weeklyList (wish, req, res) {
-        fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_LAYOUT, 'utf8', function (err,data) {
+        fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_LAYOUT, 'utf8', (err,data) => {
             if (err) {
                 return console.log(err);
             }
-            fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_STORE, 'utf8', function (error,response) {
+            fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_STORE, 'utf8', (error,response) => {
                 if (error) {
                     return console.log(error);
                 }
