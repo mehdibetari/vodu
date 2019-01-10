@@ -497,19 +497,40 @@ only screen and (min-device-pixel-ratio: 1.5) {
   #every-week-netflix article {
     display: inherit;
   }
+
   #every-week-netflix article > aside {
     min-height: none;
     max-height: none;
     margin: 35px;
   }
+
   #every-week-netflix article > aside > img {
     max-height: none;
     width: 100%
   }
+
   div.card {
     max-width: 148px;
   }
+
   div.card img {
     max-width: 148px;
+  }
+
+  div.card div.card-title a.toggle-info {
+    
+    border-radius: inherit;
+    height: inherit;
+    padding: 0;
+    position: absolute;
+    right: 0px;
+    bottom: 35px;
+    top: inherit;
+  }
+  div.card div.card-title a.toggle-info span {
+    background: black;
+  }
+  div.card div.card-actions {
+    padding: 2px 2px;
   }
 }
