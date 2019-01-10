@@ -26,20 +26,14 @@ body {
     background-image: url(/images/alloserie.png);  
     background-size: 150px 50px;  
   }
- 
-  @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
-  only screen and (-moz-min-device-pixel-ratio: 1.5),  
-  only screen and (-o-min-device-pixel-ratio: 3/2),  
-  only screen and (min-device-pixel-ratio: 1.5) {  
-    body > nav .logo {  
-      background-image: url(/images/alloserie@2x.png);  
-    }  
-  }
   body > header {
     margin: 60px 40px 20px 40px;
   }
   body > header > h1 {
       font-size: 17px;
+  }
+  body > header > h2 {
+      font-size: 14px;
   }
   body > header > p {
     font-size: 11px;
@@ -128,30 +122,6 @@ body {
     padding: 3px 10px;
     font-weight: 600;
     font-size: 12px;
-  }
-
-  @media screen and (max-width: 720px) {
-    #every-week-netflix article > aside {
-      min-height: 100px;
-      max-height: 100px;
-    }
-    #every-week-netflix article > aside > img {
-      max-height: 100px;
-    }
-  }
-  @media screen and (max-width: 490px) {
-    #every-week-netflix article {
-      display: inherit;
-    }
-    #every-week-netflix article > aside {
-      min-height: none;
-      max-height: none;
-      margin: 35px;
-    }
-    #every-week-netflix article > aside > img {
-      max-height: none;
-      width: 100%
-    }
   }
 
   .input {
@@ -495,4 +465,51 @@ div.card.show div.flap1 {
 }
 div.card.show div.flap2 {
   transition: all 0.3s 0.2s ease-out;
+}
+
+ 
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
+only screen and (-moz-min-device-pixel-ratio: 1.5),  
+only screen and (-o-min-device-pixel-ratio: 3/2),  
+only screen and (min-device-pixel-ratio: 1.5) {  
+  body > nav .logo {  
+    background-image: url(/images/alloserie@2x.png);  
+  }  
+}
+
+@media screen and (max-width: 720px) {
+  #every-week-netflix article > aside {
+    min-height: 100px;
+    max-height: 100px;
+  }
+  #every-week-netflix article > aside > img {
+    max-height: 100px;
+  }
+  .searchBar {
+    display: none !important;
+  }
+  div.cards {
+    margin: 10px auto;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  #every-week-netflix article {
+    display: inherit;
+  }
+  #every-week-netflix article > aside {
+    min-height: none;
+    max-height: none;
+    margin: 35px;
+  }
+  #every-week-netflix article > aside > img {
+    max-height: none;
+    width: 100%
+  }
+  div.card {
+    max-width: 148px;
+  }
+  div.card img {
+    max-width: 148px;
+  }
 }
