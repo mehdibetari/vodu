@@ -12,6 +12,14 @@ class RoutesControllers {
     constructor() {
     }
 
+    getAbbrMonth() {
+        return ['jan.', 'fev.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'aout', 'sept.', 'oct.', 'nov.', 'dec.'];
+    }
+
+    getMonth() {
+        return ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'];
+    }
+
     calendarList (wish, req, res) {
         switch(wish) {
         case 'netflix':
@@ -29,6 +37,8 @@ class RoutesControllers {
 
                     const lastUpdateDate = new Date(netflixUpcoming.timeStamp);
                     const fullDate = lastUpdateDate.getDate()+'.'+(lastUpdateDate.getMonth()+1)+'.'+lastUpdateDate.getFullYear()+' à '+lastUpdateDate.getHours()+'h'+lastUpdateDate.getMinutes();
+                    const frenchDate = `${lastUpdateDate.getDate()} ${this.getAbbrMonth()[lastUpdateDate.getMonth()]} ${lastUpdateDate.getFullYear()}`;
+                    const currentMonth = this.getMonth()[lastUpdateDate.getMonth()];
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
                     const structuredData = metaService.getStructuredData(this.filterMediaWithPicture(netflixUpcoming.items), configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
 
@@ -43,6 +53,12 @@ class RoutesControllers {
                     let view = dust.render('view-netflix', { 
                         list: netflixUpcoming.items, 
                         lastUpdate: fullDate,
+                        humanDate: {
+                            frenchDate,
+                            currentMonth,
+                            currentYear: lastUpdateDate.getFullYear(),
+                            nextYear: lastUpdateDate.getFullYear() + 1
+                        },
                         meta: metaData,
                         structuredData
                     }, 

@@ -70,7 +70,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     });
     if (media[0] && media[0].premiereDate) {
         return {
-            url: baseUrl + mediaId,
+            url: `${baseUrl}/${mediaId}`,
             title: `${media[0].name} - date de sortie: ${media[0].premiereDate}  sur Netflix`,
             description: (media[0].summary) ? `${media[0].name} - ${media[0].summary}` : '',
             calendarMaj: `Calendrier mis à jour le ${lastUpdateDate}`,
@@ -79,7 +79,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     }
     else if (media[0] && media[0].recurence) {
         return {
-            url: baseUrl + mediaId,
+            url: `${baseUrl}/${mediaId}`,
             title: `${media[0].name} ${media[0].recurence} sur Netflix`,
             description: (media[0].summary) ? `${media[0].name} - ${media[0].summary}` : '',
             calendarMaj: `Calendrier mis à jour le ${lastUpdateDate}`,
