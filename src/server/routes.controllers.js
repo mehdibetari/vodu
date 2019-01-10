@@ -109,7 +109,8 @@ class RoutesControllers {
                     lastUpdate: fullDateTime, 
                     theFooter: netflixEveryWeekData.footer,
                     meta: metaData,
-                    frenchDate
+                    frenchDate,
+                    currentYear: lastUpdateDate.getFullYear()
                 }, function(e, out) {
                     if(e) {
                         console.error(e);
