@@ -13,7 +13,7 @@ class RoutesControllers {
     }
 
     getAbbrMonth() {
-        return ['jan.', 'fev.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'aout', 'sept.', 'oct.', 'nov.', 'dec.'];
+        return ['janv.', 'fev.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'aout', 'sept.', 'oct.', 'nov.', 'déc.'];
     }
 
     getMonth() {
