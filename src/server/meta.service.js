@@ -1,15 +1,20 @@
 const configServer = require('./config-server').configServer;
 
-class Items {
-    constructor(items, baseUrl) {
+class StructuredData {
+    constructor(items, baseUrl, now) {
         let media;
-        this.data = {};
-        this.data["@type"] = "ItemList";
-        this.data["@context"] = "https://schema.org";
-        this.data.itemListElement = items.map((item, index) => { 
-            media = new Item(item, index, baseUrl);
-            return media.item;
-        });
+        const art = new Article(now);
+        this.data = {
+            '@context': 'https://schema.org',
+            itemList: {
+                '@type': 'ItemList',
+                itemListElement: items.map((item, index) => { 
+                    media = new Item(item, index, baseUrl);
+                    return media.item;
+                })
+            },
+            article: art.article
+        };
     }
 
     get items() {
@@ -64,6 +69,30 @@ class Person {
     }
 }
 
+class Article {
+    constructor(now) {
+        this.data = {};
+        this.data["@type"] = "Article";
+        this.data.headline = `Calendrier ${now.getFullYear()} des sorties NETFLIX FRANCE`;
+        this.data.alternativeHeadline = `Agenda ${now.getFullYear()} films et series ORIGINAL NETFLIX`;
+        this.data.image = "https://www.medial.mk/wp-content/uploads/2018/07/54c06cc456b374f4da3266f193200425.jpeg";
+        this.data.author = "Arsene B.";
+        this.data.url = "http://alloserie.fr/calendrier/netflix";
+        this.data.datePublished = "2017-10-09";
+        this.data.dateModified = `${now.getFullYear()}-${(now.getMonth()+1)}-${now.getDate()}`;
+        this.data.mainEntityOfPage = "Article";
+        this.data.publisher = {
+            '@type': 'Organization',
+            name: 'Alloserie',
+            logo: 'http://www.alloserie.fr/images/alloserie@2x.png'
+        };
+    }
+
+    get article() {
+        return this.data;
+    }
+}
+
 function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     const media = items.filter(function (item) {
         return item.id == mediaId;
@@ -100,9 +129,8 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
     }
 }
 
-function getStructuredData(items, baseUrl) {
-    // console.log('item0', items[0]);
-    const list = new Items(items, baseUrl);
+function getStructuredData(items, now) {
+    const list = new StructuredData(items, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL, now);
     return list.items;
 }
 

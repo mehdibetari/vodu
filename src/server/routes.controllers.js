@@ -2,7 +2,7 @@
 let dust    = require('dustjs-linkedin');
 let fs      = require('fs');
 let metaService = require('./meta.service');
-let configServer = require('./config-server').configServer;
+const configServer = require('./config-server').configServer;
 const Packager = require('../xspeedit/XspeedIt');
 const configKeys = require('../config-keys');
 const upcomings = require('../refresh-upcoming');
@@ -40,7 +40,7 @@ class RoutesControllers {
                     const frenchDate = `${lastUpdateDate.getDate()} ${this.getAbbrMonth()[lastUpdateDate.getMonth()]} ${lastUpdateDate.getFullYear()}`;
                     const currentMonth = this.getMonth()[lastUpdateDate.getMonth()];
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
-                    const structuredData = metaService.getStructuredData(this.filterMediaWithPicture(netflixUpcoming.items), configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
+                    const structuredData = metaService.getStructuredData(this.filterMediaWithPicture(netflixUpcoming.items), lastUpdateDate);
 
                     let tmpl = dust.compile(data, 'view-netflix');
                     dust.filters.unicorn = function(value) {
