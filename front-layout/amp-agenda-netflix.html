@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html amp lang="fr">
     <head>
-      
       <title>{#meta}{title}{/meta} {#humanDate}{currentYear}{/humanDate} | Alloserie.fr</title>
       <meta name="Description" content="{#humanDate}{frenchDate}{/humanDate} - {#meta}{description}{/meta} {#humanDate}{currentMonth} {currentYear}{/humanDate}">
       <meta name="Keywords" content="Agenda episodes series chaque semane netflix {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <meta name="google-site-verification" content="Z1umQEXvEUm7G-_R0hnV2mvxjKCJSpXMt_z2HGI1_5I" />
       <meta name="twitter:card" content="summary_large_image" />
@@ -34,6 +33,7 @@
       <meta name="msapplication-TileColor" content="#ffffff">
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
+      <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
       <link rel="stylesheet" href="/css/styles.css">
       <!-- Global Site Tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
@@ -47,6 +47,7 @@
         <!-- Structured data -->
         <script type="application/ld+json">{structuredData|js|s}</script>
         <link rel="canonical" href="http://alloserie.fr/calendrier/netflix">
+        <script async src="https://cdn.ampproject.org/v0.js"></script>
     </head>
     <body>
       <nav>
@@ -87,9 +88,9 @@
               <div class="card" id="{id}">
                 <div  id="{name|u}">
                   {#localPath}
-                  <img src="{localPath|unicorn}" alt="{name}"/>
+                  <amp-img src="{localPath|unicorn}" alt="{name}" height="218" width="148"></amp-img>
                   {:else}
-                  <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
+                  <amp-img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo" height="218" width="148"></amp-img>
                   {/localPath}
                   <div class="card-title">
                     <a href="#" class="toggle-info btn">
