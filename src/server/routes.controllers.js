@@ -182,7 +182,8 @@ class RoutesControllers {
     groupByMonth(items) {
         let groups = [];
         items.map((item) => {
-            const incomingDate = new Date(item.premiereDate.replace('é', 'e'));
+            const incomingDate = new Date(this.preFormatDate(item.premiereDate));
+            console.log(item.premiereDate, ' ', incomingDate);
             const month = (item.premiereDate == incomingDate.getFullYear()) ? undefined : this.getMonth()[incomingDate.getMonth()];
             const year = incomingDate.getFullYear() ? incomingDate.getFullYear() : 'Sans date';
             const key = `${(incomingDate.getFullYear())?incomingDate.getFullYear():'Sans date'}${(month)?'-':''}${(month)?month:''}`;
@@ -191,6 +192,17 @@ class RoutesControllers {
             else groups[keyExistAt].items.push(item);
         });
         return groups;
+    }
+
+    preFormatDate(premiereDate) {
+        return premiereDate
+                    .replace('é', 'e')
+                    .replace('fevrier', 'feb')
+                    .replace('avril', 'apr')
+                    .replace('mai', 'may')
+                    .replace('juin', 'jun')
+                    .replace('juillet', 'jul')
+                    .replace('aout', 'aug');
     }
 }
 
