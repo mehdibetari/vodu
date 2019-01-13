@@ -36,7 +36,580 @@
       <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900">
-      <link rel="stylesheet" href="/css/styles.css">
+      <style amp-custom>
+          body {
+            margin: 0;
+            padding: 0;
+            background: #edede9;
+            box-sizing: border-box;
+            font-size: 14px;
+            font-family: "Source Sans Pro", sans-serif;
+          }
+          body > nav {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 50px;
+            line-height:50px;
+            padding-left: 10px;
+            vertical-align: center;
+            z-index: 999;
+            background: #ffffff;
+            font-size: 22px;
+            font-family: Impact;  
+          }
+          body > nav .logo {
+            display: block;
+            height: 50px;  
+            width: 150px; 
+            background-image: url(/images/alloserie.png);  
+            background-size: 150px 50px;  
+          }
+          body > header {
+            margin: 60px 40px 20px 40px;
+          }
+          body > header > h1 {
+              font-size: 17px;
+          }
+          body > header > h2 {
+              font-size: 14px;
+          }
+          body > header > p {
+            font-size: 11px;
+          }
+          section {
+            padding: 0 15px;
+            margin-bottom: 20px;
+          }
+          article {
+            display: flex;
+            padding: 30px 0;
+            border-bottom: 1px #ddd solid;
+          }
+          #agenda-netflix article > aside {
+            min-height: 147.25px;
+            min-width: 100px;
+            max-height: 147.25px;
+            max-width: 100px;
+            margin-right: 10px;
+            background-color: #000;
+            border-left: 10px #331749 solid;
+          }
+          #agenda-netflix article > aside > img {
+            height: auto;
+            max-width: 100px;
+            max-height: 147.25px;
+          }
+          #agenda-netflix article > aside > iframe {
+            position: absolute;
+            left: 15px;
+            padding-top: 152px;
+          }
+          article h1 {
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: -1.3px;
+          }
+          .date {
+            color: #662D91;
+            text-transform: capitalize;
+          }
+          .type {
+            text-transform: uppercase;
+            letter-spacing: -1;
+            color: #777;
+          }
+          footer {
+            z-index: 1;
+            position: fixed;
+            bottom: 0;
+            background-color: #331749;
+            width: 100%;
+            padding: 7px 20px 7px 20px;
+          }
+          #footer-link {
+            color: #ddd;
+            text-decoration: none;
+          }
+          footer a > span {
+            white-space: nowrap;
+            line-height: 2;
+            margin-left: 7px;
+          }
+          footer a .every-week-badge:first-child {
+            background-color: #e70f1d;
+            text-transform: uppercase;
+            color: white;
+            padding: 3px 10px;
+            font-weight: 600;
+            font-size: 12px;
+          }
+          footer a .every-week-badge:nth-child(2) {
+            background-color: white;
+            text-transform: uppercase;
+            color: black;
+            padding: 3px 10px;
+            font-weight: 600;
+            font-size: 12px;
+          }
+
+          .input {
+          position: relative;
+          z-index: 1;
+          display: inline-block;
+          max-width: 350px;
+          width: calc(100% - 2em);
+          vertical-align: top;
+        }
+
+        .input__field {
+          position: relative;
+          display: block;
+          float: right;
+          padding: 0.8em;
+          width: 60%;
+          border: none;
+          border-radius: 0;
+          background: #f0f0f0;
+          color: #aaa;
+          font-weight: 400;
+          font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          -webkit-appearance: none; /* for box shadows to show on iOS */
+        }
+
+        .input__field:focus {
+          outline: none;
+        }
+
+        .input__label {
+          display: inline-block;
+          float: right;
+          padding: 0 1em;
+          width: 40%;
+          color: #696969;
+          font-weight: bold;
+          font-size: 70.25%;
+          -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        .input__label-content {
+          position: relative;
+          display: block;
+          padding: 1.6em 0;
+          width: 100%;
+        }
+
+        .graphic {
+          position: absolute;
+          top: 0;
+          left: 0;
+          fill: none;
+        }
+
+        .icon {
+          color: #ddd;
+          font-size: 150%;
+        }
+
+        /* Nao */
+        .input--nao {
+          overflow: hidden;
+          padding-top: 1em;
+        }
+
+        .input__field--nao {
+          padding: 0.5em 0em 0.25em;
+          width: 100%;
+          background: transparent;
+          color: #9da8b2;
+          font-size: 1.25em;
+        }
+
+        .input__label--nao {
+          position: absolute;
+          top: 0.95em;
+          font-size: 0.85em;
+          left: 0;
+          display: block;
+          width: 100%;
+          text-align: left;
+          padding: 0em;
+          pointer-events: none;
+          -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+          -webkit-transition: -webkit-transform 0.2s 0.15s, color 1s;
+          transition: transform 0.2s 0.15s, color 1s;
+          -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
+        }
+
+        .graphic--nao {
+          stroke: #92989e;
+          pointer-events: none;
+          -webkit-transition: -webkit-transform 0.7s, stroke 0.7s;
+          transition: transform 0.7s, stroke 0.7s;
+          -webkit-transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
+          transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
+        } 
+
+        .input__field--nao:focus + .input__label--nao,
+        .input--filled .input__label--nao {
+          color: #333;
+          -webkit-transform: translate3d(0, -1.25em, 0) scale3d(0.75, 0.75, 1);
+          transform: translate3d(0, -1.25em, 0) scale3d(0.75, 0.75, 1);
+        }
+
+        .input__field--nao:focus ~ .graphic--nao,
+        .input--filled .graphic--nao {
+          stroke: #333;
+          -webkit-transform: translate3d(-66.6%, 0, 0);
+          transform: translate3d(-66.6%, 0, 0);
+        }
+        .fb-share-button{
+          margin-right: 5px;
+        }
+        #home section > article > a > img {
+          width: 100%;
+        }
+        #home footer {
+          position: inherit;
+          display: flex;
+          justify-content: space-around;
+          font-size: 11px;
+        }
+        #home footer .title {
+          text-align: center;
+          font-size: 14px;
+          color: white;
+        }
+        #home span.badge-soon {
+          font-size: 9px;
+          padding: 2px;
+          color: #662D91;
+          background-color: white;
+          border-radius: 1px;
+        }
+        #home footer > div:nth-child(2) {
+          padding: 0 25px;
+          border-left: 1px white solid; 
+          border-right: 1px white solid; 
+        }
+        #home footer > div > div {
+          margin: 8px 0;
+        }
+        .badge {
+          white-space: nowrap;
+          background-color: #edb802;
+          border-radius: 2px;
+          color: white;
+          cursor: default;
+          display: inline-block;
+          font-size: 12px;
+          line-height: 14px;
+          margin-right: 2px;
+          padding: 0 2px;
+          vertical-align: baseline;
+        }
+        .c-pointer {
+          cursor: pointer;
+        }
+        .mg-5 {
+          margin: 5px;
+        }
+        .d-flex {
+          display: flex;
+        }
+
+        body {
+          background: #dce1df;
+          color: #4f585e;
+          font-family: "Source Sans Pro", sans-serif;
+          text-rendering: optimizeLegibility;
+        }
+        .btn {
+          background: #0096a0;
+          border-radius: 4px;
+          box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.25);
+          color: #ffffff;
+          display: inline-block;
+          padding: 6px 30px 8px;
+          position: relative;
+          text-decoration: none;
+          transition: all 0.1s 0s ease-out;
+        }
+        .no-touch a.btn:hover {
+          background: #00a2ad;
+          box-shadow: 0px 8px 2px 0 rgba(0, 0, 0, 0.075);
+          -webkit-transform: translateY(-2px);
+                  transform: translateY(-2px);
+          transition: all 0.25s 0s ease-out;
+        }
+        .no-touch a.btn:active,
+        a.btn:active {
+          background: #008a93;
+          box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.25);
+          -webkit-transform: translate3d(0, 1px, 0);
+                  transform: translate3d(0, 1px, 0);
+          transition: all 0.025s 0s ease-out;
+        }
+        div.cards {
+          margin: 80px auto;
+          max-width: 960px;
+          text-align: center;
+        }
+        div.card {
+          background: #ffffff;
+          display: inline-block;
+          margin: 8px;
+          max-width: 182px;
+          -webkit-perspective: 1000;
+                  perspective: 1000;
+          position: relative;
+          text-align: left;
+          transition: all 0.3s 0s ease-in;
+          z-index: 1;
+        }
+        div.card img {
+          max-width: 182px;
+        }
+        div.card div.card-title {
+          background: #ffffff;
+          padding: 6px 15px 10px;
+          position: relative;
+          z-index: 0;
+        }
+        div.card div.card-title a.toggle-info {
+          border-radius: 32px;
+          height: 32px;
+          padding: 0;
+          position: absolute;
+          right: 15px;
+          top: 10px;
+          width: 32px;
+        }
+        div.card div.card-title a.toggle-info span {
+          background: #ffffff;
+          display: block;
+          height: 2px;
+          position: absolute;
+          top: 16px;
+          transition: all 0.15s 0s ease-out;
+          width: 12px;
+        }
+        div.card div.card-title a.toggle-info span.left {
+          right: 14px;
+          -webkit-transform: rotate(45deg);
+                  transform: rotate(45deg);
+        }
+        div.card div.card-title a.toggle-info span.right {
+          left: 14px;
+          -webkit-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+        }
+        div.card div.card-title h2 {
+          max-width: 120px;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: -0.05em;
+          margin: 0;
+          padding: 0;
+        }
+        div.card div.card-title h2 small {
+          display: block;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: -0.025em;
+        }
+        div.card div.card-description {
+          padding: 0 15px 10px;
+          position: relative;
+          font-size: 14px;
+        }
+        div.card div.card-actions {
+          display: flex;
+          box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.075);
+          padding: 10px 15px 20px;
+          text-align: center;
+        }
+        div.card div.card-flap {
+          background: #d9d9d9;
+          position: absolute;
+          width: 100%;
+          -webkit-transform-origin: top;
+                  transform-origin: top;
+          -webkit-transform: rotateX(-90deg);
+                  transform: rotateX(-90deg);
+        }
+        div.card div.flap1 {
+          transition: all 0.3s 0.3s ease-out;
+          z-index: -1;
+        }
+        div.card div.flap2 {
+          transition: all 0.3s 0s ease-out;
+          z-index: -2;
+        }
+        div.cards.showing div.card {
+          cursor: pointer;
+          opacity: 0.6;
+          -webkit-transform: scale(0.88);
+                  transform: scale(0.88);
+        }
+        .no-touch div.cards.showing div.card:hover {
+          opacity: 0.94;
+          -webkit-transform: scale(0.92);
+                  transform: scale(0.92);
+        }
+        div.card.show div.card-title a.toggle-info span {
+          top: 15px;
+        }
+        div.card.show div.card-title a.toggle-info span.left {
+          right: 10px;
+        }
+        div.card.show div.card-title a.toggle-info span.right {
+          left: 10px;
+        }
+        div.card.show div.card-flap {
+          background: #ffffff;
+          -webkit-transform: rotateX(0deg);
+                  transform: rotateX(0deg);
+        }
+        div.card.show div.flap1 {
+          transition: all 0.3s 0s ease-out;
+        }
+        div.card.show div.flap2 {
+          transition: all 0.3s 0.2s ease-out;
+        }
+        .cards hr {
+          margin-bottom: 0;
+        }
+        .cards-group {
+          padding-top: 50px;
+        }
+        .date-anchor {
+          display: flex;
+          align-items: center;
+          justify-content: space-between; 
+        }
+        .date-anchor h3 {
+          margin: 5px;
+        }
+        .date-links {
+          line-height: 1.6;
+        }
+
+        a,a:visited,a:hover,a:active{
+          -webkit-backface-visibility:hidden;
+                  backface-visibility:hidden;
+          position:relative;
+          transition:0.5s color ease;
+          text-decoration:none;
+          color:#662D91;
+        }
+        a:hover{
+          color:#662D91;
+        }
+        a.before:before,a.after:after{
+          content: "";
+          transition:0.5s all ease;
+          -webkit-backface-visibility:hidden;
+                  backface-visibility:hidden;
+          position:absolute;
+        }
+        a.before:before{
+          top:-0.25em;
+        }
+        a.after:after{
+          bottom:-0.25em;
+        }
+        a.before:before,a.after:after{
+          height:5px;
+          height:0.05rem;
+          width:0;
+          background:#662D91;
+        }
+        a.first:after{
+          left:0;
+        }
+        a.second:after{
+          right:0;
+        }
+        a.third:after,a.sixth:before,a.sixth:after{
+          left:50%;
+          -webkit-transform:translateX(-50%);
+                  transform:translateX(-50%);
+        }
+        a.fourth:before,a.fourth:after{
+          left:0;
+        }
+        a.fifth:before,a.fifth:after{
+          right:0;
+        }
+        a.seventh:before{
+          right:0;
+        }
+        a.seventh:after{
+          left:0;
+        }
+        a.eigth:before{
+          left:0;
+        }
+        a.eigth:after{
+          right:0;
+        }
+        a.before:hover:before,a.after:hover:after{
+          width:100%;
+        }
+
+        @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
+        only screen and (-moz-min-device-pixel-ratio: 1.5),  
+        only screen and (-o-min-device-pixel-ratio: 3/2),  
+        only screen and (min-device-pixel-ratio: 1.5) {  
+          body > nav .logo {  
+            background-image: url(/images/alloserie@2x.png);  
+          }  
+        }
+
+        @media screen and (max-width: 720px) {
+          div.cards {
+            margin: 10px auto;
+          }
+        }
+
+        @media screen and (max-width: 490px) {
+
+          div.card {
+            max-width: 148px;
+          }
+
+          div.card img {
+            max-width: 148px;
+          }
+
+          div.card div.card-title a.toggle-info {
+            
+            border-radius: inherit;
+            height: inherit;
+            padding: 0;
+            position: absolute;
+            right: 0px;
+            bottom: 35px;
+            top: inherit;
+          }
+          div.card div.card-title a.toggle-info span {
+            background: black;
+          }
+          div.card div.card-actions {
+            padding: 2px 2px;
+          }
+        }
+      </style>
       <!-- Structured data -->
       <script type="application/ld+json">{structuredData|js|s}</script>
       <link rel="canonical" href="http://alloserie.fr/calendrier/netflix">
@@ -102,7 +675,7 @@
         </div>      
       </section>
       <footer>
-        <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
+        <a id="footer-link" href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
       </footer>
     </body>
 </html>
