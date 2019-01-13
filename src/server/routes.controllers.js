@@ -187,7 +187,6 @@ class RoutesControllers {
         let groups = [];
         items.map((item) => {
             const incomingDate = new Date(this.preFormatDate(item.premiereDate));
-            console.log(item.premiereDate, ' ', incomingDate);
             const month = (item.premiereDate == incomingDate.getFullYear()) ? undefined : this.getMonth()[incomingDate.getMonth()];
             const year = incomingDate.getFullYear() ? incomingDate.getFullYear() : 'Sans date';
             const key = `${(incomingDate.getFullYear())?incomingDate.getFullYear():'Sans date'}${(month)?'-':''}${(month)?month:''}`;
