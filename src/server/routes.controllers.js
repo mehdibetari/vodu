@@ -41,6 +41,7 @@ class RoutesControllers {
                     const currentMonth = this.getMonth()[lastUpdateDate.getMonth()];
                     const metaData = metaService.getMediaMetaData(req.params.media_id,netflixUpcoming.items, lastUpdateDate, configServer.ALLOSERIE_NETFLIX_CALENDAR_URL);
                     const structuredData = metaService.getStructuredData(this.filterMediaWithPicture(netflixUpcoming.items), lastUpdateDate);
+                    const groups = this.groupByMonth(netflixUpcoming.items);
 
                     let tmpl = dust.compile(data, 'view-netflix');
                     dust.filters.unicorn = function(value) {
@@ -51,7 +52,8 @@ class RoutesControllers {
                     };
                     dust.loadSource(tmpl);
                     let view = dust.render('view-netflix', { 
-                        list: netflixUpcoming.items, 
+                        list: netflixUpcoming.items,
+                        groups,
                         lastUpdate: fullDate,
                         humanDate: {
                             frenchDate,
@@ -175,6 +177,20 @@ class RoutesControllers {
 
     filterMediaWithPicture(medias) {
         return medias.filter((item) => item.posterUrl);
+    }
+
+    groupByMonth(items) {
+        let groups = [];
+        items.map((item) => {
+            const incomingDate = new Date(item.premiereDate.replace('é', 'e'));
+            const month = (item.premiereDate == incomingDate.getFullYear()) ? undefined : this.getMonth()[incomingDate.getMonth()];
+            const year = incomingDate.getFullYear() ? incomingDate.getFullYear() : 'Sans date';
+            const key = `${(incomingDate.getFullYear())?incomingDate.getFullYear():'Sans date'}${(month)?'-':''}${(month)?month:''}`;
+            const keyExistAt = groups.findIndex((group) => group.key === key);
+            if (keyExistAt === -1) groups.push({ key, year, month, items: [item] });
+            else groups[keyExistAt].items.push(item);
+        });
+        return groups;
     }
 }
 

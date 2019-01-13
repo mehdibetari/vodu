@@ -7,7 +7,7 @@ const configServer = {
     ALLOSERIE_NETFLIX_WEEKLY_STORE: './store/netflix-every-week.json',
     ALLOSERIE_NETFLIX_CALENDAR_URL: 'http://alloserie.fr/calendrier/netflix',
     ALLOSERIE_NETFLIX_CALENDAR_TITLE: 'Calendrier Netflix, Agenda des sorties series et films pour',
-    ALLOSERIE_NETFLIX_CALENDAR_DESCRIPTION: 'Calendrier à jour des nouveautés netflix à venir. Contenant l\'agenda de toutes les sorties des films et series pour',
+    ALLOSERIE_NETFLIX_CALENDAR_DESCRIPTION: 'Calendrier des nouveautés netflix à venir. Agenda de toutes les sorties des films et series pour',
     ALLOSERIE_NETFLIX_CALENDAR_LAYOUT: './front-layout/agenda-netflix.html',
     ALLOSERIE_NETFLIX_UPCOMING_STORE: './store/netflix-upcoming.json',
 };

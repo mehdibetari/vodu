@@ -2,7 +2,7 @@
     <head>
       
       <title>{#meta}{title}{/meta} {#humanDate}{currentYear}{/humanDate} | Alloserie.fr</title>
-      <meta name="Description" content="{#humanDate}{frenchDate}{/humanDate} - {#meta}{description}{/meta} {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
+      <meta name="Description" content="{#humanDate}{frenchDate}{/humanDate} - {#meta}{description}{/meta} {#humanDate}{currentMonth} {currentYear}{/humanDate}">
       <meta name="Keywords" content="Agenda episodes series chaque semane netflix {#humanDate}{currentMonth} {currentYear} {nextYear}{/humanDate}">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,10 +50,10 @@
       <nav>
         <a href="/" class="logo"></a>
       </nav>
-      <header>
+      <header id="header">
         <h1>Calendrier des sorties NETFLIX FRANCE {#humanDate}{currentYear} {nextYear}{/humanDate}</h1>
         <h2>Dernière mise à jour de l'agenda le {lastUpdate}</h2>
-        <p>Toutes les sorties et nouveautés films et series ORIGINAL NETFLIX pour {#humanDate}{currentMonth} {currentYear}{/humanDate} et apres</p>
+        <p>Toutes les sorties et nouveautés films et series ORIGINAL NETFLIX pour {#humanDate}{currentMonth} {currentYear}{/humanDate}</p>
       </header>
       <section class="searchBar">
         <span class="input input--nao">
@@ -66,47 +66,62 @@
 					</svg>
 				</span>
       </section>
+      <section class="date-links">
+        <span>
+          {#groups}
+            <a href="#{key|u}" class="sixth before after">{month} {year}</a>&nbsp;&nbsp;&nbsp;
+          {/groups}
+        </span>
+      </section>
       <section  id="agenda-netflix">
         <div class="cards">
-          {#list}
-          <div class="card" id="{id}">
-            <div  id="{name|u}">
-              {#localPath}
-              <img src="{localPath|unicorn}" alt="{name}"/>
-              {:else}
-              <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
-              {/localPath}
-              <div class="card-title">
-                <a href="#" class="toggle-info btn">
-                  <span class="left"></span>
-                  <span class="right"></span>
-                </a>
-                <h2>
-                    <span class="name">{name}</span>
-                    <small class="date-de-sortie">{premiereDate}</small>
-                </h2>
-              </div>
-              <div class="card-flap flap1">
-                <div class="card-description">
-                  <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
-                  {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
-                  {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
-                  {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
-                  {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
-                </div>
-                <div class="card-flap flap2">
-                  <div class="card-actions">
-                    <div id="twitter-share-btn-{id}"></div>
+          {#groups}
+          <div class="cards-group" id="{key|u}">
+            <hr>
+            <div class="date-anchor">
+              <h3>{month} {year}</h3><strong><a href="#header">⌃</a></strong>
+            </div>
+              {#items}
+              <div class="card" id="{id}">
+                <div  id="{name|u}">
+                  {#localPath}
+                  <img src="{localPath|unicorn}" alt="{name}"/>
+                  {:else}
+                  <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
+                  {/localPath}
+                  <div class="card-title">
+                    <a href="#" class="toggle-info btn">
+                      <span class="left"></span>
+                      <span class="right"></span>
+                    </a>
+                    <h2>
+                        <span class="name">{name}</span>
+                        <small class="date-de-sortie">{premiereDate}</small>
+                    </h2>
+                  </div>
+                  <div class="card-flap flap1">
+                    <div class="card-description">
+                      <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
+                      {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
+                      {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
+                      {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
+                      {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
+                    </div>
+                    <div class="card-flap flap2">
+                      <div class="card-actions">
+                        <div id="twitter-share-btn-{id}"></div>
+                      </div>
+                    </div>
+                    <template id="share-template-{id}">
+                      <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                    </template>
                   </div>
                 </div>
-                <template id="share-template-{id}">
-                  <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                </template>
               </div>
-            </div>
+              {/items}
           </div>
-          {/list}
-        </div>        
+          {/groups}
+        </div>      
       </section>
       <footer>
         <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
