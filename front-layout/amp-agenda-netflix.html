@@ -37,19 +37,24 @@
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900">
       <link rel="stylesheet" href="/css/styles.css">
+      <!-- Structured data -->
+      <script type="application/ld+json">{structuredData|js|s}</script>
+      <link rel="canonical" href="http://alloserie.fr/calendrier/netflix">
       <!-- Global Site Tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107359518-1"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
-        
-        gtag('config', 'UA-107359518-1');
+      <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+      <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json">
+        {
+          "vars" : {
+            "gtag_id": "UA-107359518-1",
+            "config" : {
+              "UA-107359518-1": { "groups": "default" }
+            }
+          }
+        }
         </script>
-        <!-- Structured data -->
-        <script type="application/ld+json">{structuredData|js|s}</script>
-        <link rel="canonical" href="http://alloserie.fr/calendrier/netflix">
-        <script async src="https://cdn.ampproject.org/v0.js"></script>
+      </amp-analytics>
+      <script async src="https://cdn.ampproject.org/v0.js"></script>
     </head>
     <body>
       <nav>
