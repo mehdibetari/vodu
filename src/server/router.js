@@ -24,6 +24,9 @@ app.get('/calendrier/netflix/:media_id*?', function(req, res){
 app.get('/json/calendrier/netflix', function(req, res){
     routesControllers.calendarList('json-netflix', req, res);
 });
+app.get('/amp/calendrier/netflix', function(req, res){
+    routesControllers.calendarList('amp-netflix', req, res);
+});
 app.get('/episode-chaque-semaine/netflix/:media_id*?', function(req, res){
     routesControllers.weeklyList('netflix', req, res);
 });
