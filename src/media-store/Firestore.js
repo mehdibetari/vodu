@@ -6,10 +6,12 @@ let serviceAccount = require('./firebase-key.json');
 class Firestore {
 
     constructor() {
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
-            databaseURL: 'https://alloserie-986c3.firebaseio.com'
-        });
+        if (!admin.apps.length) {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: 'https://alloserie-986c3.firebaseio.com'
+            });
+        }
         this.db = admin.database();
         this.ref = this.db.ref("server");
         this.mediaRef = this.ref.child("media");
