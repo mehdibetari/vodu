@@ -180,7 +180,7 @@ function refreshNetflixUpcoming (upc, prompt) {
     argv.prt = prompt;
     uploadcare = upc;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
-    [ 'fr', 'en', 'es', 'pt'].forEach(language => {
+    async.mapSeries(['fr', 'en', 'es', 'pt'], function(language, done) {
         netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
             // console.log(netflixUpcoming);
             console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
@@ -193,6 +193,7 @@ function refreshNetflixUpcoming (upc, prompt) {
                     newUpcomings.items = items;
                     saveStore(newUpcomings, language);
                     console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+                    done();
                 });
             });
         });

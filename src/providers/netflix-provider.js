@@ -3,12 +3,14 @@ let fs      = require('fs');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
 const NETFLIX_API_PATH = '/gateway/v1';
-const NETFLIX_UPCOMING_PATH = 'titles/upcoming';
+const NETFLIX_UPCOMING_PATH = '/titles/upcoming';
 const NETFLIX_UPCOMING_MANUAL_JSON = './store/netflix-upcoming-manual.json';
 
 function getUpcomingMedia (lang, callback) {
-    const langPath = lang ? '/fr' : `/${lang}`;
-    request(`${NETFLIX_BASE_URL}${NETFLIX_API_PATH}${langPath}${NETFLIX_UPCOMING_PATH}`, function(error, response) {
+    const langPath = lang ? `/${lang}` : '/fr';
+    const netflixApi = `${NETFLIX_BASE_URL}${NETFLIX_API_PATH}${langPath}${NETFLIX_UPCOMING_PATH}`;
+    console.log('netflixApi', netflixApi);
+    request(netflixApi, function(error, response) {
         var netflixUpcomings = JSON.parse(response.body)
         if(error || !netflixUpcomings.items || !netflixUpcomings.meta.result.totalItems) {
             console.log('Error : ', error);
