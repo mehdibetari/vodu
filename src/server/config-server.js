@@ -10,7 +10,7 @@ const configServer = {
     ALLOSERIE_NETFLIX_CALENDAR_DESCRIPTION: 'Calendrier des nouveautés netflix à venir. Agenda de toutes les sorties des films et series pour',
     ALLOSERIE_NETFLIX_CALENDAR_LAYOUT: './front-layout/agenda-netflix.html',
     ALLOSERIE_NETFLIX_CALENDAR_AMP_LAYOUT: './front-layout/amp-agenda-netflix.html',
-    ALLOSERIE_NETFLIX_UPCOMING_STORE: './store/netflix-upcoming.json',
+    ALLOSERIE_NETFLIX_UPCOMING_STORE: './store/netflix-upcoming/fr.json',
     ALLOSERIE_NETFLIX_UPCOMING_STORE_LANG: './store/netflix-upcoming'
 };
 exports.configServer = configServer;
