@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
 app.get('/calendrier/netflix/:media_id*?', function(req, res){
     routesControllers.calendarList('netflix', req, res);
 });
-app.get('/json/calendrier/netflix', function(req, res){
+app.get('/json/calendrier/netflix/:lang*?', function(req, res){
     routesControllers.calendarList('json-netflix', req, res);
 });
 app.get('/amp/calendrier/netflix', function(req, res){

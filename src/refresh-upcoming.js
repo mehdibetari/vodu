@@ -10,7 +10,7 @@ let Firestore       = require('./media-store/Firestore');
 let Media           = require('./media-store/Media');
 
 const STORE_FOLDER = './store';
-const STORE_NETFLIX_UPCOMING = '/netflix-upcoming.json';
+const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
 let argv = {};
 let uploadcare = false;
 
@@ -169,8 +169,9 @@ function getMediaStartYear (media) {
     }
 }
 
-function saveStore (upComings) {
-    fs.writeFile(STORE_FOLDER + STORE_NETFLIX_UPCOMING, JSON.stringify(upComings), function(){
+function saveStore (upComings, language) {
+    const file = `${STORE_FOLDER}${STORE_NETFLIX_UPCOMING}/${language}.json`;
+    fs.writeFile(file, JSON.stringify(upComings), function(){
         console.log(colors.bgGreen.white('File successfully written! - Check your project directory for the ./store/netflix-upcoming.json file'));
     });
 }
@@ -179,18 +180,20 @@ function refreshNetflixUpcoming (upc, prompt) {
     argv.prt = prompt;
     uploadcare = upc;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
-    netflixProvider.getUpcomingMedia(function(netflixUpcoming) {
-        // console.log(netflixUpcoming);
-        console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
-        let newUpcomings = {};
-        netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
-            netflixUpcoming.items = upcomingMediaManual.concat(netflixUpcoming.items);
-            updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
-                newUpcomings.timeStamp = Date.now();
-                newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
-                newUpcomings.items = items;
-                saveStore(newUpcomings);
-                console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+    [ 'fr', 'en', 'es', 'pt'].forEach(language => {
+        netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
+            // console.log(netflixUpcoming);
+            console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
+            let newUpcomings = {};
+            netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
+                netflixUpcoming.items = upcomingMediaManual.concat(netflixUpcoming.items);
+                updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
+                    newUpcomings.timeStamp = Date.now();
+                    newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
+                    newUpcomings.items = items;
+                    saveStore(newUpcomings, language);
+                    console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+                });
             });
         });
     });

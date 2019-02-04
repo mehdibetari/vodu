@@ -80,7 +80,12 @@ class RoutesControllers {
                 });
                 break;
             case 'json-netflix':
-                fs.readFile(configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE, 'utf8', function (error,response) {
+                let file = configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE;
+                if (req.params.lang) {
+                    file = `${configServer.ALLOSERIE_NETFLIX_UPCOMING_STORE_LANG}/${req.params.lang}.json`
+                }
+
+                fs.readFile(file, 'utf8', function (error,response) {
                     if (error) {
                         return console.log(error);
                     }
