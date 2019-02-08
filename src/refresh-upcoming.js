@@ -13,6 +13,7 @@ const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
 let argv = {};
 let uploadcare = false;
+const languages = ['fr', 'en', 'es', 'pt_br', 'de'];
 
 function getDataFrom(from, Datas = []) {
     if (!~Datas.length) return '';
@@ -180,7 +181,7 @@ function refreshNetflixUpcoming (upc, prompt) {
     argv.prt = prompt;
     uploadcare = upc;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
-    async.mapSeries(['fr', 'en', 'es', 'pt'], function(language, done) {
+    async.mapSeries(languages, function(language, done) {
         netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
             // console.log(netflixUpcoming);
             console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
