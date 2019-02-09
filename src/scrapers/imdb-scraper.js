@@ -1,8 +1,9 @@
-let request       = require('request');
-let cheerio       = require('cheerio');
-let async         = require('async');
-let colors        = require('colors');
-const Filestorage = require('../media-storage/Filestorage');
+const request          = require('request');
+const cheerio          = require('cheerio');
+const async            = require('async');
+const colors           = require('colors');
+const stringSimilarity = require('string-similarity');
+const Filestorage      = require('../media-storage/Filestorage');
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
@@ -17,11 +18,14 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
     console.log('  STEP # MATCHING LIST TITLES ');
     let posterStore = new Filestorage();
     async.eachSeries(mediasFounded, function(media, done){
-        console.log('      Matching test : ',$(media).text().toLowerCase().replace(/\s/g,'') ,' => ', titleToFound.toLowerCase().replace(/\s/g,''));
-        // console.log($(media).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) );
-        let textExactlyMatch = $(media).text().toLowerCase().replace(/\s/g,'') === titleToFound.toLowerCase().replace(/\s/g,'');
-        let textExactlyStart = $(media).text().toLowerCase().replace(/\s/g,'').indexOf(titleToFound.toLowerCase().replace(/\s/g,'')) === 0;
-        if (!lock && textExactlyMatch || textExactlyStart) {
+        const mediaTitle = $(media).text().toLowerCase().replace(/\s/g,'').replace(':','').replace('(tvseries)','').replace('(tvepisode)','').replace('(video)','');
+        const title = titleToFound.toLowerCase().replace(/\s/g,'').replace(':','');
+        const similarity = stringSimilarity.compareTwoStrings(mediaTitle, title);
+        console.log('      Matching test : ',mediaTitle ,' => ', title, ' ', similarity);
+        // console.log(mediaTitle.indexOf(title) );
+        let textExactlyMatch = mediaTitle === title;
+        let textExactlyStart = mediaTitle.indexOf(title) === 0;
+        if (!lock && (textExactlyMatch || textExactlyStart || (similarity > 0.79))) {
             lock = true;
             let mediaLink = $(media).find('a').attr('href');
             console.log('        Media link '+ colors.green('FOUNDED') + ' : ',name, ' => ',mediaLink);

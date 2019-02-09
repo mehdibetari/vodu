@@ -19,6 +19,7 @@
     "prompt": "^1.0.0",
     "querybase": "^0.6.0",
     "request": "latest",
+    "string-similarity": "^3.0.0",
     "uploadcare": "^0.4.3",
     "uuid": "^3.1.0",
     "yargs": "^9.0.1"
