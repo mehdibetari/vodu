@@ -9,7 +9,6 @@ init();
  * call prompt methode
  */
 function init () {
-    const prompt = argv.prt;
     const uploadcare = argv.upc;
-    upcomings(uploadcare, prompt);
+    upcomings(uploadcare);
 }
