@@ -6,7 +6,6 @@ let imdbScraper     = require('./scrapers/imdb-scraper');
 let netflixScraper  = require('./scrapers/netflix-scraper');
 let netflixProvider = require('./providers/netflix-provider');
 const Filestorage   = require('./media-storage/Filestorage');
-let Firestore       = require('./media-store/Firestore');
 let Media           = require('./media-store/Media');
 
 const STORE_FOLDER = './store';
@@ -47,81 +46,37 @@ function itemPatchWithImdbScrap (item, scrap) {
     return item;
 }
 
-function itemBuildWithImdbScrapOrExisting (item, scrap, existing = {}) {
-    item.actors    = scrap.actors    || existing.actors;
-    item.directors = scrap.directors || existing.directors;
-    item.creators  = scrap.creators  || existing.creators;
-    item.summary   = scrap.summary   || existing.summary;
-    item.mediaLink = scrap.mediaLink || existing.mediaLink;
+function itemBuildWithImdbScrap (item, scrap) {
+    item.actors    = scrap.actors;
+    item.directors = scrap.directors;
+    item.creators  = scrap.creators;
+    item.summary   = scrap.summary;
+    item.mediaLink = scrap.mediaLink;
     item.posterUrl = scrap.posterUrl;
     item.localPath = scrap.localPath;
     return item;
-}
-
-function mediaAlreadyExistWithPoster (item, itemAlreadyExist, mediaFrom, mediaStore, callback) {
-    console.log(colors.inverse('poster ALREADY downloaded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-    item = itemPatchWithExisting(item, itemAlreadyExist, mediaFrom);
-    var minActorsAndOneMeta = item.actors && (item.directors || item.creators || item.summary);
-    if (minActorsAndOneMeta) {
-        console.log(colors.inverse('meta ALREADY founded'),colors.bgGreen.white(item.name, getMediaStartYear(item)));
-        callback(item);
-    }
-    else {
-        imdbScraper.getMedia(item.name, getMediaStartYear(item), false, uploadcare, function(imdbInfos) {
-            console.log(colors.inverse('meta UNFINISHED'),colors.bgRed.white(item.name, getMediaStartYear(item)));
-            item = itemPatchWithImdbScrap(item, imdbInfos);
-            let updatedMedia = new Media(item, mediaFrom);
-            mediaStore.setMedia(updatedMedia, function(error){
-                if (error) console.log('Updated Item failed to put in Firestore error: ', error);
-                callback(item);
-            });
-        });
-    }
 }
 
 function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
     let upComings = [];
     let cpt = 0;
     let postersCpt = 0;
-    let mediaStore = new Firestore();
-    const mediaFrom = 'netflix-upcomings';
     async.mapSeries(newUpcomings, function(item, done) {
         cpt++;
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
-        let itemMedia = new Media(item, mediaFrom);
-        mediaStore.getMedia(itemMedia, function(itemAlreadyExist){
-            
-            var minOnePoster = itemAlreadyExist && itemAlreadyExist.poster && ~itemAlreadyExist.poster.length;
-            if (minOnePoster) {
-                mediaAlreadyExistWithPoster(item, itemAlreadyExist, mediaFrom, mediaStore, function(item){
+        imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
+            if (imdbInfos.localPath) postersCpt++;
+            item = itemBuildWithImdbScrap(item, imdbInfos);
+            if (!item.localPath) {
+                trySearchPosterOnNetflixOrPrompt(item, imdbInfos, uploadcare, function(item) {
                     upComings.push(item);
                     done();
                 });
             }
             else {
-                imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
-                    if (imdbInfos.localPath) postersCpt++;
-                    item = itemBuildWithImdbScrapOrExisting(item, imdbInfos, itemAlreadyExist || {});
-                    if (!item.localPath) {
-                        trySearchPosterOnNetflixOrPrompt(item, imdbInfos, uploadcare, function(){
-                            upComings.push(item);
-                            let updatedMedia = new Media(item, mediaFrom);
-                            mediaStore.setMedia(updatedMedia, function(error){
-                                if (error) console.log('Updated Item failed to post in Firestore after prompt error: ', error);
-                                done();
-                            });
-                        });
-                    }
-                    else {
-                        upComings.push(item);
-                        let updatedMedia = new Media(item, mediaFrom);
-                        mediaStore.setMedia(updatedMedia, function(error){
-                            if (error) console.log('Updated Item failed to post in Firestore error: ', error);
-                            done();
-                        });
-                    }
-                });
+                upComings.push(item);
+                done();
             }
         });
     }, function() {
@@ -132,7 +87,6 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
 }
 
 function trySearchPosterOnNetflixOrPrompt (item, imdbInfos, uploadcare, callback) {
-    
     netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
         if ((!argv.prt) || (argv.prt && imdbInfos.localPath)) {
             item.posterUrl = netflixPoster.posterUrl;
