@@ -9,6 +9,7 @@
         "type": "serie",
         "premiereDate": "18 janvier 2019",
         "locale": "fr",
+        "country": ["*"],
         "sortDate": "2019-01-18"
     },
     {
@@ -21,6 +22,7 @@
         "type": "serie",
         "premiereDate": "18 janvier 2019",
         "locale": "fr",
+        "country": ["france", "belgique"],
         "sortDate": "2019-01-18"
     }
 ]
