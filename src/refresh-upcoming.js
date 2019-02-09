@@ -19,7 +19,6 @@ function itemBuildWithImdbScrap (item, scrap) {
     item.mediaLink = scrap.mediaLink;
     item.posterUrl = scrap.posterUrl;
     item.localPath = scrap.localPath;
-    item.country = scrap.country;
     return item;
 }
 
