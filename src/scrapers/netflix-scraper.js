@@ -14,7 +14,12 @@ function getPoster (uri, name, year, uploadcare, callback) {
             let posterUri = $('img','.nfo-poster-img-container').filter(function(){
                 return ($(this).attr('src') === '/dist/img/no-key-art.jpg') ? false : $(this).attr('src');
             });
-            if (posterUri && posterUri !== '' && posterUri.length > 0) {
+            const description = $('p','.nfo-intro').filter(function() {
+                return $(this).html() !== '';
+            });
+
+            console.log('    NETFLIX POSTER description : '+ description);
+            if (description && posterUri && posterUri !== '' && posterUri.length > 0) {
                 posterUri = $(posterUri).attr('src');
                 console.log('    NETFLIX POSTER URL : '+posterUri);
                 let posterStore = new Filestorage();
@@ -22,7 +27,7 @@ function getPoster (uri, name, year, uploadcare, callback) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
-                    callback({'localPath': path, 'posterUrl': posterUri});
+                    callback({'localPath': path, 'posterUrl': posterUri, description: description});
                 });
             }
             else {                
