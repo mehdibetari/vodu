@@ -37,7 +37,7 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
                 netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
                     item.posterUrl = netflixPoster.posterUrl;
                     item.localPath = netflixPoster.localPath;
-                    item.description = netflixPoster.description;
+                    item.description = typeof netflixPoster.description === 'string' ? netflixPoster.description : '';
                     upComings.push(item);
                     done();
                 });
