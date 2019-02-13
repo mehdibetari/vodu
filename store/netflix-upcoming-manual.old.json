@@ -43,5 +43,30 @@
         "premiereDate": "18 janvier 2019",
         "locale": "fr",
         "sortDate": "2019-01-18"
+    },
+    {
+        
+        "id": 1212121213,
+        "name": "STAR TREK Discovery",
+        "firstSeason": "2018",
+        "seasons": 2,
+        "description": "Après un siècle de silence, une guerre éclate entre la Fédération et l'empire klingon, alors qu'un officier en disgrâce de la Starfleet se retrouve au centre du conflit.",
+        "type": "serie",
+        "premiereDate": "18 janvier 2019",
+        "locale": "fr",
+        "sortDate": "2019-01-18"
+    },
+    {
+        
+        "id": 1212121214,
+        "name": "American Crime Story",
+        "firstSeason": "2016",
+        "seasons": 2,
+        "description": "The Assassination of Gianni Versace : L'assassinat du couturier italien Gianni Versace, raconté à travers le parcours de son tueur Andrew Cunanan dans l'Amérique des années 90.",
+        "type": "serie",
+        "premiereDate": "18 janvier 2019",
+        "locale": "fr",
+        "country": ["fr", "be"],
+        "sortDate": "2019-01-18"
     }
 ]
