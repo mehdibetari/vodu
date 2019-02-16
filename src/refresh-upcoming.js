@@ -33,10 +33,10 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
         imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
             if (imdbInfos.localPath) postersCpt++;
             item = itemBuildWithImdbScrap(item, imdbInfos);
-            if (!item.localPath && item.uri) {
+            if (item.uri) {
                 netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
-                    item.posterUrl = netflixPoster.posterUrl;
-                    item.localPath = netflixPoster.localPath;
+                    item.posterUrl = netflixPoster.posterUrl || item.posterUrl;
+                    item.localPath = netflixPoster.localPath || item.localPath;
                     item.description = typeof netflixPoster.description === 'string' ? netflixPoster.description : '';
                     upComings.push(item);
                     done();
@@ -76,8 +76,8 @@ function saveStore (upComings, language) {
     });
 }
 
-function refreshNetflixUpcoming (upc) {
-    uploadcare = upc;
+function refreshNetflixUpcoming () {
+    uploadcare = true;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     async.mapSeries(languages, function(language, done) {
         netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
