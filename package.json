@@ -16,6 +16,7 @@
     "dustjs-linkedin": "^2.7.5",
     "express": "latest",
     "firebase-admin": "^5.13.1",
+    "node-cron": "^2.0.3",
     "prompt": "^1.0.0",
     "querybase": "^0.6.0",
     "request": "latest",
