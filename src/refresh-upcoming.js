@@ -7,8 +7,6 @@ let netflixProvider = require('./providers/netflix-provider');
 
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
-let argv = {};
-let uploadcare = false;
 const languages = ['fr', 'en', 'es', 'pt_br', 'de'];
 
 function itemBuildWithImdbScrap (item, scrap) {
@@ -77,11 +75,10 @@ function saveStore (upComings, language) {
 }
 
 function refreshNetflixUpcoming () {
-    uploadcare = true;
+    const uploadcare = true;
     console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
     async.mapSeries(languages, function(language, done) {
         netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
-            // console.log(netflixUpcoming);
             console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
             let newUpcomings = {};
             netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
