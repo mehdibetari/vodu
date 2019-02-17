@@ -1,7 +1,8 @@
-const request       = require('request');
-const cheerio       = require('cheerio');
-const colors        = require('colors');
-const Filestorage = require('../media-storage/Filestorage');
+const request      = require('request');
+const cheerio      = require('cheerio');
+const colors       = require('colors');
+const Filestorage  = require('../media-storage/Filestorage');
+const h2p          = require('html2plaintext');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
 
@@ -18,8 +19,8 @@ function getPoster (uri, name, year, uploadcare, callback) {
                 return $(this).html() !== '';
             });
 
-            console.log('    NETFLIX POSTER description : '+ description);
             if (description && posterUri && posterUri !== '' && posterUri.length > 0) {
+                console.log('    NETFLIX POSTER description : '+ description);
                 posterUri = $(posterUri).attr('src');
                 console.log('    NETFLIX POSTER URL : '+ posterUri);
                 let posterStore = new Filestorage();
@@ -27,7 +28,7 @@ function getPoster (uri, name, year, uploadcare, callback) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
-                    callback({'localPath': path, 'posterUrl': posterUri, description});
+                    callback({'localPath': path, 'posterUrl': posterUri, description: h2p(description)});
                 });
             }
             else {                
