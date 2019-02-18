@@ -7,7 +7,7 @@ let netflixProvider = require('./providers/netflix-provider');
 
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
-const languages = ['fr', 'en', 'es', 'pt_br', 'de'];
+const languages = ['en', 'fr', 'es', 'pt_br', 'de'];
 
 function itemBuildWithImdbScrap (item, scrap) {
     item.actors    = scrap.actors;
@@ -28,11 +28,11 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
         cpt++;
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
-        imdbScraper.getMedia(item.name, getMediaStartYear(item), true, uploadcare, function(imdbInfos) {
+        imdbScraper.getMedia(item.name, getMediaStartYear(item), item.id, true, function(imdbInfos) {
             if (imdbInfos.localPath) postersCpt++;
             item = itemBuildWithImdbScrap(item, imdbInfos);
             if (item.uri) {
-                netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), uploadcare, function(netflixPoster) {
+                netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), item.id, uploadcare, function(netflixPoster) {
                     item.posterUrl = netflixPoster.posterUrl || item.posterUrl;
                     item.localPath = netflixPoster.localPath || item.localPath;
                     item.description = netflixPoster.description;

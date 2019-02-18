@@ -1,7 +1,14 @@
-const configKeys = require('../config-keys');
-let fs           = require('fs');
-let request      = require('request');
-let uploadcare   = require('uploadcare')(configKeys.uploadcare.public_key, configKeys.uploadcare.private_key);
+const configKeys   = require('../config-keys');
+const fs           = require('fs');
+const request      = require('request');
+const uploadcare   = require('uploadcare')(configKeys.uploadcare.public_key, configKeys.uploadcare.private_key);
+const AWS          = require('aws-sdk');
+
+const s3 = new AWS.S3({
+  accessKeyId: configKeys.S3.AWS_ACCESS_KEY,
+  secretAccessKey: configKeys.S3.AWS_SECRET_ACCESS_KEY
+});
+const BUCKET_NAME = 'media-store.tolookat.com';
 
 const STORE_UPLOADCARE_BASE_URL = 'https://ucarecdn.com/';
 
@@ -11,18 +18,9 @@ class Filestorage {
 
     }
 
-    download (uri, filename, uploadcare, callback) {
+    download (uri, filePath, fileName, callback) {
         if (!uri) return callback(false);
-        if (uploadcare) {
-            this.uploadOnDistant(uri, function (distantUrl) {
-                callback(distantUrl);
-            });
-        }
-        else {
-            this.downloadLocaly(uri, filename, function (state) {
-                callback(state);
-            });
-        }
+        this.uploadOnDistant(uri, filePath, fileName, callback);
     }
 
     downloadLocaly (uri, filename, callback) {
@@ -38,12 +36,57 @@ class Filestorage {
         });
     }
 
-    uploadOnDistant (url, callback) {
+    uploadOnDistantWithUploadcare (url, callback) {
         //Upload from URL
         uploadcare.file.fromUrl(url, function(err,res){
             //Res should contain returned file ID
             let uplc_filepath = STORE_UPLOADCARE_BASE_URL + res.file_id + '/' + res.filename;
             callback(uplc_filepath);
+        });
+    }
+
+    uploadOnDistant (sourceUrl, filepath, filename, callback) {
+        const s3params = {
+            Bucket: BUCKET_NAME,
+            MaxKeys: 20,
+            Delimiter: '/',
+            Prefix: filepath
+        };
+        s3.listObjectsV2 (s3params, (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            // console.log('data =>', data);
+            if (data && data.Contents.length > 0) {
+                callback(`https://${BUCKET_NAME}/${data.Contents[0].Key}`);
+            }
+            else {
+                this.uploadOnS3FromUrl(sourceUrl, filepath, filename, callback);
+            }
+        });
+    }
+
+    uploadOnS3FromUrl (sourceUrl, filepath, filename, callback) {
+        var options = {
+            uri: sourceUrl,
+            encoding: null
+        };
+        request(options, function(error, response, body) {
+            if (error || response.statusCode !== 200) { 
+                console.log("failed to get image");
+                console.log(error);
+            } else {
+                const params = {
+                    Bucket: BUCKET_NAME,
+                    Key: `${filepath}${filename}`,
+                    Body: body
+                };
+                s3.upload(params, function(s3Err, data) {
+                    if (s3Err) throw s3Err
+                    console.log(`File uploaded successfully at ${data.Location}`)
+                    callback(`https://${BUCKET_NAME}/${filepath}${filename}`);
+                });
+            }
         });
     }
 }

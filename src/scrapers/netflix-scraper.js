@@ -1,12 +1,13 @@
 const request      = require('request');
 const cheerio      = require('cheerio');
 const colors       = require('colors');
-const Filestorage  = require('../media-storage/Filestorage');
 const h2p          = require('html2plaintext');
+const Slug         = require('slugify');
+const Filestorage  = require('../media-storage/Filestorage');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
 
-function getPoster (uri, name, year, uploadcare, callback) {
+function getPoster (uri, name, year, id, uploadcare, callback) {
     console.log(colors.inverse('NETFLIX poster to found'),colors.bgGreen.white(name,year));
     request(NETFLIX_BASE_URL+uri, function(error, response, html){
         if(!error){
@@ -24,11 +25,13 @@ function getPoster (uri, name, year, uploadcare, callback) {
                 posterUri = $(posterUri).attr('src');
                 console.log('    NETFLIX POSTER URL : '+ posterUri);
                 let posterStore = new Filestorage();
-                posterStore.download(posterUri,'./public/posters/' + name.replace('/','') + '+' + year + '.jpg', uploadcare, function (path) {
+                const fileName = `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`;
+                const filePath = `posters/${year}${id}/`;
+                posterStore.download(posterUri, filePath, fileName, function (path) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
-                    callback({'localPath': path, 'posterUrl': posterUri, description: h2p(description)});
+                    callback({'localPath': path, 'sourceUrl': posterUri, description: h2p(description)});
                 });
             }
             else {                

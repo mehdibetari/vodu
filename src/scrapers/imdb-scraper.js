@@ -2,6 +2,7 @@ const request          = require('request');
 const cheerio          = require('cheerio');
 const async            = require('async');
 const colors           = require('colors');
+const Slug             = require('slugify');
 const stringSimilarity = require('string-similarity');
 const Filestorage      = require('../media-storage/Filestorage');
 
@@ -14,7 +15,7 @@ function getMediaListUrl (name, year) {
         encodeURIComponent(name + '+' +year) + 
         imdbSearchEndUrl;
 }
-function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback) {
+function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
     let posterStore = new Filestorage();
     async.eachSeries(mediasFounded, function(media, done){
@@ -54,11 +55,13 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
                     if (enableDownload) {
-                        posterStore.download(posterUrl,'./public/posters/' + name.replace('/','') + '+' +year + '.jpg', uploadcare, function (path) {
+                        const fileName = `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`;
+                        const filePath = `posters/${year}${id}/`;
+                        posterStore.download(posterUrl, filePath, fileName, function (path) {
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);
-                            callback({'actors': actors, 'localPath': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                            callback({'actors': actors, 'sourceUrl': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
                         });
                     }
                     else {
@@ -83,7 +86,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, $, lock, enable
         callback({});
     });
 }
-function getMedia(name, year, enableDownload, uploadcare, callback) {
+function getMedia(name, year, id, enableDownload, callback) {
     console.log(colors.inverse('IMDB media to found'),colors.bgGreen.white(name,year));
 
     let url = getMediaListUrl(name, year);
@@ -126,23 +129,23 @@ function getMedia(name, year, enableDownload, uploadcare, callback) {
                                         callback({});
                                     }
                                     else {
-                                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
+                                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
                                     }
                                 });
                             }
                             else {
-                                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
+                                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
                             }
                         });
 
                     }
                     else {
-                        listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
+                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
                     }
                 });
             }
             else {
-                listScrapping(mediasFounded, titleToFound, name, year, $, lock, enableDownload, uploadcare, callback);
+                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
             }
         }
         else {
