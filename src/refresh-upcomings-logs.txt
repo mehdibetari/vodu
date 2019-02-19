@@ -1,0 +1,67 @@
+1550581576193 : ### Lang: en POSTER DOWNLOADED => 1/109
+1550581576198 : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+1550581580716 : ### Lang: fr POSTER DOWNLOADED => 1/107
+1550581580719 : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+1550581585272 : ### Lang: es POSTER DOWNLOADED => 1/108
+1550581585275 : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+1550581590260 : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+1550581590263 : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+1550581595558 : ### Lang: de POSTER DOWNLOADED => 1/107
+1550581595559 : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:11:16 PM : ### Lang: en POSTER DOWNLOADED => 1/109
+2/19/2019, 2:11:16 PM : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+2/19/2019, 2:11:23 PM : ### Lang: fr POSTER DOWNLOADED => 1/107
+2/19/2019, 2:11:23 PM : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+2/19/2019, 2:11:31 PM : ### Lang: es POSTER DOWNLOADED => 1/108
+2/19/2019, 2:11:31 PM : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+2/19/2019, 2:11:36 PM : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+2/19/2019, 2:11:36 PM : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+2/19/2019, 2:11:43 PM : ### Lang: de POSTER DOWNLOADED => 1/107
+2/19/2019, 2:11:43 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:20:34 PM : ### Lang: en POSTER DOWNLOADED => 1/109
+2/19/2019, 2:20:34 PM : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+2/19/2019, 2:20:38 PM : ### Lang: fr POSTER DOWNLOADED => 1/107
+2/19/2019, 2:20:38 PM : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+2/19/2019, 2:20:43 PM : ### Lang: es POSTER DOWNLOADED => 1/108
+2/19/2019, 2:20:43 PM : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+2/19/2019, 2:20:48 PM : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+2/19/2019, 2:20:48 PM : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+2/19/2019, 2:20:54 PM : ### Lang: de POSTER DOWNLOADED => 1/107
+2/19/2019, 2:20:54 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:27:18 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1550582838717
+2/19/2019, 2:27:18 PM : -----------------------------------
+2/19/2019, 2:27:24 PM : File uploaded successfully at https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/2019377864/period-end-of-sentence-2019.jpg
+2/19/2019, 2:27:25 PM : ### Lang: en POSTER DOWNLOADED => 1/109
+2/19/2019, 2:27:25 PM : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+2/19/2019, 2:27:31 PM : ### Lang: fr POSTER DOWNLOADED => 1/107
+2/19/2019, 2:27:31 PM : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+2/19/2019, 2:27:35 PM : ### Lang: es POSTER DOWNLOADED => 1/108
+2/19/2019, 2:27:35 PM : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+2/19/2019, 2:27:40 PM : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+2/19/2019, 2:27:40 PM : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+2/19/2019, 2:27:45 PM : ### Lang: de POSTER DOWNLOADED => 1/107
+2/19/2019, 2:27:45 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:30:16 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1550583016378
+2/19/2019, 2:30:26 PM : ### Lang: en POSTER DOWNLOADED => 1/109
+2/19/2019, 2:30:26 PM : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+2/19/2019, 2:30:34 PM : ### Lang: fr POSTER DOWNLOADED => 1/107
+2/19/2019, 2:30:34 PM : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+2/19/2019, 2:30:38 PM : ### Lang: es POSTER DOWNLOADED => 1/108
+2/19/2019, 2:30:38 PM : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+2/19/2019, 2:30:43 PM : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+2/19/2019, 2:30:43 PM : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+2/19/2019, 2:30:49 PM : ### Lang: de POSTER DOWNLOADED => 1/107
+2/19/2019, 2:30:49 PM : -----------------------------------
+2/19/2019, 2:30:49 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:32:27 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1550583147202
+2/19/2019, 2:32:32 PM : ### Lang: en POSTER DOWNLOADED => 1/109
+2/19/2019, 2:32:32 PM : File successfully written! - Check your at ./store/netflix-upcoming/en.json
+2/19/2019, 2:32:38 PM : ### Lang: fr POSTER DOWNLOADED => 1/107
+2/19/2019, 2:32:38 PM : File successfully written! - Check your at ./store/netflix-upcoming/fr.json
+2/19/2019, 2:32:42 PM : ### Lang: es POSTER DOWNLOADED => 1/108
+2/19/2019, 2:32:42 PM : File successfully written! - Check your at ./store/netflix-upcoming/es.json
+2/19/2019, 2:32:48 PM : ### Lang: pt_br POSTER DOWNLOADED => 1/110
+2/19/2019, 2:32:48 PM : File successfully written! - Check your at ./store/netflix-upcoming/pt_br.json
+2/19/2019, 2:32:52 PM : ### Lang: de POSTER DOWNLOADED => 1/107
+2/19/2019, 2:32:52 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
+2/19/2019, 2:32:52 PM : -----------------------------------

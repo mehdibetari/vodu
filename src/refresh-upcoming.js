@@ -20,7 +20,7 @@ function itemBuildWithImdbScrap (item, scrap) {
     return item;
 }
 
-function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
+function updateUpcoming (newUpcomings, mediasCount, lang, callback) {
     let upComings = [];
     let cpt = 0;
     let postersCpt = 0;
@@ -28,11 +28,12 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
         cpt++;
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
-        imdbScraper.getMedia(item.name, getMediaStartYear(item), item.id, true, function(imdbInfos) {
+        imdbScraper.getMedia(item.name, getMediaStartYear(item), item.id, true, logger, function(imdbInfos) {
             if (imdbInfos.localPath) postersCpt++;
             item = itemBuildWithImdbScrap(item, imdbInfos);
             if (item.uri) {
-                netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), item.id, uploadcare, function(netflixPoster) {
+                netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), item.id, logger, function(netflixPoster) {
+                    if (netflixPoster.localPath) postersCpt++;
                     item.posterUrl = netflixPoster.posterUrl || item.posterUrl;
                     item.localPath = netflixPoster.localPath || item.localPath;
                     item.description = netflixPoster.description;
@@ -46,8 +47,10 @@ function updateUpcoming (newUpcomings, mediasCount, uploadcare, callback) {
             }
         });
     }, function() {
+        const logTrace = `### Lang: ${lang} POSTER DOWNLOADED => ${postersCpt}/${mediasCount}`
         console.log('');
-        console.log(colors.bgYellow.white('POSTER DOWNLOADED =>',postersCpt,'/', mediasCount));
+        console.log(colors.bgYellow.white(logTrace));
+        logger(logTrace);
         callback(upComings);
     });
 }
@@ -67,32 +70,47 @@ function getMediaStartYear (media) {
     }
 }
 
-function saveStore (upComings, language) {
+function saveStore (upComings, language, callback) {
     const file = `${STORE_FOLDER}${STORE_NETFLIX_UPCOMING}/${language}.json`;
     fs.writeFile(file, JSON.stringify(upComings), function(){
-        console.log(colors.bgGreen.white('File successfully written! - Check your project directory for the ./store/netflix-upcoming.json file'));
+        const msg = `File successfully written! - Check your at ${file}`;
+        console.log(colors.bgGreen.white(msg));
+        logger(msg);
+        callback();
     });
 }
 
 function refreshNetflixUpcoming () {
-    const uploadcare = true;
-    console.log(colors.bgMagenta.white('\NETFLIX REFRESH UPCOMINGS MEDIA STARTED', Date.now()));
+    const startMsg = `\NETFLIX REFRESH UPCOMINGS MEDIA STARTED ${Date.now()}`;
+    console.log(colors.bgMagenta.white(startMsg));
+    logger(startMsg);
     async.mapSeries(languages, function(language, done) {
         netflixProvider.getUpcomingMedia(language, function(netflixUpcoming) {
-            console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX '),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
+            console.log(colors.bgWhite.blue('  Medias upcoming Scrapped from NETFLIX Lang', language),colors.bgGreen.white('SUCCESS'),colors.blue(' Total items : ',netflixUpcoming.meta.result.totalItems));
             let newUpcomings = {};
             netflixProvider.getUpcomingMediaManual((upcomingMediaManual) => {
                 netflixUpcoming.items = upcomingMediaManual.concat(netflixUpcoming.items);
-                updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, uploadcare, function(items) {
+                updateUpcoming(netflixUpcoming.items, netflixUpcoming.meta.result.totalItems, language, function(items) {
                     newUpcomings.timeStamp = Date.now();
                     newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
                     newUpcomings.items = items;
-                    saveStore(newUpcomings, language);
-                    console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
-                    done();
+                    saveStore(newUpcomings, language, function () {
+                        console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
+                        done();
+                    });
                 });
             });
         });
+    }, function () {
+        logger('-----------------------------------');
+    });
+}
+
+function logger(logTrace) {
+    const datetime = new Date();
+    const completeLog = `${datetime.toLocaleString()} : ${logTrace}\n`;
+    fs.appendFile('./src/refresh-upcomings-logs.txt', completeLog, function(){
+        console.log('Trace succefully logged');
     });
 }
 

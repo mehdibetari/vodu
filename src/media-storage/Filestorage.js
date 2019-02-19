@@ -8,7 +8,7 @@ const s3 = new AWS.S3({
   accessKeyId: configKeys.S3.AWS_ACCESS_KEY,
   secretAccessKey: configKeys.S3.AWS_SECRET_ACCESS_KEY
 });
-const BUCKET_NAME = 'media-store.tolookat.com';
+const BUCKET_NAME = 'cf-simple-s3-origin-cloudfrontfors3-642578718534';
 
 const STORE_UPLOADCARE_BASE_URL = 'https://ucarecdn.com/';
 
@@ -18,9 +18,9 @@ class Filestorage {
 
     }
 
-    download (uri, filePath, fileName, callback) {
+    download (uri, filePath, fileName, logger, callback) {
         if (!uri) return callback(false);
-        this.uploadOnDistant(uri, filePath, fileName, callback);
+        this.uploadOnDistant(uri, filePath, fileName, logger, callback);
     }
 
     downloadLocaly (uri, filename, callback) {
@@ -45,7 +45,7 @@ class Filestorage {
         });
     }
 
-    uploadOnDistant (sourceUrl, filepath, filename, callback) {
+    uploadOnDistant (sourceUrl, filepath, filename, logger, callback) {
         const s3params = {
             Bucket: BUCKET_NAME,
             MaxKeys: 20,
@@ -61,12 +61,12 @@ class Filestorage {
                 callback(`https://${BUCKET_NAME}/${data.Contents[0].Key}`);
             }
             else {
-                this.uploadOnS3FromUrl(sourceUrl, filepath, filename, callback);
+                this.uploadOnS3FromUrl(sourceUrl, filepath, filename, logger, callback);
             }
         });
     }
 
-    uploadOnS3FromUrl (sourceUrl, filepath, filename, callback) {
+    uploadOnS3FromUrl (sourceUrl, filepath, filename, logger, callback) {
         var options = {
             uri: sourceUrl,
             encoding: null
@@ -83,7 +83,8 @@ class Filestorage {
                 };
                 s3.upload(params, function(s3Err, data) {
                     if (s3Err) throw s3Err
-                    console.log(`File uploaded successfully at ${data.Location}`)
+                    console.log(`File uploaded successfully at ${data.Location}`);
+                    logger(`File uploaded successfully at ${data.Location}`);
                     callback(`https://${BUCKET_NAME}/${filepath}${filename}`);
                 });
             }

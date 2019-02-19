@@ -15,7 +15,7 @@ function getMediaListUrl (name, year) {
         encodeURIComponent(name + '+' +year) + 
         imdbSearchEndUrl;
 }
-function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback) {
+function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
     let posterStore = new Filestorage();
     async.eachSeries(mediasFounded, function(media, done){
@@ -57,7 +57,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, en
                     if (enableDownload) {
                         const fileName = `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`;
                         const filePath = `posters/${year}${id}/`;
-                        posterStore.download(posterUrl, filePath, fileName, function (path) {
+                        posterStore.download(posterUrl, filePath, fileName, logger, function (path) {
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);
@@ -86,7 +86,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, en
         callback({});
     });
 }
-function getMedia(name, year, id, enableDownload, callback) {
+function getMedia(name, year, id, enableDownload, logger, callback) {
     console.log(colors.inverse('IMDB media to found'),colors.bgGreen.white(name,year));
 
     let url = getMediaListUrl(name, year);
@@ -129,23 +129,23 @@ function getMedia(name, year, id, enableDownload, callback) {
                                         callback({});
                                     }
                                     else {
-                                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
+                                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback);
                                     }
                                 });
                             }
                             else {
-                                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
+                                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback);
                             }
                         });
 
                     }
                     else {
-                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
+                        listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback);
                     }
                 });
             }
             else {
-                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, callback);
+                listScrapping(mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback);
             }
         }
         else {

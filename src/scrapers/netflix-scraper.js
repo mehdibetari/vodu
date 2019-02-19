@@ -7,7 +7,7 @@ const Filestorage  = require('../media-storage/Filestorage');
 
 const NETFLIX_BASE_URL = 'https://media.netflix.com';
 
-function getPoster (uri, name, year, id, uploadcare, callback) {
+function getPoster (uri, name, year, id, logger, callback) {
     console.log(colors.inverse('NETFLIX poster to found'),colors.bgGreen.white(name,year));
     request(NETFLIX_BASE_URL+uri, function(error, response, html){
         if(!error){
@@ -27,7 +27,7 @@ function getPoster (uri, name, year, id, uploadcare, callback) {
                 let posterStore = new Filestorage();
                 const fileName = `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`;
                 const filePath = `posters/${year}${id}/`;
-                posterStore.download(posterUri, filePath, fileName, function (path) {
+                posterStore.download(posterUri, filePath, fileName, logger, function (path) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
