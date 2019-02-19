@@ -9,6 +9,7 @@ const s3 = new AWS.S3({
   secretAccessKey: configKeys.S3.AWS_SECRET_ACCESS_KEY
 });
 const BUCKET_NAME = 'cf-simple-s3-origin-cloudfrontfors3-642578718534';
+const CF_BASE_URL = 'd1sygdf8atpyev.cloudfront.net'
 
 const STORE_UPLOADCARE_BASE_URL = 'https://ucarecdn.com/';
 
@@ -58,7 +59,7 @@ class Filestorage {
             }
             // console.log('data =>', data);
             if (data && data.Contents.length > 0) {
-                callback(`https://${BUCKET_NAME}/${data.Contents[0].Key}`);
+                callback(`https://${CF_BASE_URL}/${data.Contents[0].Key}`);
             }
             else {
                 this.uploadOnS3FromUrl(sourceUrl, filepath, filename, logger, callback);
@@ -85,7 +86,7 @@ class Filestorage {
                     if (s3Err) throw s3Err
                     console.log(`File uploaded successfully at ${data.Location}`);
                     logger(`File uploaded successfully at ${data.Location}`);
-                    callback(`https://${BUCKET_NAME}/${filepath}${filename}`);
+                    callback(`https://${CF_BASE_URL}/${filepath}${filename}`);
                 });
             }
         });
