@@ -85,11 +85,11 @@
               {#items}
               <div class="card" id="{id}">
                 <div  id="{name|u}">
-                  {#localPath}
-                  <img src="{localPath|unicorn}" alt="{name}"/>
+                  {#posterUrl}
+                  <img src="{posterUrl|unicorn}" alt="{name}"/>
                   {:else}
                   <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
-                  {/localPath}
+                  {/posterUrl}
                   <div class="card-title">
                     <a href="#" class="toggle-info btn">
                       <span class="left"></span>

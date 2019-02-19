@@ -656,11 +656,11 @@
               {#items}
               <div class="card" id="{id}">
                 <div  id="{name|u}">
-                  {#localPath}
-                  <amp-img src="{localPath|unicorn}" alt="{name}" height="218" width="148"></amp-img>
+                  {#posterUrl}
+                  <amp-img src="{posterUrl|unicorn}" alt="{name}" height="218" width="148"></amp-img>
                   {:else}
                   <amp-img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo" height="218" width="148"></amp-img>
-                  {/localPath}
+                  {/posterUrl}
                   <div class="card-title">
                     <h2>
                         <span class="name">{name}</span>
