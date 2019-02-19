@@ -61,7 +61,7 @@ function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, en
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);
-                            callback({'actors': actors, 'sourceUrl': path, 'posterUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
+                            callback({'actors': actors, 'posterUrl': path, 'sourceUrl': posterUrl, 'mediaLink': mediaLink, 'directors': directors, 'creators': creators, 'summary' : summary});
                         });
                     }
                     else {

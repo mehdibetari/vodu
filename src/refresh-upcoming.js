@@ -16,7 +16,7 @@ function itemBuildWithImdbScrap (item, scrap) {
     item.summary   = scrap.summary;
     item.mediaLink = scrap.mediaLink;
     item.posterUrl = scrap.posterUrl;
-    item.localPath = scrap.localPath;
+    item.sourceUrl = scrap.sourceUrl;
     return item;
 }
 
@@ -29,13 +29,13 @@ function updateUpcoming (newUpcomings, mediasCount, lang, callback) {
         console.log('');
         console.log(colors.inverse('#',cpt,'/',mediasCount));
         imdbScraper.getMedia(item.name, getMediaStartYear(item), item.id, true, logger, function(imdbInfos) {
-            if (imdbInfos.localPath) postersCpt++;
+            if (imdbInfos.posterUrl) postersCpt++;
             item = itemBuildWithImdbScrap(item, imdbInfos);
             if (item.uri) {
                 netflixScraper.getPoster(item.uri, item.name, getMediaStartYear(item), item.id, logger, function(netflixPoster) {
-                    if (netflixPoster.localPath) postersCpt++;
+                    if (netflixPoster.posterUrl) postersCpt++;
                     item.posterUrl = netflixPoster.posterUrl || item.posterUrl;
-                    item.localPath = netflixPoster.localPath || item.localPath;
+                    item.sourceUrl = netflixPoster.sourceUrl || item.sourceUrl;
                     item.description = netflixPoster.description;
                     upComings.push(item);
                     done();

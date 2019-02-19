@@ -32,11 +32,11 @@ class Media {
         if (media.mediaLink && from) {
             this.addLink(IMDB_BASE_URL + media.mediaLink, 'IMDB');
         }
-        if (media.posterUrl) {
-            this.addPoster(media.posterUrl, from);
+        if (media.sourceUrl) {
+            this.addPoster(media.sourceUrl, from);
         }
-        if (media.localPath) {
-            this.addPoster(media.localPath, 'own-cloud-storage');
+        if (media.posterUrl) {
+            this.addPoster(media.posterUrl, 'own-cloud-storage');
         }
 
     }

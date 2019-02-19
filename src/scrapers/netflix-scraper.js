@@ -31,7 +31,7 @@ function getPoster (uri, name, year, id, logger, callback) {
                     const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                     const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
                     console.log( (path) ? addedMessage : failedMessage);
-                    callback({'localPath': path, 'sourceUrl': posterUri, description: h2p(description)});
+                    callback({'posterUrl': path, 'sourceUrl': posterUri, description: h2p(description)});
                 });
             }
             else {                

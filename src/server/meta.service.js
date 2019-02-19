@@ -103,7 +103,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
             title: `${media[0].name} - date de sortie: ${media[0].premiereDate}  sur Netflix`,
             description: (media[0].summary) ? `${media[0].name} - ${media[0].summary}` : '',
             calendarMaj: `Calendrier mis à jour le ${lastUpdateDate}`,
-            image: media[0].localPath
+            image: media[0].posterUrl
         };
     }
     else if (media[0] && media[0].recurence) {
@@ -112,7 +112,7 @@ function getMediaMetaData (mediaId, items, lastUpdateDate, baseUrl) {
             title: `${media[0].name} ${media[0].recurence} sur Netflix`,
             description: (media[0].summary) ? `${media[0].name} - ${media[0].summary}` : '',
             calendarMaj: `Calendrier mis à jour le ${lastUpdateDate}`,
-            image: media[0].localPath
+            image: media[0].posterUrl
         };
     }
     else {
