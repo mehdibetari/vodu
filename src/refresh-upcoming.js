@@ -8,6 +8,13 @@ let netflixProvider = require('./providers/netflix-provider');
 const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
 const languages = ['en', 'fr', 'es', 'pt_br', 'de'];
+const videos = {
+    fr: 'X3VDoJ7ZnKc',
+    en: 'Y5aztl4h_kY',
+    de: 'oPD6XGXXjI0',
+    es: 'OxvTC53NWfw',
+    pt_br: 'Y5aztl4h_kY'
+};
 
 function itemBuildWithImdbScrap (item, scrap) {
     item.actors    = scrap.actors;
@@ -94,6 +101,7 @@ function refreshNetflixUpcoming () {
                     newUpcomings.timeStamp = Date.now();
                     newUpcomings.totalItems = netflixUpcoming.meta.result.totalItems;
                     newUpcomings.items = items;
+                    newUpcomings.videoId = videos[language];
                     saveStore(newUpcomings, language, function () {
                         console.log(colors.bgMagenta.white('NETFLIX REFRESH UPCOMINGS MEDIA ENDED', Date.now()));
                         done();
