@@ -18,6 +18,7 @@
     "express": "latest",
     "firebase-admin": "^5.13.1",
     "html2plaintext": "^2.1.2",
+    "ml_media-storage": "^1.0.0",
     "node-cron": "^2.0.3",
     "prompt": "^1.0.0",
     "querybase": "^0.6.0",

@@ -4,7 +4,8 @@ const async            = require('async');
 const colors           = require('colors');
 const Slug             = require('slugify');
 const stringSimilarity = require('string-similarity');
-const Filestorage      = require('../media-storage/Filestorage');
+const Store = require('ml_media-storage');
+const configKeys   = require('../config-keys');
 
 const imdbBaseUrl = 'http://www.imdb.com';
 const imdbSearchStartUrl = '/find?ref_=nv_sr_fn&q=';
@@ -17,7 +18,6 @@ function getMediaListUrl (name, year) {
 }
 function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, enableDownload, logger, callback) {
     console.log('  STEP # MATCHING LIST TITLES ');
-    let posterStore = new Filestorage();
     async.eachSeries(mediasFounded, function(media, done){
         const mediaTitle = $(media).text().toLowerCase().replace(/\s/g,'').replace(':','').replace('(tvseries)','').replace('(tvepisode)','').replace('(video)','');
         const title = titleToFound.toLowerCase().replace(/\s/g,'').replace(':','');
@@ -55,9 +55,19 @@ function listScrapping (mediasFounded, titleToFound, name, year, id, $, lock, en
                     summary += $('.summary_text[itemprop*="description"]').text();
                     console.log('  STEP # DOWNLOAD : ', name, ' ', year);
                     if (enableDownload) {
-                        const fileName = `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`;
-                        const filePath = `posters/${year}${id}/`;
-                        posterStore.download(posterUrl, filePath, fileName, logger, function (path) {
+                        const props = {
+                            sourceUrl: posterUrl,
+                            destinationPath: `posters/${year}${id}/`,
+                            destinationFileName: `${Slug(name, { lower: true, remove: /[$*_+~.()'"!\-:@]/g })}-${year}.jpg`,
+                            logger,
+                            options: {
+                                AWS_ACCESS_KEY: configKeys.S3.AWS_ACCESS_KEY,
+                                AWS_SECRET_ACCESS_KEY: configKeys.S3.AWS_SECRET_ACCESS_KEY,
+                                AWS_BUCKET_NAME: 'cf-simple-s3-origin-cloudfrontfors3-642578718534',
+                                AWS_CF_BASE_URL: 'd1sygdf8atpyev.cloudfront.net'
+                            }
+                        };
+                        Store(props, (path) => {
                             const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
                             const failedMessage = colors.bgYellow.white('MEDIA POSTER ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded') + colors.green(' ✓ but meta data does');
                             console.log( (path) ? addedMessage : failedMessage);
