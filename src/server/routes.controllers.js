@@ -1,12 +1,11 @@
 'use strict';
-let dust    = require('dustjs-linkedin');
-let fs      = require('fs');
+let dust = require('dustjs-linkedin');
+let fs = require('fs');
 let metaService = require('./meta.service');
 const configServer = require('./config-server').configServer;
 const Packager = require('../xspeedit/XspeedIt');
 const configKeys = require('../config-keys');
 const upcomings = require('../refresh-upcoming');
-const atob = require('atob');
 
 class RoutesControllers {
     constructor() {
@@ -167,8 +166,7 @@ class RoutesControllers {
             badParam = true;
         }
         else {
-            const key = atob(req.params.key);;
-            if (key === configKeys.secretApi['private_key']) {
+            if (req.params.key === configKeys.secretApi['private_key']) {
                 upcomings(true);
                 res.status(200).send('In progress');
             }
