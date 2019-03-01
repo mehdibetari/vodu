@@ -56,16 +56,13 @@
         <h2>Dernière mise à jour de l'agenda le {lastUpdate}</h2>
         <p>Toutes les sorties et nouveautés films et series ORIGINAL NETFLIX pour {#humanDate}{currentMonth} {currentYear}{/humanDate}</p>
       </header>
-      <section class="searchBar">
-        <span class="input input--nao">
-          <input class="input__field input__field--nao" type="text" id="input-1" />
-					<label class="input__label input__label--nao" for="input-1">
-            <span class="input__label-content input__label-content--nao">Rechercher un titre</span>
-					</label>
-					<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
-					</svg>
-				</span>
+      <section class="demenagement">
+        <h2>Nouvelle adresse, le site démenage</h2>
+        <a href="https://tolookat.com/fr/netflix/calendrier/france">Retrouvez le calendrier Netflix FRANCE des sorties mis à jour</a>
+        <br>
+        <small>
+          Voir aussi les sorties : <a href="https://tolookat.com/fr/netflix/calendrier/belgique">Netflix BELGIQUE</a> - <a href="https://tolookat.com/fr/netflix/calendrier/suisse">Netflix SUISSE</a> - et plus
+        </small>
       </section>
       <section class="date-links">
         <span>
@@ -91,31 +88,10 @@
                   <img src="https://ucarecdn.com/6fab3bd5-af10-4e89-9ccc-0e095729dd32/netflix.jpg" alt="netflix logo">
                   {/posterUrl}
                   <div class="card-title">
-                    <a href="#" class="toggle-info btn">
-                      <span class="left"></span>
-                      <span class="right"></span>
-                    </a>
                     <h2>
                         <span class="name">{name}</span>
                         <small class="date-de-sortie">{premiereDate}</small>
                     </h2>
-                  </div>
-                  <div class="card-flap flap1">
-                    <div class="card-description">
-                      <div class="type genre">{type}{#seasons} - {seasons} saison(s){/seasons}</div>
-                      {#directors}<div class="realisateur director"><small>Réalisation</small>  {directors}</div>{/directors}
-                      {#creators}<div class="auteur creator"><small>Créateur</small>  {creators}</div>{/creators}
-                      {#actors}<div class="acteur actor"><small>Casting</small>  {actors}</div>{/actors}
-                      {#summary}<p class="resume"><small>Descriptif</small>  {summary}</p>{/summary}
-                    </div>
-                    <div class="card-flap flap2">
-                      <div class="card-actions">
-                        <div id="twitter-share-btn-{id}"></div>
-                      </div>
-                    </div>
-                    <template id="share-template-{id}">
-                      <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Falloserie.fr%2Fcalendrier%2Fnetflix%2F{id}&layout=button_count&size=small&mobile_iframe=true&width=105&height=20&appId" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                    </template>
                   </div>
                 </div>
               </div>
@@ -125,24 +101,7 @@
         </div>      
       </section>
       <footer>
-        <a href="/episode-chaque-semaine/netflix">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
+        <a href="https://tolookat.com/fr/netflix/calendrier/france/#weekly-upcomings">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
       </footer>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-      <script src="/scripts/article-title-filter.js"></script>
-      <script src="/scripts/card-animation.js"></script>
-      <script>
-        $(window).bind("load", function() {
-          /*Facebook*/
-          (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-          /*Twitter*/
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-        });
-      </script>
     </body>
 </html>

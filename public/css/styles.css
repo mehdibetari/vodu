@@ -545,6 +545,18 @@ a.eigth:after{
 a.before:hover:before,a.after:hover:after{
   width:100%;
 }
+.demenagement {
+  display: flex;
+  flex-direction: column;
+  border: grey 2px solid;
+  padding: 20px;
+  margin: 60px;
+}
+
+.demenagement h2, a, small {
+  margin-top: 0;
+  text-align: center;
+}
 
 @media only screen and (-Webkit-min-device-pixel-ratio: 1.5),  
 only screen and (-moz-min-device-pixel-ratio: 1.5),  
