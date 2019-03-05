@@ -9,10 +9,10 @@ const STORE_FOLDER = './store';
 const STORE_NETFLIX_UPCOMING = '/netflix-upcoming';
 const languages = ['en', 'fr', 'es', 'pt_br', 'de'];
 const videos = {
-    fr: 'X3VDoJ7ZnKc',
+    fr: 'jFon8gXm9uY',
     en: 'Y5aztl4h_kY',
     de: 'oPD6XGXXjI0',
-    es: 'OxvTC53NWfw',
+    es: 'Y5aztl4h_kY',
     pt_br: 'Y5aztl4h_kY'
 };
 
