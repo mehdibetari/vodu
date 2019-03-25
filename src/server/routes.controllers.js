@@ -15,8 +15,12 @@ class RoutesControllers {
         return ['janv.', 'fev.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'aout', 'sept.', 'oct.', 'nov.', 'déc.'];
     }
 
-    getMonth() {
+    getFrMonth() {
         return ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'];
+    }
+
+    getMonth() {
+        return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     }
 
     calendarList (wish, req, res) {
@@ -192,9 +196,9 @@ class RoutesControllers {
             const incomingDate = new Date(this.preFormatDate(item.premiereDate));
             const month = (item.premiereDate == incomingDate.getFullYear()) ? undefined : this.getMonth()[incomingDate.getMonth()];
             const year = incomingDate.getFullYear() ? incomingDate.getFullYear() : 'Sans date';
-            const key = `${(incomingDate.getFullYear())?incomingDate.getFullYear():'Sans date'}${(month)?'-':''}${(month)?month:''}`;
+            const key = `${(incomingDate.getFullYear())?incomingDate.getFullYear():'withoutYear'}${(month)?'-':''}${(month)?month:''}`;
             const keyExistAt = groups.findIndex((group) => group.key === key);
-            if (keyExistAt === -1) groups.push({ key, year, month, items: [item] });
+            if (keyExistAt === -1) groups.push({ key, year, month: this.getFrMonth()[incomingDate.getMonth()], items: [item] });
             else groups[keyExistAt].items.push(item);
         });
         return groups;
@@ -202,13 +206,13 @@ class RoutesControllers {
 
     preFormatDate(premiereDate) {
         return premiereDate
-                    .replace('é', 'e')
-                    .replace('fevrier', 'feb')
-                    .replace('avril', 'apr')
-                    .replace('mai', 'may')
-                    .replace('juin', 'jun')
-                    .replace('juillet', 'jul')
-                    .replace('aout', 'aug');
+            .replace('é', 'e')
+            .replace('fevrier', 'feb')
+            .replace('avril', 'apr')
+            .replace('mai', 'may')
+            .replace('juin', 'jun')
+            .replace('juillet', 'jul')
+            .replace('aout', 'aug');
     }
 }
 

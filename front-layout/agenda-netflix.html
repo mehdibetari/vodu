@@ -53,13 +53,13 @@
       </nav>
       <header id="header">
         <h1>Calendrier des sorties NETFLIX FRANCE {#humanDate}{currentYear} {nextYear}{/humanDate}</h1>
-        <h2>Dernière mise à jour de l'agenda le {lastUpdate}</h2>
+        <h2>mis à jour de le {lastUpdate}</h2>
         <p>Toutes les sorties et nouveautés films et series ORIGINAL NETFLIX pour {#humanDate}{currentMonth} {currentYear}{/humanDate}</p>
       </header>
       <section class="demenagement">
-        <h2>Nouvelle adresse, le site démenage</h2>
-        <a href="https://tolookat.com/fr/netflix/calendrier/france">Retrouvez le calendrier Netflix FRANCE des sorties mis à jour</a>
+        <a href="https://tolookat.com/fr/netflix/calendrier/france">Retrouvez le calendrier Netflix FRANCE des sorties mis à jour quotidiennement</a>
         <br>
+        <a class="button" href="https://tolookat.com/fr/netflix/calendrier/france">Nouveau calendrier <br/>NETFLIX {#humanDate}{currentYear}{/humanDate}</a>
         <small>
           Voir aussi les sorties : <a href="https://tolookat.com/fr/netflix/calendrier/belgique">Netflix BELGIQUE</a> - <a href="https://tolookat.com/fr/netflix/calendrier/suisse">Netflix SUISSE</a> - et plus
         </small>
@@ -67,7 +67,7 @@
       <section class="date-links">
         <span>
           {#groups}
-            <a href="#{key|u}" class="sixth before after">{month} {year}</a>&nbsp;&nbsp;&nbsp;
+            <a href="https://tolookat.com/fr/netflix/calendrier/france/#{key|u}" class="sixth before after">{month} {year}</a>&nbsp;&nbsp;&nbsp;
           {/groups}
         </span>
       </section>
@@ -101,7 +101,8 @@
         </div>      
       </section>
       <footer>
-        <a href="https://tolookat.com/fr/netflix/calendrier/france/#weekly-upcomings">Voir aussi le Calendrier NETFLIX des series avec <span><span class="every-week-badge">un nouvel épisode</span><span class="every-week-badge">chaque semaine</span></span></a>
+          <a href="https://tolookat.com/fr/netflix/calendrier/france/"><span><span class="every-week-badge every-week-badge-red">Nouveau Calendrier</span><span class="every-week-badge every-week-badge-white">NETFLIX {#humanDate}{currentYear}{/humanDate}</span></span></a>
+          <a href="https://tolookat.com/fr/netflix/meilleures-series/"><span><span class="every-week-badge every-week-badge-white">Classement Meilleures</span><span class="every-week-badge every-week-badge-red">Series NETFLIX</span></span></a>
       </footer>
     </body>
 </html>
