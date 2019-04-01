@@ -11,9 +11,9 @@ const languages = ['en', 'fr', 'es', 'pt_br', 'de'];
 const videos = {
     fr: 'jFon8gXm9uY',
     en: 'Y5aztl4h_kY',
-    de: 'oPD6XGXXjI0',
-    es: 'Y5aztl4h_kY',
-    pt_br: 'Y5aztl4h_kY'
+    de: 's4eGhbbgk2s',
+    es: 'Yqr1ausBmjA',
+    pt_br: 'Yqr1ausBmjA'
 };
 
 function itemBuildWithImdbScrap (item, scrap) {
