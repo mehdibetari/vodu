@@ -36,9 +36,6 @@ app.get('/packager/:input*?', function(req, res){
 app.get('/vodu/refresh/:key*?', function(req, res){
     routesControllers.refreshUpcomings(req, res);
 });
-app.get('/vodt/refresh/:key*?', function(req, res){
-    routesControllers.refreshTops(req, res);
-});
 
 app.use(express.static('./public'));
 exports = module.exports = app;
