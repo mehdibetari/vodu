@@ -6,7 +6,7 @@ const configServer = require('./config-server').configServer;
 const Packager = require('../xspeedit/XspeedIt');
 const configKeys = require('../config-keys');
 const upcomings = require('../refresh-upcoming');
-const tops = require('../vodt-run');
+// const tops = require('../vodt-run');
 
 class RoutesControllers {
     constructor() {
@@ -100,20 +100,20 @@ class RoutesControllers {
         }
     }
 
-    topsList (req, res) {
-        let file = configServer.ALLOSERIE_NETFLIX_TOPS_STORE;
-        if (req.params.lang) {
-            file = `.${configServer.ALLOSERIE_NETFLIX_TOPS_STORE_LANG}/tops/${req.params.lang}.json`
-        }
+    // topsList (req, res) {
+    //     let file = configServer.ALLOSERIE_NETFLIX_TOPS_STORE;
+    //     if (req.params.lang) {
+    //         file = `.${configServer.ALLOSERIE_NETFLIX_TOPS_STORE_LANG}/tops/${req.params.lang}.json`
+    //     }
 
-        fs.readFile(file, 'utf8', function (error,response) {
-            if (error) {
-                return console.log(error);
-            }
-            res.setHeader('Content-Type', 'application/json');
-            res.send(response);
-        });
-    }
+    //     fs.readFile(file, 'utf8', function (error,response) {
+    //         if (error) {
+    //             return console.log(error);
+    //         }
+    //         res.setHeader('Content-Type', 'application/json');
+    //         res.send(response);
+    //     });
+    // }
 
     weeklyList (wish, req, res) {
         fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_LAYOUT, 'utf8', (err,data) => {
@@ -198,23 +198,23 @@ class RoutesControllers {
         if (badParam) res.status(404).send('Not found');
     }
 
-    refreshTops (req, res) {
-        let badParam = false;
-        if (!req.params.key) {
-            badParam = true;
-        }
-        else {
-            if (req.params.key === configKeys.secretApi['private_key']) {
-                tops();
-                res.status(200).send('In progress');
-            }
-            else {
-                badParam = true;
-            }
+    // refreshTops (req, res) {
+    //     let badParam = false;
+    //     if (!req.params.key) {
+    //         badParam = true;
+    //     }
+    //     else {
+    //         if (req.params.key === configKeys.secretApi['private_key']) {
+    //             tops();
+    //             res.status(200).send('In progress');
+    //         }
+    //         else {
+    //             badParam = true;
+    //         }
 
-        }
-        if (badParam) res.status(404).send('Not found');
-    }
+    //     }
+    //     if (badParam) res.status(404).send('Not found');
+    // }
 
     removeMediaFromPreviousYear (medias) {
         return medias.filter((item) => new Date(item.sortDate).getFullYear() != new Date().getFullYear() - 1);
