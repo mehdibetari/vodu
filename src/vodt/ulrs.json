@@ -1,8 +1,0 @@
-{
-    "show": {
-        "populaire": ["http://www.allocine.fr/series-tv/decennie-2010/", "http://www.allocine.fr/series-tv/decennie-2010/?page=2"],
-        "spectateur": ["http://www.allocine.fr/series-tv/notes/decennie-2010/", "http://www.allocine.fr/series-tv/notes/decennie-2010/?page=2"],
-        "presse": ["http://www.allocine.fr/series-tv/presse/decennie-2010/", "http://www.allocine.fr/series-tv/presse/decennie-2010/?page=2"],
-        "countPage": 413
-    }
-}
