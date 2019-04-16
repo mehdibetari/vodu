@@ -1,9 +1,10 @@
 const { run } = require('./vodt/index');
 const { S3 } = require('./config-keys');
+const configServer = require('./config-server').configServer;
 
 const refreshNetflixTops = () => {
     run({
-        destinationPath: '/store/netflix-best',
+        destinationPath: configServer.ALLOSERIE_NETFLIX_TOPS_STORE_LANG,
         awskeys: { S3 }
     });
 };
