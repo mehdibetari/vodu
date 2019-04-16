@@ -100,6 +100,21 @@ class RoutesControllers {
         }
     }
 
+    topsList (req, res) {
+        let file = configServer.ALLOSERIE_NETFLIX_TOPS_STORE;
+        if (req.params.lang) {
+            file = `.${configServer.ALLOSERIE_NETFLIX_TOPS_STORE_LANG}/tops/${req.params.lang}.json`
+        }
+
+        fs.readFile(file, 'utf8', function (error,response) {
+            if (error) {
+                return console.log(error);
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send(response);
+        });
+    }
+
     weeklyList (wish, req, res) {
         fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_LAYOUT, 'utf8', (err,data) => {
             if (err) {
