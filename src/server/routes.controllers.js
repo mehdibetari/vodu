@@ -6,6 +6,7 @@ const configServer = require('./config-server').configServer;
 const Packager = require('../xspeedit/XspeedIt');
 const configKeys = require('../config-keys');
 const upcomings = require('../refresh-upcoming');
+const tops = require('../vodt-run');
 
 class RoutesControllers {
     constructor() {
@@ -172,6 +173,24 @@ class RoutesControllers {
         else {
             if (req.params.key === configKeys.secretApi['private_key']) {
                 upcomings(true);
+                res.status(200).send('In progress');
+            }
+            else {
+                badParam = true;
+            }
+
+        }
+        if (badParam) res.status(404).send('Not found');
+    }
+
+    refreshTops (req, res) {
+        let badParam = false;
+        if (!req.params.key) {
+            badParam = true;
+        }
+        else {
+            if (req.params.key === configKeys.secretApi['private_key']) {
+                tops();
                 res.status(200).send('In progress');
             }
             else {
