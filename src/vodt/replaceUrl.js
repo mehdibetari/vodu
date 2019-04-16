@@ -27,7 +27,7 @@ const readFile = filePath => new Promise((resolve, reject) => {
 });
 
 const replaceUrl = async (langs, destinationPath, callback) => {
-    const frFile = await readFile(`./tops/fr.json`);
+    const frFile = await readFile(`.${destinationPath}/tops/fr.json`);
     console.log('fr fetched');
     const french = await JSON.parse(frFile);
     console.log('fr json parsed');

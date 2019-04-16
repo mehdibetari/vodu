@@ -53,7 +53,7 @@ const buildTops = async (lang, sourceFile, destinationPath) => {
         if(err) {
             return console.log('[match.js](L51)', err);
         }
-        console.log(`[match.js](L53) The ${lang} TOP file was saved!`);
+        console.log(`[match.js](L53) .${destinationPath}/tops/${lang}.json was saved!`);
     }); 
 };
 
