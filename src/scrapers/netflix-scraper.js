@@ -38,10 +38,15 @@ function getPoster (uri, name, year, id, logger, callback) {
                     }
                 };
                 Store(props, (path) => {
-                    const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
-                    const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
-                    console.log( (path) ? addedMessage : failedMessage);
-                    callback({'posterUrl': path, 'sourceUrl': posterUri, description: h2p(description)});
+                    if (path) {
+                        const addedMessage = '    ✓ Poster '+ colors.green('ADDED') + ' at ' + path;
+                        const failedMessage = colors.bgRed.white('POSTER SEARCH ABORDED') + ' => ' + name + year + colors.magenta(' ✘ Poster DOES NOT downloaded');
+                        console.log( (path) ? addedMessage : failedMessage);
+                        callback({'posterUrl': path, 'sourceUrl': posterUri, description: h2p(description)});
+                    }
+                    else {
+                        callback({});
+                    }
                 });
             }
             else {                
