@@ -11,6 +11,8 @@ const configServer = {
     ALLOSERIE_NETFLIX_CALENDAR_LAYOUT: './front-layout/agenda-netflix.html',
     ALLOSERIE_NETFLIX_CALENDAR_AMP_LAYOUT: './front-layout/amp-agenda-netflix.html',
     ALLOSERIE_NETFLIX_UPCOMING_STORE: './store/netflix-upcoming/fr.json',
-    ALLOSERIE_NETFLIX_UPCOMING_STORE_LANG: './store/netflix-upcoming'
+    ALLOSERIE_NETFLIX_UPCOMING_STORE_LANG: './store/netflix-upcoming',
+    ALLOSERIE_NETFLIX_TOPS_STORE: './store/netflix-best/tops/fr.json',
+    ALLOSERIE_NETFLIX_TOPS_STORE_LANG: '/store/netflix-best'
 };
 exports.configServer = configServer;

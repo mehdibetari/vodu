@@ -24,6 +24,9 @@ app.get('/calendrier/netflix/:media_id*?', function(req, res){
 app.get('/json/calendrier/netflix/:lang*?', function(req, res){
     routesControllers.calendarList('json-netflix', req, res);
 });
+app.get('/json/tops/netflix/:lang*?', function(req, res){
+    routesControllers.topsList(req, res);
+});
 app.get('/amp/calendrier/netflix', function(req, res){
     routesControllers.calendarList('amp-netflix', req, res);
 });
@@ -35,6 +38,9 @@ app.get('/packager/:input*?', function(req, res){
 });
 app.get('/vodu/refresh/:key*?', function(req, res){
     routesControllers.refreshUpcomings(req, res);
+});
+app.get('/vodt/refresh/:key*?', function(req, res){
+    routesControllers.refreshTops(req, res);
 });
 
 app.use(express.static('./public'));
