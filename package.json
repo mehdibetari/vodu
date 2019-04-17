@@ -1,6 +1,6 @@
 {
   "name": "node-web-scrape",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Scrape le web.",
   "main": "server.js",
   "author": "mehdibetari",
