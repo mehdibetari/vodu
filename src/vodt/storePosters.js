@@ -3,8 +3,8 @@ const Slug = require('slugify');
 const Store = require('./Filestore');
 const BASE_URL = 'https://images.justwatch.com';
 
-const savePostersAndUpdateFile = async (lang, awskeys) => {
-    const topFile = await readFile(`./tops/${lang}.json`);
+const savePostersAndUpdateFile = async (lang, destinationPath, awskeys) => {
+    const topFile = await readFile(`.${destinationPath}/tops/${lang}.json`);
     const tops = JSON.parse(topFile);
 
     for(const top of tops) {
@@ -24,7 +24,7 @@ const savePostersAndUpdateFile = async (lang, awskeys) => {
 };
 
 const storeTopsPosters = async (lang, destinationPath, awskeys) => {
-    const series = await savePostersAndUpdateFile(lang, awskeys);
+    const series = await savePostersAndUpdateFile(lang, destinationPath, awskeys);
     fs.writeFile(`.${destinationPath}/tops/${lang}.json`, JSON.stringify(series), { flag: 'w' }, function(err) {
         if(err) {
             return console.log(err);
