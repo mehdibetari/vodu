@@ -1,4 +1,4 @@
-const { run } = require('./vodt/index');
+const { run } = require('v0dt');
 const { S3 } = require('./config-keys');
 const configServer = require('./server/config-server').configServer;
 
