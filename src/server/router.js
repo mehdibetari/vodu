@@ -27,6 +27,9 @@ app.get('/json/calendrier/netflix/:lang*?', function(req, res){
 app.get('/json/tops/netflix/:lang*?', function(req, res){
     routesControllers.topsList(req, res);
 });
+app.get('/json/tops/amazon/:lang*?', function(req, res){
+    routesControllers.amazonTopsList(req, res);
+});
 app.get('/amp/calendrier/netflix', function(req, res){
     routesControllers.calendarList('amp-netflix', req, res);
 });
@@ -41,6 +44,9 @@ app.get('/vodu/refresh/:key*?', function(req, res){
 });
 app.get('/vodt/refresh/:key*?', function(req, res){
     routesControllers.refreshTops(req, res);
+});
+app.get('/vodt/amazon/refresh/:key*?', function(req, res){
+    routesControllers.refreshAmazonTops(req, res);
 });
 
 app.use(express.static('./public'));

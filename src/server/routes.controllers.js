@@ -115,6 +115,21 @@ class RoutesControllers {
         });
     }
 
+    amazonTopsList (req, res) {
+        let file = configServer.ALLOSERIE_AMAZON_TOPS_STORE;
+        if (req.params.lang) {
+            file = `.${configServer.ALLOSERIE_AMAZON_TOPS_STORE_LANG}/tops/${req.params.lang}.json`
+        }
+
+        fs.readFile(file, 'utf8', function (error,response) {
+            if (error) {
+                return console.log(error);
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send(response);
+        });
+    }
+
     weeklyList (wish, req, res) {
         fs.readFile(configServer.ALLOSERIE_NETFLIX_WEEKLY_LAYOUT, 'utf8', (err,data) => {
             if (err) {
@@ -205,7 +220,25 @@ class RoutesControllers {
         }
         else {
             if (req.params.key === configKeys.secretApi['private_key']) {
-                tops();
+                tops('netflix');
+                res.status(200).send('In progress');
+            }
+            else {
+                badParam = true;
+            }
+
+        }
+        if (badParam) res.status(404).send('Not found');
+    }
+
+    refreshAmazonTops (req, res) {
+        let badParam = false;
+        if (!req.params.key) {
+            badParam = true;
+        }
+        else {
+            if (req.params.key === configKeys.secretApi['private_key']) {
+                tops('amazon');
                 res.status(200).send('In progress');
             }
             else {

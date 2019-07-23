@@ -13,6 +13,8 @@ const configServer = {
     ALLOSERIE_NETFLIX_UPCOMING_STORE: './store/netflix-upcoming/fr.json',
     ALLOSERIE_NETFLIX_UPCOMING_STORE_LANG: './store/netflix-upcoming',
     ALLOSERIE_NETFLIX_TOPS_STORE: './store/netflix-best/tops/fr.json',
-    ALLOSERIE_NETFLIX_TOPS_STORE_LANG: '/store/netflix-best'
+    ALLOSERIE_NETFLIX_TOPS_STORE_LANG: '/store/netflix-best',
+    ALLOSERIE_AMAZON_TOPS_STORE: './store/amazon-best/tops/fr.json',
+    ALLOSERIE_AMAZON_TOPS_STORE_LANG: '/store/amazon-best'
 };
 exports.configServer = configServer;
