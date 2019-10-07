@@ -1,4 +1,3 @@
-![VODMU](http://alloserie.fr/images/calendrier-netflix@2x.jpg)
 VODU - Video On Demand Upcomings
 =====
 [nodejs-server] [nodejs-scrapper]
