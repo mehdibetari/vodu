@@ -9,7 +9,8 @@ const s3 = new AWS.S3({
   secretAccessKey: configKeys.S3.AWS_SECRET_ACCESS_KEY
 });
 const BUCKET_NAME = 'cf-simple-s3-origin-cloudfrontfors3-642578718534';
-const CF_BASE_URL = 'd1sygdf8atpyev.cloudfront.net'
+// const CF_BASE_URL = 'd1sygdf8atpyev.cloudfront.net';
+const CF_BASE_URL = 'cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com';
 
 const STORE_UPLOADCARE_BASE_URL = 'https://ucarecdn.com/';
 

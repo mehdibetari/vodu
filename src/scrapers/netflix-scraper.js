@@ -34,7 +34,8 @@ function getPoster (uri, name, year, id, logger, callback) {
                         AWS_ACCESS_KEY: configKeys.S3.AWS_ACCESS_KEY,
                         AWS_SECRET_ACCESS_KEY: configKeys.S3.AWS_SECRET_ACCESS_KEY,
                         AWS_BUCKET_NAME: 'cf-simple-s3-origin-cloudfrontfors3-642578718534',
-                        AWS_CF_BASE_URL: 'd1sygdf8atpyev.cloudfront.net'
+                        // AWS_CF_BASE_URL: 'd1sygdf8atpyev.cloudfront.net'
+                        AWS_CF_BASE_URL: 'cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com'
                     }
                 };
                 Store(props, (path) => {
