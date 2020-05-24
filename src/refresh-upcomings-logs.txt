@@ -65,3 +65,18 @@
 2/19/2019, 2:32:52 PM : ### Lang: de POSTER DOWNLOADED => 1/107
 2/19/2019, 2:32:52 PM : File successfully written! - Check your at ./store/netflix-upcoming/de.json
 2/19/2019, 2:32:52 PM : -----------------------------------
+5/24/2020, 10:04:44 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1590350684260
+5/24/2020, 10:08:45 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1590350925917
+5/24/2020, 10:15:24 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1590351324916
+5/24/2020, 10:15:30 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081273378/coronavirus,-explained-2020.jpg
+5/24/2020, 10:18:50 PM : NETFLIX REFRESH UPCOMINGS MEDIA STARTED 1590351530802
+5/24/2020, 10:18:56 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081273378/coronavirus,-explained-2020.jpg
+5/24/2020, 10:19:01 PM : File uploaded successfully at https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202080074249/the-last-kingdom-2020.jpg
+5/24/2020, 10:19:06 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202080179190/never-have-i-ever-2020.jpg
+5/24/2020, 10:19:09 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202080209024/a-secret-love-2020.jpg
+5/24/2020, 10:19:13 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202080990668/extracurricular-2020.jpg
+5/24/2020, 10:19:19 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081004936/summertime-2020.jpg
+5/24/2020, 10:19:24 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081227121/the-victims-game-2020.jpg
+5/24/2020, 10:19:27 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081008221/into-the-night-2020.jpg
+5/24/2020, 10:19:31 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081005150/the-half-of-it-2020.jpg
+5/24/2020, 10:19:34 PM : File already exist https://cf-simple-s3-origin-cloudfrontfors3-642578718534.s3.amazonaws.com/posters/202081021355/go-go-cory-carson-the-chrissy-2020.jpg

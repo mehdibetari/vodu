@@ -66,15 +66,11 @@ function getMediaStartYear (media) {
     if (media.premiereDate === 'upcoming') {
         return new Date().getFullYear();
     }
-    if (media.type !== 'series') {
-        return media.sortDate.split('-')[0];
-    }
     if (media.type === 'series' && media.firstSeason) {
         return Number(media.firstSeason);
     }
-    if (media.type === 'series') {
-        return Number(media.sortDate.split('-')[0])-(--media.seasons);
-    }
+    if (typeof media.sortDate === 'string') return media.sortDate.split('-')[0];
+    if (typeof media.sortDate === 'number') return new Date(media.sortDate).getFullYear();
 }
 
 function saveStore (upComings, language, callback) {
